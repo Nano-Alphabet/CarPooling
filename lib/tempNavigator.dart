@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/home/homePage.dart';
+import 'package:uniteonwheels/signInModule/signInOTPPage.dart';
 
 class TempNavigator extends StatelessWidget {
   @override
@@ -29,7 +30,7 @@ class TempNavigator extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => ); // TODO add class
+                          builder: (BuildContext context) =>MySignInOTPPage() )); // TODO add class
                 },
                 child: Text('Sign In OTP')),
           ],

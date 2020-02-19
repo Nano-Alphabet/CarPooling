@@ -1,9 +1,11 @@
-class MySingInOTPPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+
+class MySignInOTPPage extends StatefulWidget {
   @override
-  _MySingInOTPPageState createState() => _MySingInOTPPageState();
+  _MySignInOTPPageState createState() => _MySignInOTPPageState();
 }
 
-class _MySingInOTPPageState extends State<MySingInOTPPage> {
+class _MySignInOTPPageState extends State<MySignInOTPPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
