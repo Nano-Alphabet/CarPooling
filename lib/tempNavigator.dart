@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/home/homePage.dart';
+import 'package:uniteonwheels/signInModule/signInPage.dart';
 
 class TempNavigator extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class TempNavigator extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => ); // TODO add class
+                          builder: (BuildContext context) => MySignInPage())); // TODO add class
                 },
                 child: Text('Sign in page')),
             FlatButton(
