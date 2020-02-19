@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class MySignInPage extends StatefulWidget {
+
+class LoginPage extends StatefulWidget {
   @override
-  _MySignInPageState createState() => _MySignInPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _MySignInPageState extends State<MySignInPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      body: new Container(),
     );
   }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
@@ -41,3 +42,5 @@ class _MySignInOTPPageState extends State<MySignInOTPPage> {
         ));
   }
 }
+=======
+>>>>>>> e0dca313cae3e30cc2264109357954df2e88e940
