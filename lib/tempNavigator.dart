@@ -26,7 +26,7 @@ class TempNavigator extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              MySignInPage())); // TODO add class
+                              LoginPage())); // TODO add class
                 },
                 child: Text('Sign in page')),
             FlatButton(
