@@ -3,12 +3,14 @@ import 'package:uniteonwheels/home/homePage.dart';
 
 import 'signInModule/signInOTPPage.dart';
 import 'signInModule/signInPage.dart';
+
 class TempNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
                 onPressed: () {
@@ -23,7 +25,8 @@ class TempNavigator extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => LoginPage())); // TODO add class
+                          builder: (BuildContext context) =>
+                              LoginPage())); // TODO add class
                 },
                 child: Text('Sign in page')),
             FlatButton(
@@ -31,7 +34,8 @@ class TempNavigator extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>MySignInOTPPage() )); // TODO add class
+                          builder: (BuildContext context) =>
+                              MySignInOTPPage())); // TODO add class
                 },
                 child: Text('Sign In OTP')),
           ],
