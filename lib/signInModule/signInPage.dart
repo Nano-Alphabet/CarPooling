@@ -31,16 +31,18 @@ class _LoginPageState extends State<LoginPage> {
                 Center(
                   child: Row(
                     children: <Widget>[
-                      SizedBox(
-                        width: 60,
-                        child: RaisedButton(
-                          onPressed: null,
-                          child: Text("+91"),
-                        ),
+                      MaterialButton(
+                        height: 30.0,
+                        minWidth: 30.0,
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.white,
+                        child: Text("+91"),
+                        onPressed: () => {},
+                        splashColor: Colors.redAccent,
                       ),
                       PinEntryTextField(
                         fields: 10,
-                        fieldWidth: 14,
+                        fieldWidth: 13,
                         onSubmit: (String pin) {
                           showDialog(
                               context: context,
@@ -55,9 +57,12 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                RaisedButton(
-                  onPressed: null,
-                  child: Text('Next'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 25, 0.0, 25),
+                  child: RaisedButton(
+                    onPressed: null,
+                    child: Text('Next'),
+                  ),
                 )
               ],
             ),

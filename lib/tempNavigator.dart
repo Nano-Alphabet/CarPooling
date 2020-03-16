@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/home/homePage.dart';
+import 'package:uniteonwheels/temp/bottomButtons.dart';
 
 import 'signInModule/signInOTPPage.dart';
 import 'signInModule/signInPage.dart';
@@ -38,6 +39,24 @@ class TempNavigator extends StatelessWidget {
                               MySignInOTPPage())); // TODO add class
                 },
                 child: Text('Sign In OTP')),
+            FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              MySignInOTPPage())); // TODO add class
+                },
+                child: Text('Sign In OTP')),
+            FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              BottomButtons())); // TODO add class
+                },
+                child: Text('BottomButtons')),
           ],
         ),
       ),

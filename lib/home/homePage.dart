@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniteonwheels/temp/bottomButtons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,7 +35,16 @@ class _HomePageState extends State<HomePage> {
               }),
         ),*/
         body: Stack(
-      children: <Widget>[Positioned(top: 25, child: SearchBar())],
+      children: <Widget>[
+        Positioned(top: 25, child: SearchBar()),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: BottomButtons(),
+          ),
+        ),
+      ],
     ));
   }
 }

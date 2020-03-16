@@ -28,6 +28,7 @@ class _MySignInOTPPageState extends State<MySignInOTPPage> {
                 ),
                 PinEntryTextField(
                   fields: 6,
+                  fieldWidth: 30.0,
                   onSubmit: (String pin) {
                     showDialog(
                         context: context,
@@ -39,9 +40,12 @@ class _MySignInOTPPageState extends State<MySignInOTPPage> {
                         }); //end showDialog()
                   }, // end onSubmit
                 ),
-                RaisedButton(
-                  onPressed: null,
-                  child: Text('Next'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0,25,0.0,25),
+                  child: RaisedButton(
+                    onPressed: null,
+                    child: Text('Next'),
+                  ),
                 )
               ],
             ),
