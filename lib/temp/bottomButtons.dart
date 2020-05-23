@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/planModule/createPlan.dart';
 import 'package:uniteonwheels/planModule/joinPlan.dart';
-
+import 'package:velocity_x/velocity_x.dart';
 class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class BottomButtons extends StatelessWidget {
               ),
             ),
           ),
+          20.widthBox,
           Opacity(
             opacity: 0.8,
             child: RaisedButton(

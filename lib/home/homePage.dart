@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,18 +49,19 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 75.0,
                 child: DrawerHeader(
-                    child: Center(
-                      child: Text(
-                        'MySelf',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                  child: Center(
+                    child: Text(
+                      'MySelf',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
                     ),
-                    decoration: BoxDecoration(color: Colors.blueGrey),
-                    margin: EdgeInsets.all(0.0),
-                    padding: EdgeInsets.all(0.0)),
+                  ),
+                  decoration: BoxDecoration(color: Colors.blueGrey),
+                  margin: EdgeInsets.all(0.0),
+                  padding: EdgeInsets.all(0.0),
+                ),
               ),
               ListTile(
                 title: Text('Home'),
@@ -103,7 +105,9 @@ class _HomePageState extends State<HomePage> {
                   // Update the state of the app
                   // ...
                   // Then close the drawer
-                  Navigator.push(context,MaterialPageRoute(
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
                           builder: (BuildContext context) => TempNavigator()));
                 },
               ),
@@ -123,7 +127,7 @@ class _HomePageState extends State<HomePage> {
               Positioned(
                   top: 25,
                   child: SearchBar(
-                    ScaffoldKey: _scaffoldKey,
+                    scaffoldKey: _scaffoldKey,
                   )),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -139,11 +143,11 @@ class _HomePageState extends State<HomePage> {
 }
 
 class SearchBar extends StatefulWidget {
-  final ScaffoldKey;
-  SearchBar({Key key, @required this.ScaffoldKey}) : super(key: key);
+  final scaffoldKey;
+  SearchBar({Key key, @required this.scaffoldKey}) : super(key: key);
 
   @override
-  _SearchBarState createState() => _SearchBarState(ScaffoldKey);
+  _SearchBarState createState() => _SearchBarState(scaffoldKey);
 }
 
 class _SearchBarState extends State<SearchBar> {
@@ -152,39 +156,70 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.horizontal,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black,
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Flex(
+        direction: Axis.horizontal,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              _scaffoldKey.currentState.openDrawer();
+            },
           ),
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
-        ),
-        Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(4),
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: 40,
-              child: TextFormField(
-                decoration: InputDecoration(border: OutlineInputBorder()),
+
+          Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(4),
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 40,
+                child: TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder()),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 40,
+                child: TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder()),
+                ),
+              ),
+            ],
+          ),
+          6.widthBox,
+          ClipOval(
+            child: Material(
+              color: Colors.purple[200], // button color
+              child: InkWell(
+                splashColor: Colors.green, // inkwell color
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Icon(
+                    Icons.notification_important,
+                    color: Colors.amberAccent,
+                    size: 40,
+                    ),
+                ),
+                onTap: () {},
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(8),
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: 40,
-              child: TextFormField(
-                decoration: InputDecoration(border: OutlineInputBorder()),
-              ),
-            ),
-          ],
-        ),
-      ],
+          )
+
+          // Expanded(
+          //     child: FlatButton(
+          //     color:Colors.green,
+          //     child: Text('New Request'),
+          //     onPressed: (){},
+          //   ),
+          // )
+        ],
+      ),
     );
   }
 }
