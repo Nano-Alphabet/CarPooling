@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -161,16 +162,39 @@ final List<Customer> customers = <Customer>[
   Customer(name: 'Adarsh', phone: 6265252766)
 ];
 Widget _listItemBuilder(BuildContext context, int index) {
+  int t = customers[index].phone;
   return Container(
+    height: 60,
     color: Colors.blue[50],
     padding: const EdgeInsets.only(right: 20.0),
     alignment: Alignment.center,
-    child: Text(
-      customers[index].name,
-      style: Theme.of(context)
-          .textTheme
-          .headline
-          .apply(color: Colors.indigo[700], backgroundColor: Colors.purple[50]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            customers[index].name,
+            style: Theme.of(context).textTheme.headline.apply(
+                color: Colors.indigo[700], backgroundColor: Colors.purple[50]),
+          ),
+        ),
+        Text("$t")
+      ],
+    ),
+  );
+}
+
+Widget setUpAlertDialoadBox() {
+  return Container(
+
+    height: 60,
+    width: 60,
+    child: ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: customers.length,
+      itemBuilder: _listItemBuilder,
     ),
   );
 }
@@ -178,12 +202,13 @@ Widget _listItemBuilder(BuildContext context, int index) {
 Widget _dialogBuilder() {
   print('Hello');
   return SimpleDialog(
-    contentPadding: EdgeInsets.zero,
+    contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+    backgroundColor: Colors.purpleAccent,
     children: [
-      ListView.builder(
-          itemCount: customers.length,
-          itemExtent: 40.0,
-          itemBuilder: _listItemBuilder),
+      Padding(
+        padding: const EdgeInsets.all(0),
+        child: setUpAlertDialoadBox(),
+      )
     ],
   );
 }
