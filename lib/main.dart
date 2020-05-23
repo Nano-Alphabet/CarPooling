@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/tempNavigator.dart';
-
 import 'home/homePage.dart';
 
 void main() => runApp(MyApp());
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TempNavigator(),
+      home: HomePage(),
     );
   }
 }
