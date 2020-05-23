@@ -5,6 +5,7 @@ import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -164,9 +165,10 @@ final List<Customer> customers = <Customer>[
 
 Widget _listItemBuilder(BuildContext context, int index) {
   int t = customers[index].phone;
-  String n=customers[index].name;
+  String n = customers[index].name;
   return Container(
     height: 100,
+    margin: EdgeInsets.all(1),
     color: Colors.blue[50],
     padding: const EdgeInsets.only(right: 20.0),
     alignment: Alignment.center,
@@ -177,10 +179,8 @@ Widget _listItemBuilder(BuildContext context, int index) {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             customers[index].name,
-            style: Theme.of(context)
-                .textTheme
-                .headline
-                .apply(color: Colors.black),
+            style:
+                Theme.of(context).textTheme.headline.apply(color: Colors.black),
           ),
         ),
         Align(
@@ -210,14 +210,16 @@ Widget _listItemBuilder(BuildContext context, int index) {
 }
 
 Widget setUpAlertDialoadBox() {
-  return Container(
-    height: 200,
-    width: 60,
-    child: ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: customers.length,
-      itemBuilder: _listItemBuilder,
+  return Scrollbar(
+    child: Container(
+      height: 200,
+      width: 60,
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: customers.length,
+        itemBuilder: _listItemBuilder,
+      ),
     ),
   );
 }
