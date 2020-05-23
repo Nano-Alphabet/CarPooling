@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uniteonwheels/planModule/createPlan.dart';
+import 'package:uniteonwheels/planModule/joinPlan.dart';
 
 class BottomButtons extends StatelessWidget {
   @override
@@ -11,7 +13,8 @@ class BottomButtons extends StatelessWidget {
             opacity: 0.8,
             child: RaisedButton(
               onPressed: () {
-                print("This is a print()");
+                Navigator.push(context,MaterialPageRoute(
+                          builder: (BuildContext context) => JoinPlan()));
               },
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.black),
@@ -29,7 +32,8 @@ class BottomButtons extends StatelessWidget {
             opacity: 0.8,
             child: RaisedButton(
               onPressed: () {
-                print("This is a print()");
+                Navigator.push(context,MaterialPageRoute(
+                          builder: (BuildContext context) => CreatePlan()));
               },
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.blueAccent),

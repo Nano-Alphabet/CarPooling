@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/home/homePage.dart';
+import 'package:uniteonwheels/planModule/createPlan.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 
+import 'home/homePage2.dart';
 import 'signInModule/signInOTPPage.dart';
 import 'signInModule/signInPage.dart';
 
@@ -9,6 +11,9 @@ class TempNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Temporary Navigation"),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,6 +26,14 @@ class TempNavigator extends StatelessWidget {
                           builder: (BuildContext context) => HomePage()));
                 },
                 child: Text('Home Page')),
+            FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomePage2()));
+                },
+                child: Text('Home Page2')),
             FlatButton(
                 onPressed: () {
                   Navigator.push(
@@ -45,9 +58,9 @@ class TempNavigator extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              MySignInOTPPage())); // TODO add class
+                              CreatePlan())); // TODO add class
                 },
-                child: Text('Sign In OTP')),
+                child: Text('Create Plan Page')),
             FlatButton(
                 onPressed: () {
                   Navigator.push(
