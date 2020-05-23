@@ -216,7 +216,6 @@ class _SearchBarState extends State<SearchBar> {
               _scaffoldKey.currentState.openDrawer();
             },
           ),
-
           Column(
             children: <Widget>[
               Container(
@@ -238,27 +237,23 @@ class _SearchBarState extends State<SearchBar> {
             ],
           ),
           6.widthBox,
-          
-          GestureDetector(
-            onTap: () => showDialog(
-              context: context,
-              child: _dialogBuilder(),
-            ),
-            child: ClipOval(
-              child: Material(
-                color: Colors.purple[200], // button color
-                child: InkWell(
-                  splashColor: Colors.green, // inkwell color
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Icon(
-                      Icons.notification_important,
-                      color: Colors.amberAccent,
-                      size: 40,
-                    ),
+          ClipOval(
+            child: Material(
+              color: Colors.purple[200], // button color
+              child: InkWell(
+                splashColor: Colors.green, // inkwell color
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Icon(
+                    Icons.notification_important,
+                    color: Colors.amberAccent,
+                    size: 40,
                   ),
-                  onTap: () {},
+                ),
+                onTap: () => showDialog(
+                  context: context,
+                  child: _dialogBuilder(),
                 ),
               ),
             ),
