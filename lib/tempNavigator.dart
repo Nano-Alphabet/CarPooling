@@ -6,7 +6,7 @@ import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'home/homePage2.dart';
 import 'signInModule/signInOTPPage.dart';
 import 'signInModule/signInPage.dart';
-
+import 'signInModule/signuppageruchir.dart';
 class TempNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,15 @@ class TempNavigator extends StatelessWidget {
                           builder: (BuildContext context) => HomePage2()));
                 },
                 child: Text('Home Page2')),
+            FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              SignUp())); // TODO add class
+                },
+                child: Text('SignUP Page')),
             FlatButton(
                 onPressed: () {
                   Navigator.push(
