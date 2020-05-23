@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/foundation.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -142,6 +143,51 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+class Customer {
+  const Customer({this.name, this.phone});
+  final String name;
+  final int phone;
+}
+
+final String server =
+    debugDefaultTargetPlatformOverride == TargetPlatform.android
+        ? "10.0.2.2"
+        : "0.0.0.0";
+
+final List<Customer> customers = <Customer>[
+  Customer(name: 'Ruchir', phone: 6377414790),
+  Customer(name: 'Sreeharsh', phone: 6303073463),
+  Customer(name: 'Ubaid', phone: 8149943088),
+  Customer(name: 'Adarsh', phone: 6265252766)
+];
+Widget _listItemBuilder(BuildContext context, int index) {
+  return Container(
+    color: Colors.blue[50],
+    padding: const EdgeInsets.only(right: 20.0),
+    alignment: Alignment.center,
+    child: Text(
+      customers[index].name,
+      style: Theme.of(context)
+          .textTheme
+          .headline
+          .apply(color: Colors.indigo[700], backgroundColor: Colors.purple[50]),
+    ),
+  );
+}
+
+Widget _dialogBuilder() {
+  print('Hello');
+  return SimpleDialog(
+    contentPadding: EdgeInsets.zero,
+    children: [
+      ListView.builder(
+          itemCount: customers.length,
+          itemExtent: 40.0,
+          itemBuilder: _listItemBuilder),
+    ],
+  );
+}
+
 class SearchBar extends StatefulWidget {
   final scaffoldKey;
   SearchBar({Key key, @required this.scaffoldKey}) : super(key: key);
@@ -192,32 +238,31 @@ class _SearchBarState extends State<SearchBar> {
             ],
           ),
           6.widthBox,
-          ClipOval(
-            child: Material(
-              color: Colors.purple[200], // button color
-              child: InkWell(
-                splashColor: Colors.green, // inkwell color
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Icon(
-                    Icons.notification_important,
-                    color: Colors.amberAccent,
-                    size: 40,
+          
+          GestureDetector(
+            onTap: () => showDialog(
+              context: context,
+              child: _dialogBuilder(),
+            ),
+            child: ClipOval(
+              child: Material(
+                color: Colors.purple[200], // button color
+                child: InkWell(
+                  splashColor: Colors.green, // inkwell color
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Icon(
+                      Icons.notification_important,
+                      color: Colors.amberAccent,
+                      size: 40,
                     ),
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
               ),
             ),
-          )
-
-          // Expanded(
-          //     child: FlatButton(
-          //     color:Colors.green,
-          //     child: Text('New Request'),
-          //     onPressed: (){},
-          //   ),
-          // )
+          ),
         ],
       ),
     );

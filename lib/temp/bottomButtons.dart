@@ -23,7 +23,7 @@ class BottomButtons extends StatelessWidget {
                       bottomLeft: Radius.circular(25.0))),
               color:Colors.indigo ,
               child: Text(
-                "Joi",
+                "Join",
                 style: TextStyle(color: Colors.white),
               ),
             ),
