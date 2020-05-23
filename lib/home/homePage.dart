@@ -4,7 +4,7 @@ import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -161,10 +161,12 @@ final List<Customer> customers = <Customer>[
   Customer(name: 'Ubaid', phone: 8149943088),
   Customer(name: 'Adarsh', phone: 6265252766)
 ];
+
 Widget _listItemBuilder(BuildContext context, int index) {
   int t = customers[index].phone;
+  String n=customers[index].name;
   return Container(
-    height: 60,
+    height: 100,
     color: Colors.blue[50],
     padding: const EdgeInsets.only(right: 20.0),
     alignment: Alignment.center,
@@ -175,11 +177,33 @@ Widget _listItemBuilder(BuildContext context, int index) {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             customers[index].name,
-            style: Theme.of(context).textTheme.headline.apply(
-                color: Colors.indigo[700], backgroundColor: Colors.purple[50]),
+            style: Theme.of(context)
+                .textTheme
+                .headline
+                .apply(color: Colors.black),
           ),
         ),
-        Text("$t")
+        Align(
+          alignment: Alignment.centerRight,
+          child: Wrap(
+            children: [
+              FlatButton(
+                color: Colors.lightGreenAccent,
+                onPressed: () {
+                  FlutterOpenWhatsapp.sendSingleMessage("+91$t", "Hello $n");
+                  // Navigator.of(context).pop();
+                },
+                child: const Text('WhatsChat'),
+              ),
+              5.widthBox,
+              RaisedButton(
+                color: Colors.lightBlue,
+                onPressed: () {},
+                child: const Text('ALLOW'),
+              )
+            ],
+          ),
+        ),
       ],
     ),
   );
@@ -187,8 +211,7 @@ Widget _listItemBuilder(BuildContext context, int index) {
 
 Widget setUpAlertDialoadBox() {
   return Container(
-
-    height: 60,
+    height: 200,
     width: 60,
     child: ListView.builder(
       scrollDirection: Axis.vertical,
@@ -202,8 +225,8 @@ Widget setUpAlertDialoadBox() {
 Widget _dialogBuilder() {
   print('Hello');
   return SimpleDialog(
-    contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
-    backgroundColor: Colors.purpleAccent,
+    contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
+    backgroundColor: Colors.blueGrey,
     children: [
       Padding(
         padding: const EdgeInsets.all(0),
