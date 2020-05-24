@@ -32,6 +32,7 @@ dependencies:
   ##-----------------------------------------------
   ## Utilities
   flutter_open_whatsapp:
+
   pin_entry_text_field: ^0.1.4
   fluttertoast: #error handling
   shared_preferences: #Local Storage
