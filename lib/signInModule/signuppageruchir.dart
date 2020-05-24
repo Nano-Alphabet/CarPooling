@@ -18,7 +18,7 @@ class _SignUpState extends State<SignUp> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.fromLTRB(15, 60, 0, 0),
+                  padding: EdgeInsets.fromLTRB(15, 30, 0, 0),
                   child: Text(
                     'Signup',
                     style: GoogleFonts.balooDa(
@@ -41,7 +41,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 180, left: 20, right: 20),
+                  padding: EdgeInsets.only(top: 140, left: 20, right: 20),
                   child: Column(
                     children: <Widget>[
                       TextField(
@@ -60,7 +60,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      SizedBox(height:20),
+                      SizedBox(height: 20),
                       TextField(
                         style: TextStyle(fontSize: 25),
                         decoration: InputDecoration(
@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         cursorColor: Colors.greenAccent,
                       ),
-                      SizedBox(height:20),
+                      SizedBox(height: 20),
                       TextField(
                         cursorColor: Colors.greenAccent,
                         style: TextStyle(fontSize: 25),
@@ -101,7 +101,7 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
           ),
-          SizedBox(height: 60),
+          SizedBox(height: 40),
           Container(
             height: 45,
             // width: 100,
@@ -129,6 +129,15 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
+          ),
+
+          // Temporary Back Button for Back Navigation
+          Center(
+            child: FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Back Button")),
           ),
         ],
       ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
+import 'package:uniteonwheels/Notification/notificationpage.dart';
+import 'package:uniteonwheels/profile/profile.dart';
+import 'package:uniteonwheels/signInModule/signuppageruchir.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 
@@ -76,38 +80,26 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               ListTile(
-                title: Text('History'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
                 title: Text('Profile'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => ProfilePage()));
                 },
               ),
               ListTile(
-                title: Text('Settings'),
+                title: Text('Sign Up'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => SignUp()));
                 },
               ),
               ListTile(
                 title: Text('Temp Page'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -273,15 +265,47 @@ class _SearchBarState extends State<SearchBar> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40,
                 child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                    // border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      // borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        width: 4,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      // borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: Colors.black87,
+                        width: 1.6,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(6),
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40,
                 child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                    // border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      // borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        width: 4,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      // borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: Colors.black87,
+                        width: 1.6,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

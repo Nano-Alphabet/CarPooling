@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uniteonwheels/planModule/createPlan.dart';
 import 'package:uniteonwheels/planModule/joinPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,28 +14,31 @@ class BottomButtons extends StatelessWidget {
             opacity: 0.8,
             child: RaisedButton(
               onPressed: () {
-                Navigator.push(context,MaterialPageRoute(
-                          builder: (BuildContext context) => JoinPlan()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => JoinPlan()));
               },
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.black),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25.0),
                       bottomLeft: Radius.circular(25.0))),
-              color:Colors.indigo ,
+              color: Colors.indigo,
               child: Text(
                 "Join",
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-          20.widthBox,
           Opacity(
             opacity: 0.8,
             child: RaisedButton(
               onPressed: () {
-                Navigator.push(context,MaterialPageRoute(
-                          builder: (BuildContext context) => CreatePlan()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => CreatePlan()));
               },
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.blueAccent),

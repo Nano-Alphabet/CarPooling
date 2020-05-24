@@ -22,12 +22,33 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+
+  ##-----------------------------------------------
+  ## Useful for UI
   cupertino_icons: ^0.1.2
   google_fonts:
   velocity_x:
+
+  ##-----------------------------------------------
+  ## Utilities
   flutter_open_whatsapp:
-  google_maps_flutter:
+
   pin_entry_text_field: ^0.1.4
+  fluttertoast: #error handling
+  shared_preferences: #Local Storage
+
+  ##-----------------------------------------------
+  ## Firebase
+  cloud_firestore:
+
+  ##-----------------------------------------------
+  ## State Management
+  provider:
+
+  #-----------------------------------------------
+  ## Location/Maps
+  geolocator: #Device Location
+  google_maps_flutter:
 
 dev_dependencies:
   flutter_test:
