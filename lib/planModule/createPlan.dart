@@ -26,6 +26,31 @@ class CreatePlanForm extends StatefulWidget {
 }
 
 class _CreatePlanFormState extends State<CreatePlanForm> {
+  //  user defined function
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success!"),
+          content: new Text("Plan created successfully"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   final _formKey = GlobalKey<FormState>();
   Cluster cluster = Cluster();
   @override
@@ -57,7 +82,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             labelText: "Pickup Point",
             validator: (String value) {},
             onSaved: (String value) {
-              cluster.initialLocation= value;
+              cluster.initialLocation = value;
             },
           ),
           FormField(
@@ -78,7 +103,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             labelText: "Cost",
             validator: (String value) {},
             onSaved: (String value) {
-              cluster.cost= value;
+              cluster.cost = value;
             },
           ),
           FormField(
@@ -129,7 +154,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 clusters.add(cluster);
-                Navigator.pop(context);
+                _showDialog();
                 // Navigator.push(
                 //     context,
                 //     MaterialPageRoute(
