@@ -1,4 +1,0 @@
-Ubaid: I created a copy of homepage so that I can experiment with menu drawer.
-Ubaid: After successfull implementation of drawer, I have incorporated it in original homepage.
-Ubaid: Now there is no need of homepage2 but still let us keep it for future.
-Ubaid: By the way, both the pages homepage and homepage2 look slightly different. You are requested to check both of them.

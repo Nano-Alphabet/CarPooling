@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniteonwheels/Notification/notificationpage.dart';
 import 'package:uniteonwheels/temp/bottomButtons.dart';
 import 'package:uniteonwheels/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -157,69 +158,75 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      child: Flex(
-        direction: Axis.horizontal,
+        padding: EdgeInsets.all(10),
+        child: Flex(
+    direction: Axis.horizontal,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: <Widget>[
+      IconButton(
+        icon: Icon(
+          Icons.menu,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          _scaffoldKey.currentState.openDrawer();
+        },
+      ),
+
+      Column(
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.black,
+          Container(
+            padding: EdgeInsets.all(4),
+            width: MediaQuery.of(context).size.width * 0.7,
+            height: 40,
+            child: TextFormField(
+              decoration: InputDecoration(border: OutlineInputBorder()),
             ),
-            onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
-            },
           ),
-
-          Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(4),
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: 40,
-                child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder()),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: 40,
-                child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder()),
-                ),
-              ),
-            ],
-          ),
-          6.widthBox,
-          ClipOval(
-            child: Material(
-              color: Colors.purple[200], // button color
-              child: InkWell(
-                splashColor: Colors.green, // inkwell color
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Icon(
-                    Icons.notification_important,
-                    color: Colors.amberAccent,
-                    size: 40,
-                    ),
-                ),
-                onTap: () {},
-              ),
+          Container(
+            padding: EdgeInsets.all(8),
+            width: MediaQuery.of(context).size.width * 0.7,
+            height: 40,
+            child: TextFormField(
+              decoration: InputDecoration(border: OutlineInputBorder()),
             ),
-          )
-
-          // Expanded(
-          //     child: FlatButton(
-          //     color:Colors.green,
-          //     child: Text('New Request'),
-          //     onPressed: (){},
-          //   ),
-          // )
+          ),
         ],
       ),
-    );
+      
+      ClipOval(
+        child: Material(
+          color: Colors.purple[200], // button color
+          child: InkWell(
+            splashColor: Colors.green, // inkwell color
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: Icon(
+                Icons.notification_important,
+                color: Colors.amberAccent,
+                size: 40,
+                ),
+            ),
+            onTap: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => NotificationPage()));
+            },
+          ),
+        ),
+      )
+
+      // Expanded(
+      //     child: FlatButton(
+      //     color:Colors.green,
+      //     child: Text('New Request'),
+      //     onPressed: (){},
+      //   ),
+      // )
+    ],
+        ),
+      );
   }
 }

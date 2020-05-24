@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:uniteonwheels/models/Cluster.dart';
+import 'package:uniteonwheels/planModule/joinPlan.dart';
 
 class CreatePlan extends StatefulWidget {
   @override
@@ -6,6 +9,7 @@ class CreatePlan extends StatefulWidget {
 }
 
 class _CreatePlanState extends State<CreatePlan> {
+  final _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,60 +26,132 @@ class CreatePlanForm extends StatefulWidget {
 }
 
 class _CreatePlanFormState extends State<CreatePlanForm> {
+  final _formKey = GlobalKey<FormState>();
+  Cluster cluster = Cluster();
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return Form(
+      key: _formKey,
+      child: Column(
         children: <Widget>[
-          FormField(label: "Name"),
-        ]);
-  }
-}
-
-class FormField extends StatefulWidget {
-  final label;
-  FormField({Key key, @required this.label}) : super(key: key);
-  @override
-  _FormFieldState createState() => _FormFieldState(label);
-}
-
-class _FormFieldState extends State<FormField> {
-  final label;
-  _FormFieldState(this.label);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              //  padding: EdgeInsets.all(20.0),
-              margin: EdgeInsets.all(5),
-              child: Text(
-                label,
-                style: TextStyle(
-                    fontSize: 18.0,
-                    color: const Color(0xFF000000),
-                    fontWeight: FontWeight.w300,
-                    fontFamily: "Roboto"),
+          FormField(
+            labelText: "First Name",
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter your name';
+              }
+              return null;
+            },
+            onSaved: (String value) {
+              cluster.adminFirstName = value;
+            },
+          ),
+          FormField(
+            labelText: "Last Name",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.adminLastName = value;
+            },
+          ),
+          RaisedButton(
+            color: Colors.blueAccent,
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                clusters.add(cluster);
+                Navigator.pop(context);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => JoinPlan(cluster: this.cluster)));
+              }
+            },
+            child: Text(
+              'Create Plan',
+              style: TextStyle(
+                color: Colors.white,
               ),
             ),
-            Flexible(
-              fit: FlexFit.loose,
-              child: TextField(
-                style: TextStyle(
-                    fontSize: 18.0,
-                    color: const Color(0xFF000000),
-                    fontWeight: FontWeight.w200,
-                    fontFamily: "Roboto"),
-              ),
-            )
-          ]),
+          )
+        ],
+      ),
     );
   }
 }
+
+class FormField extends StatelessWidget {
+  final String labelText;
+  final Function validator;
+  final Function onSaved;
+
+  FormField({
+    this.labelText,
+    this.validator,
+    this.onSaved,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextFormField(
+        cursorColor: Colors.greenAccent,
+        style: TextStyle(fontSize: 20),
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: GoogleFonts.montserrat(
+            textStyle: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.green),
+          ),
+        ),
+        validator: validator,
+        onSaved: onSaved,
+      ),
+    );
+  }
+}
+
+// class FormField extends StatefulWidget {
+//   final label;
+//   FormField({Key key, @required this.label}) : super(key: key);
+//   @override
+//   _FormFieldState createState() => _FormFieldState(label);
+// }
+
+// class _FormFieldState extends State<FormField> {
+//   final label;
+//   _FormFieldState(this.label);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+//       child: TextFormField(
+//         cursorColor: Colors.greenAccent,
+//         style: TextStyle(fontSize: 20),
+//         decoration: InputDecoration(
+//           labelText: label,
+//           labelStyle: GoogleFonts.montserrat(
+//             textStyle: TextStyle(
+//               fontSize: 16,
+//               color: Colors.grey,
+//             ),
+//           ),
+//           focusedBorder: UnderlineInputBorder(
+//             borderSide: BorderSide(color: Colors.green),
+//           ),
+//         ),
+//         onSaved: (String value) {
+//           // This optional block of code can be used to run
+//           // code when the user saves the form.
+//         },
+//         validator: (String value) {
+//           // print("The value is"+value);
+//         },
+//       ),
+//     );
+//   }
+// }

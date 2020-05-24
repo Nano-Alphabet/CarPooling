@@ -28,7 +28,6 @@ class BottomButtons extends StatelessWidget {
               ),
             ),
           ),
-          20.widthBox,
           Opacity(
             opacity: 0.8,
             child: RaisedButton(
