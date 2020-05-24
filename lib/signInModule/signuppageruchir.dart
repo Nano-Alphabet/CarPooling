@@ -60,7 +60,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      SizedBox(height:20),
+                      SizedBox(height: 20),
                       TextField(
                         style: TextStyle(fontSize: 25),
                         decoration: InputDecoration(
@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         cursorColor: Colors.greenAccent,
                       ),
-                      SizedBox(height:20),
+                      SizedBox(height: 20),
                       TextField(
                         cursorColor: Colors.greenAccent,
                         style: TextStyle(fontSize: 25),
@@ -129,6 +129,15 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
+          ),
+
+          // Temporary Back Button for Back Navigation
+          Center(
+            child: FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Back Button")),
           ),
         ],
       ),
