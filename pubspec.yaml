@@ -26,6 +26,7 @@ dependencies:
   google_fonts:
   velocity_x:
   flutter_open_whatsapp:
+  google_maps_flutter:
   pin_entry_text_field: ^0.1.4
 
 dev_dependencies:
