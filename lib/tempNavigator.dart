@@ -8,6 +8,7 @@ import 'planModule/viewPlan.dart';
 import 'signInModule/signInOTPPage.dart';
 import 'signInModule/signInPage.dart';
 import 'signInModule/signuppageruchir.dart';
+
 class TempNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class TempNavigator extends StatelessWidget {
                               BottomButtons())); // TODO add class
                 },
                 child: Text('BottomButtons')),
-                FlatButton(
+            FlatButton(
                 onPressed: () {
                   Navigator.push(
                       context,
