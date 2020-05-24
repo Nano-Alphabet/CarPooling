@@ -32,7 +32,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
+      child: ListView(
         children: <Widget>[
           FormField(
             labelText: "First Name",
@@ -53,6 +53,76 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               cluster.adminLastName = value;
             },
           ),
+          FormField(
+            labelText: "Pickup Point",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.initialLocation= value;
+            },
+          ),
+          FormField(
+            labelText: "Drop Point",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.finalLocation = value;
+            },
+          ),
+          FormField(
+            labelText: "Phone No",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.phoneNo = value;
+            },
+          ),
+          FormField(
+            labelText: "Cost",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.cost= value;
+            },
+          ),
+          FormField(
+            labelText: "Number of Passengers",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.noOfPassengers = value;
+            },
+          ),
+          FormField(
+            labelText: "Car Number",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.carNo = value;
+            },
+          ),
+          FormField(
+            labelText: "Car Type",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.carType = value;
+            },
+          ),
+          FormField(
+            labelText: "Time",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.time = value;
+            },
+          ),
+          FormField(
+            labelText: "Date",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.date = value;
+            },
+          ),
+          FormField(
+            labelText: "Admin User Id",
+            validator: (String value) {},
+            onSaved: (String value) {
+              cluster.adminUserID = value;
+            },
+          ),
           RaisedButton(
             color: Colors.blueAccent,
             onPressed: () {
@@ -70,6 +140,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               'Create Plan',
               style: TextStyle(
                 color: Colors.white,
+                fontSize: 25,
               ),
             ),
           )
