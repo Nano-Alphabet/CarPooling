@@ -11,7 +11,7 @@ class BottomButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Opacity(
-            opacity: 0.8,
+            opacity: 1,
             child: RaisedButton(
               onPressed: () {
                 Navigator.push(
@@ -20,7 +20,7 @@ class BottomButtons extends StatelessWidget {
                         builder: (BuildContext context) => JoinPlan()));
               },
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.black),
+                  side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25.0),
                       bottomLeft: Radius.circular(25.0))),
@@ -31,9 +31,11 @@ class BottomButtons extends StatelessWidget {
               ),
             ),
           ),
+          Padding(padding: EdgeInsets.all(2)),
           Opacity(
-            opacity: 0.8,
+            opacity: 1,
             child: RaisedButton(
+              color: Colors.white,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -41,13 +43,13 @@ class BottomButtons extends StatelessWidget {
                         builder: (BuildContext context) => CreatePlan()));
               },
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.blueAccent),
+                  side: BorderSide(color: Colors.indigo),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25.0),
                       bottomRight: Radius.circular(25.0))),
               child: Text(
                 "Create",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.indigo),
               ),
             ),
           ),

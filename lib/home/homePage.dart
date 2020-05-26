@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Stack(
             children: <Widget>[
-              //ClusterLocationPage(),
+              ClusterLocationPage(),
               Positioned(
                   top: 25,
                   child: SearchBar(
