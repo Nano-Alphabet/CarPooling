@@ -4,8 +4,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniteonwheels/models/Cluster.dart';
+import 'package:uniteonwheels/models/currentUser.dart';
 
 import 'dart:async';
+
+import 'package:uniteonwheels/provider/carPoolingProvider.dart';
 
 //---------------- NOTE NOTE NOTE ---------------
 //-----------------------------------------------
@@ -14,18 +18,15 @@ import 'dart:async';
 //--GOOGLE MAP-----------------------------------
 //-----------------------------------------------
 
-class MultiShopLocationPage extends StatefulWidget {
-  final List<Shop> shopList;
-
-  const MultiShopLocationPage({
+class ClusterLocationPage extends StatefulWidget {
+  const ClusterLocationPage({
     Key key,
-    @required this.shopList,
   }) : super(key: key);
   @override
-  _MultiShopLocationPageState createState() => _MultiShopLocationPageState();
+  _ClusterLocationPageState createState() => _ClusterLocationPageState();
 }
 
-class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
+class _ClusterLocationPageState extends State<ClusterLocationPage> {
   @override
   void initState() {
     super.initState();
@@ -42,9 +43,10 @@ class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
   List<Marker> markers = [];
 
   _setMarkers() async {
-    widget.shopList.forEach((element) {
-      _add(element);
-    });
+    //widget.shopList.forEach((element) {
+    //  _add(element);
+    //});
+    //TODO init markers
   }
 
   Future<Position> _getLocation() async {
@@ -67,10 +69,11 @@ class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
     return pos;
   }
 
-  void _add(Shop shop) async {
-    final MarkerId markerId = MarkerId(shop.shopName);
+  void _add(Cluster cluster) async {
+    final MarkerId markerId = MarkerId(cluster.clusterID);
     //print(address);
-    LatLng center = LatLng(shop.geoPoint.latitude, shop.geoPoint.longitude);
+    LatLng center =
+        LatLng(cluster.geoPoint.latitude, cluster.geoPoint.longitude);
 
     if (center == null) return;
     // creating a new MARKER
@@ -83,18 +86,10 @@ class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
       icon: BitmapDescriptor.defaultMarker,
       position: center,
       infoWindow: InfoWindow(
-          title: shop.shopName,
-          snippet: shop.shopType.toString(),
+          title: cluster.finalLocation,
+          snippet: cluster.adminFirstName.toString(),
           onTap: () {
-            shop.isShopOpen
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => ShopHomePage(
-                              shop: shop,
-                              shopTypeToDisplay: shop.shopType,
-                            )))
-                : Fluttertoast.showToast(msg: 'Shop is closed');
+            //TODO Navigate to DEtails page
           }),
     );
 
@@ -106,12 +101,6 @@ class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: VegigoText(
-          postText: ' | shops',
-        ),
-      ),
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -120,28 +109,25 @@ class _MultiShopLocationPageState extends State<MultiShopLocationPage> {
                 mapController = controller;
               });
 
-              User _user =
-                  await Provider.of<CurrentUser>(primeContext).getCurrentUser();
+              CurrentUser _user = Provider.of<CarPoolingProvider>(context).user;
               setState(() {
                 markers.add(Marker(
                   onTap: () {
                     mapController.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(
-                            target: LatLng(_user.userLat, _user.userLng),
-                            zoom: 16)));
+                            target: LatLng(_user.lat, _user.lng), zoom: 16)));
                   },
                   markerId: MarkerId(_user.userName),
                   icon: BitmapDescriptor.defaultMarkerWithHue(
                       BitmapDescriptor.hueBlue),
-                  position: LatLng(_user.userLat, _user.userLng),
+                  position: LatLng(_user.lat, _user.lng),
                   infoWindow: InfoWindow(
                     title: _user.userName,
                   ),
                 ));
                 mapController.animateCamera(CameraUpdate.newCameraPosition(
                     CameraPosition(
-                        target: LatLng(_user.userLat, _user.userLng),
-                        zoom: 16)));
+                        target: LatLng(_user.lat, _user.lng), zoom: 16)));
               });
             },
             compassEnabled: true,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uniteonwheels/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -49,6 +50,7 @@ var clusters = <Cluster>[
 
 class Cluster {
   //  For the time being, I am keeping all of these as strings
+  String clusterID;
   String adminFirstName;
   String adminLastName;
   String initialLocation;
@@ -61,6 +63,8 @@ class Cluster {
   String time;
   String date;
   String adminUserID;
+
+  GeoPoint geoPoint;
 
   Cluster(
       {this.adminFirstName,
@@ -75,6 +79,38 @@ class Cluster {
       this.time,
       this.date,
       this.adminUserID});
+
+  Cluster.fromMap(Map data) {
+    this.adminFirstName = data["adminFirstName"];
+    this.adminLastName = data["adminLastName"] ?? "...";
+    this.initialLocation = data["initialLocation"];
+    this.finalLocation = data["finalLocation"];
+    this.phoneNo = data["phoneNo"];
+    this.cost = data["cost"];
+    this.noOfPassengers = data["noOfPassengers"];
+    this.carNo = data["carNo"];
+    this.carType = data["carType"];
+    this.time = data["time"];
+    this.date = data["date"];
+    this.adminUserID = data["adminUserID"];
+  }
+
+  Map toMap() {
+    return {
+      "adminFirstName": adminFirstName,
+      "adminLastName": adminLastName,
+      "initialLocation": initialLocation,
+      "finalLocation": finalLocation,
+      "phoneNo": phoneNo,
+      "cost": cost,
+      "noOfPassengers": noOfPassengers,
+      "carNo": carNo,
+      "carType": carType,
+      "time": time,
+      "date": date,
+      "adminUserID": adminUserID,
+    };
+  }
 }
 
 class ClusterCard extends StatelessWidget {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniteonwheels/LocationModule/clusterLocationPage.dart';
 
 import 'package:uniteonwheels/Notification/notificationpage.dart';
 import 'package:uniteonwheels/profile/profile.dart';
@@ -119,6 +120,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Stack(
             children: <Widget>[
+              //ClusterLocationPage(),
               Positioned(
                   top: 25,
                   child: SearchBar(

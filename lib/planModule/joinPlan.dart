@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uniteonwheels/models/Cluster.dart';
+import 'package:uniteonwheels/provider/carPoolingProvider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class JoinPlan extends StatelessWidget {
@@ -17,6 +19,10 @@ class JoinPlan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map clusters = Provider.of<CarPoolingProvider>(context).clustersMap;
+    clusters.forEach((key, value) {
+      plans.add(ClusterCard(cluster: value));
+    });
     return Scaffold(
         appBar: AppBar(
           title: Text("JoinPlan"),

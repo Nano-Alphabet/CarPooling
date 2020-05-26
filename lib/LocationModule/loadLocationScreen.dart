@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'dart:async';
 import 'dart:ui';
 
 /*
@@ -161,14 +158,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             right: 0,
             child: InkWell(
               onTap: () async {
-                if (center.latitude ==
-                    (await Provider.of<CurrentUser>(context)
-                            .setUserLocation(center))
-                        .userLat) {
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(msg: 'Success');
-                } else
-                  Fluttertoast.showToast(msg: 'Falure');
+                //TODO SET location
               },
               child: Container(
                 alignment: Alignment.center,
