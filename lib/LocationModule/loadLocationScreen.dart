@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -106,7 +107,12 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
           Positioned(
             child: SafeArea(
               child: Container(
-                color: Colors.white70,
+                clipBehavior: Clip.hardEdge,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(),
+                    borderRadius: BorderRadius.circular(15)),
                 child: TextField(
                   showCursor: true,
                   controller: conte,
@@ -114,7 +120,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     hintText: 'Enter Address',
-                    border: UnderlineInputBorder(),
+                    border: InputBorder.none,
                     contentPadding: EdgeInsets.only(left: 10, top: 15),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
@@ -129,6 +135,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                     setState(() {
                       searchAddress = val;
                     });
+                    navigateToAddress();
                   },
                   onChanged: (val) {
                     setState(() {
@@ -181,10 +188,10 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
   }
 
   void navigateToAddress() {
-    Geolocator().placemarkFromAddress(conte.text).then((val) {
+    Geocoder.local.findAddressesFromQuery(conte.text).then((val) {
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target:
-              LatLng(val.first.position.latitude, val.first.position.longitude),
+          target: LatLng(
+              val.first.coordinates.latitude, val.first.coordinates.longitude),
           zoom: 16)));
     });
   }

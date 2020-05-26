@@ -81,18 +81,18 @@ class Cluster {
       this.adminUserID});
 
   Cluster.fromMap(Map data) {
-    this.adminFirstName = data["adminFirstName"];
+    this.adminFirstName = data["adminFirstName"] ?? "";
     this.adminLastName = data["adminLastName"] ?? "...";
-    this.initialLocation = data["initialLocation"];
-    this.finalLocation = data["finalLocation"];
-    this.phoneNo = data["phoneNo"];
-    this.cost = data["cost"];
-    this.noOfPassengers = data["noOfPassengers"];
-    this.carNo = data["carNo"];
-    this.carType = data["carType"];
-    this.time = data["time"];
-    this.date = data["date"];
-    this.adminUserID = data["adminUserID"];
+    this.initialLocation = data["initialLocation"] ?? "";
+    this.finalLocation = data["finalLocation"] ?? "";
+    this.phoneNo = data["phoneNo"] ?? "";
+    this.cost = data["cost"] ?? "";
+    this.noOfPassengers = data["noOfPassengers"] ?? "";
+    this.carNo = data["carNo"] ?? "";
+    this.carType = data["carType"] ?? "";
+    this.time = data["time"] ?? "";
+    this.date = data["date"] ?? "";
+    this.adminUserID = data["adminUserID"] ?? "";
   }
 
   Map<String, dynamic> toMap() {

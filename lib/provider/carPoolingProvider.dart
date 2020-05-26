@@ -10,7 +10,7 @@ class CarPoolingProvider with ChangeNotifier {
   /*
   *CLUSTERS key: unique cluster ID
   *this will help us in accessing clusters more effectively*/
-  Map<String, Cluster> clustersMap;
+  Map<String, Cluster> clustersMap = {};
 
   //
   //INIT -----------------------------
@@ -34,6 +34,7 @@ class CarPoolingProvider with ChangeNotifier {
         clusters.add(Cluster.fromMap(element.data));
       });
     });
+    print("Data Loaded from firebase");
     return "done";
   }
 
@@ -42,6 +43,7 @@ class CarPoolingProvider with ChangeNotifier {
   Future<String> setData(Cluster cluster) async {
     await Firestore.instance.collection("clusters").add(cluster.toMap());
 
+    print("Data uploaded to firebase");
     return "done";
   }
   //

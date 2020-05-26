@@ -19,6 +19,7 @@ class BottomButtons extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (BuildContext context) => JoinPlan()));
               },
+              padding: EdgeInsets.all(15),
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.only(
@@ -42,6 +43,7 @@ class BottomButtons extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (BuildContext context) => CreatePlan()));
               },
+              padding: EdgeInsets.all(15),
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.indigo),
                   borderRadius: BorderRadius.only(

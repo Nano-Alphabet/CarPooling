@@ -100,114 +100,112 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
 
   @override
   Widget build(BuildContext context) {
+    markers = [];
+    Map clusters =
+        Provider.of<CarPoolingProvider>(context, listen: false).clustersMap;
+    clusters.values.forEach((element) {
+      //_add(element);
+    });
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          GoogleMap(
-            onMapCreated: (controller) async {
-              setState(() {
-                mapController = controller;
-              });
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            GoogleMap(
+              onMapCreated: (controller) async {
+                setState(() {
+                  mapController = controller;
+                });
+                CurrentUser _user =
+                    Provider.of<CarPoolingProvider>(context).user;
+                setState(() {
+                  markers.add(Marker(
+                    onTap: () {
+                      mapController.animateCamera(
+                          CameraUpdate.newCameraPosition(CameraPosition(
+                              target: LatLng(_user.lat, _user.lng), zoom: 16)));
+                    },
+                    markerId: MarkerId(_user.userName),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueBlue),
+                    position: LatLng(_user.lat, _user.lng),
+                    infoWindow: InfoWindow(
+                      title: _user.userName,
+                    ),
+                  ));
+                  mapController.animateCamera(CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                          target: LatLng(_user.lat, _user.lng), zoom: 16)));
+                });
+              },
+              compassEnabled: true,
+              mapToolbarEnabled: true,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
 
-              CurrentUser _user = Provider.of<CarPoolingProvider>(context).user;
-              setState(() {
-                markers.add(Marker(
-                  onTap: () {
-                    mapController.animateCamera(CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                            target: LatLng(_user.lat, _user.lng), zoom: 16)));
-                  },
-                  markerId: MarkerId(_user.userName),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueBlue),
-                  position: LatLng(_user.lat, _user.lng),
-                  infoWindow: InfoWindow(
-                    title: _user.userName,
-                  ),
-                ));
-                mapController.animateCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                        target: LatLng(_user.lat, _user.lng), zoom: 16)));
-              });
-            },
-            compassEnabled: true,
-            mapToolbarEnabled: true,
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            buildingsEnabled: true,
-            //padding: EdgeInsets.only(top: 50),
-            markers: Set<Marker>.of(markers),
-            mapType: isNormalMap ? MapType.normal : MapType.hybrid,
-            onCameraMove: (camPos) {
-              setState(() {
-                center = camPos.target;
-              });
-            },
+              buildingsEnabled: true,
+              padding: EdgeInsets.only(top: 100),
+              markers: Set<Marker>.of(markers),
+              mapType: isNormalMap ? MapType.normal : MapType.hybrid,
+              onCameraMove: (camPos) {
+                setState(() {
+                  center = camPos.target;
+                });
+              },
 
-            // onTap: (latLng0) {
-            //   Geocoder.local
-            //       .findAddressesFromCoordinates(
-            //           Coordinates(center.latitude, center.longitude))
-            //       .then((val) {
-            //     setState(() {
-            //       searchAddress = val.first.addressLine;
-            //       conte.text = val.first.addressLine;
-            //     });
-            //   }
-            //   );
-            // },
-            initialCameraPosition: CameraPosition(target: center, zoom: 13),
-          ),
-          Positioned(
-              child: IconButton(
-                  icon: Icon(
-                    Icons.map,
-                    color: isNormalMap ? Colors.green : Colors.white,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isNormalMap = !isNormalMap;
-                    });
-                  }))
-          /*Positioned(
-            child: Container(
-              height: 40,
-              width: double.infinity,
-              clipBehavior: Clip.hardEdge,
-              margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
-              child: TextField(
-                showCursor: true,
-                controller: conte,
-                style: TextStyle(fontSize: 10),
-                decoration: InputDecoration(
-                  hintText: 'Enter Address',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(left: 15, top: 15),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: navigateToAddress,
-                    iconSize: 25,
-                  ),
-                ),
-                onEditingComplete: () {
-                  navigateToAddress();
-                },
-                onSubmitted: (val) {
-                  setState(() {
-                    searchAddress = val;
-                  });
-                },
-                onChanged: (val) {
-                  setState(() {
-                    searchAddress = val;
-                  });
-                },
-              ),
+              // onTap: (latLng0) {
+              //   Geocoder.local
+              //       .findAddressesFromCoordinates(
+              //           Coordinates(center.latitude, center.longitude))
+              //       .then((val) {
+              //     setState(() {
+              //       searchAddress = val.first.addressLine;
+              //       conte.text = val.first.addressLine;
+              //     });
+              //   }
+              //   );
+              // },
+              initialCameraPosition: CameraPosition(target: center, zoom: 13),
             ),
-          ),*/
-        ],
+            /*Positioned(
+              child: Container(
+                height: 40,
+                width: double.infinity,
+                clipBehavior: Clip.hardEdge,
+                margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), color: Colors.white),
+                child: TextField(
+                  showCursor: true,
+                  controller: conte,
+                  style: TextStyle(fontSize: 10),
+                  decoration: InputDecoration(
+                    hintText: 'Enter Address',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(left: 15, top: 15),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: navigateToAddress,
+                      iconSize: 25,
+                    ),
+                  ),
+                  onEditingComplete: () {
+                    navigateToAddress();
+                  },
+                  onSubmitted: (val) {
+                    setState(() {
+                      searchAddress = val;
+                    });
+                  },
+                  onChanged: (val) {
+                    setState(() {
+                      searchAddress = val;
+                    });
+                  },
+                ),
+              ),
+            ),*/
+          ],
+        ),
       ),
     );
   }
