@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "106088369872",
+    "firebase_url": "https://carpooling-24ef2.firebaseio.com",
+    "project_id": "carpooling-24ef2",
+    "storage_bucket": "carpooling-24ef2.appspot.com"
+  },
+  "client": [{
+    "client_info": {
+      "mobilesdk_app_id": "1:106088369872:android:38b9cf154ab7615bc298d5",
+      "android_client_info": {
+        "package_name": "com.thesmallcreators.uow"
+      }
+    },
+    "oauth_client": [{
+      "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+      "client_type": 3
+    }],
+    "api_key": [{
+      "current_key": "AIzaSyBe1rIBQPQ2n_pnRYY_ew-uXD5J6z4x9oY"
+    }],
+    "services": {
+      "appinvite_service": {
+        "other_platform_oauth_client": [{
+          "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+          "client_type": 3
+        }]
+      }
+    }
+  }],
+  "configuration_version": "1"
+}

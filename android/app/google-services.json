@@ -5,7 +5,29 @@
     "project_id": "carpooling-24ef2",
     "storage_bucket": "carpooling-24ef2.appspot.com"
   },
-  "client": [
+  "client": [{
+      "client_info": {
+        "mobilesdk_app_id": "1:106088369872:android:aeff90eee0b8f108c298d5",
+        "android_client_info": {
+          "package_name": "com.example.uniteonwheels"
+        }
+      },
+      "oauth_client": [{
+        "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+        "client_type": 3
+      }],
+      "api_key": [{
+        "current_key": "AIzaSyBe1rIBQPQ2n_pnRYY_ew-uXD5J6z4x9oY"
+      }],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [{
+            "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+            "client_type": 3
+          }]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:106088369872:android:38b9cf154ab7615bc298d5",
@@ -13,25 +35,42 @@
           "package_name": "com.thesmallcreators.uow"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBe1rIBQPQ2n_pnRYY_ew-uXD5J6z4x9oY"
-        }
-      ],
+      "oauth_client": [{
+        "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+        "client_type": 3
+      }],
+      "api_key": [{
+        "current_key": "AIzaSyBe1rIBQPQ2n_pnRYY_ew-uXD5J6z4x9oY"
+      }],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": [{
+            "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+            "client_type": 3
+          }]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106088369872:android:8ad35c8b67aca561c298d5",
+        "android_client_info": {
+          "package_name": "com.uniteow.uow"
+        }
+      },
+      "oauth_client": [{
+        "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+        "client_type": 3
+      }],
+      "api_key": [{
+        "current_key": "AIzaSyBe1rIBQPQ2n_pnRYY_ew-uXD5J6z4x9oY"
+      }],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [{
+            "client_id": "106088369872-gfqb4i95f8arbekd70k1j2lcbctp98i6.apps.googleusercontent.com",
+            "client_type": 3
+          }]
         }
       }
     }
