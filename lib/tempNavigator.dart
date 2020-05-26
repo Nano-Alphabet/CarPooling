@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/home/homePage.dart';
-import 'package:uniteonwheels/planModule/createPlan.dart';
-import 'package:uniteonwheels/temp/bottomButtons.dart';
+import 'package:uow/home/homePage.dart';
+import 'package:uow/planModule/createPlan.dart';
+import 'package:uow/temp/bottomButtons.dart';
 
 import 'home/homePage2.dart';
 import 'planModule/viewPlan.dart';

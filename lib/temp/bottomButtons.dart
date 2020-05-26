@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/planModule/createPlan.dart';
-import 'package:uniteonwheels/planModule/joinPlan.dart';
+import 'package:uow/planModule/createPlan.dart';
+import 'package:uow/planModule/joinPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class BottomButtons extends StatelessWidget {

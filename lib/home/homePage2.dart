@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/temp/bottomButtons.dart';
+import 'package:uow/temp/bottomButtons.dart';
 
 class HomePage2 extends StatefulWidget {
   @override

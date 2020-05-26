@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/models/Cluster.dart';
-
-
+import 'package:uow/models/Cluster.dart';
 
 class ViewPlan extends StatelessWidget {
   final Cluster cluster;
@@ -21,7 +19,7 @@ class ViewPlan extends StatelessWidget {
             // isCornerRounded: true,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius:BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(20.0),
@@ -89,24 +87,27 @@ class ViewPlan extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ticketDetailsWidget(
-                            'First Name', cluster.adminFirstName, 'Last name', cluster.adminLastName),
+                            'First Name',
+                            cluster.adminFirstName,
+                            'Last name',
+                            cluster.adminLastName),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 12.0),
-                          child: ticketDetailsWidget('Date', cluster.date,
-                              'time', cluster.time),
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: ticketDetailsWidget(
+                              'Date', cluster.date, 'time', cluster.time),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 12.0),
+                          padding: const EdgeInsets.only(top: 12.0),
                           child: ticketDetailsWidget('Car No', cluster.carNo,
                               'Pick Up', cluster.initialLocation),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 12.0),
-                          child: ticketDetailsWidget('Car type', cluster.carType,
-                              'Drop Point', cluster.finalLocation),
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: ticketDetailsWidget(
+                              'Car type',
+                              cluster.carType,
+                              'Drop Point',
+                              cluster.finalLocation),
                         ),
                       ],
                     ),
@@ -119,7 +120,8 @@ class ViewPlan extends StatelessWidget {
                         height: 60.0,
                         child: RaisedButton(
                           onPressed: () {
-                            print("Send chat message on whatsapp no "+cluster.phoneNo);
+                            print("Send chat message on whatsapp no " +
+                                cluster.phoneNo);
                           },
                           child: Text("Send join request"),
                         )),
@@ -142,16 +144,16 @@ class ViewPlan extends StatelessWidget {
       ),
     );
   }
+
   Widget ticketDetailsWidget(String firstTitle, String firstDesc,
       String secondTitle, String secondDesc) {
     return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          
           Expanded(
-                      child: Padding(
+            child: Padding(
               padding: const EdgeInsets.only(left: 12.0),
               child: SizedBox(
                 // height: 75.0,
@@ -180,7 +182,7 @@ class ViewPlan extends StatelessWidget {
             ),
           ),
           Expanded(
-                      child: Padding(
+            child: Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: SizedBox(
                 // height: 75.0,
@@ -213,12 +215,3 @@ class ViewPlan extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-  

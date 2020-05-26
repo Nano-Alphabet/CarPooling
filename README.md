@@ -1,4 +1,4 @@
-# uniteonwheels
+# uow
 
 A new Flutter project.
 

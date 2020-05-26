@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/planModule/viewPlan.dart';
+import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 var clusters = <Cluster>[
@@ -95,7 +95,7 @@ class Cluster {
     this.adminUserID = data["adminUserID"];
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       "adminFirstName": adminFirstName,
       "adminLastName": adminLastName,

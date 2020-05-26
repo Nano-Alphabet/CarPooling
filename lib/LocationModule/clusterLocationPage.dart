@@ -4,12 +4,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uniteonwheels/models/Cluster.dart';
-import 'package:uniteonwheels/models/currentUser.dart';
+import 'package:uow/models/Cluster.dart';
+import 'package:uow/models/currentUser.dart';
 
 import 'dart:async';
 
-import 'package:uniteonwheels/provider/carPoolingProvider.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 
 //---------------- NOTE NOTE NOTE ---------------
 //-----------------------------------------------

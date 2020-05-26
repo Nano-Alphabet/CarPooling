@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uniteonwheels/LocationModule/clusterLocationPage.dart';
+import 'package:uow/LocationModule/clusterLocationPage.dart';
 
-import 'package:uniteonwheels/Notification/notificationpage.dart';
-import 'package:uniteonwheels/profile/profile.dart';
-import 'package:uniteonwheels/signInModule/signuppageruchir.dart';
-import 'package:uniteonwheels/temp/bottomButtons.dart';
-import 'package:uniteonwheels/tempNavigator.dart';
+import 'package:uow/Notification/notificationpage.dart';
+import 'package:uow/profile/profile.dart';
+import 'package:uow/signInModule/signuppageruchir.dart';
+import 'package:uow/temp/bottomButtons.dart';
+import 'package:uow/tempNavigator.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';

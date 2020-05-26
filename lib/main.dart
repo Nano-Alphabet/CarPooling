@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uniteonwheels/provider/carPoolingProvider.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 import 'home/homePage.dart';
 
 void main() => runApp(MyApp());

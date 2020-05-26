@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:uniteonwheels/models/Cluster.dart';
-import 'package:uniteonwheels/models/currentUser.dart';
+import 'package:uow/models/Cluster.dart';
+import 'package:uow/models/currentUser.dart';
 
 class CarPoolingProvider with ChangeNotifier {
   //
