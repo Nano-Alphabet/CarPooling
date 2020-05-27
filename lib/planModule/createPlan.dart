@@ -157,7 +157,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 _formKey.currentState.save();
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .setData(cluster);
-                clusters.add(cluster);
+                // clusters.add(cluster);
                 _showDialog();
                 // Navigator.push(
                 //     context,
