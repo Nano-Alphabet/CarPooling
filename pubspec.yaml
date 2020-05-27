@@ -53,8 +53,14 @@ dependencies:
   ## Location/Maps
   geolocator: #Device Location
   google_maps_flutter:
+  flutter_google_maps:
   geoflutterfire:
   geocoder:
+  
+  # --------------------------------------------------
+  ## Flutter Web 
+  flutter_for_web: ^1.0.0
+  flutter_for_web_ui: ^1.0.0
 
 dev_dependencies:
   flutter_test:

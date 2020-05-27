@@ -25,6 +25,7 @@ class CarPoolingProvider with ChangeNotifier {
   Future<String> loadClusterData() async {
     await Firestore.instance
         .collection("clusters")
+        .where("time")
         .getDocuments()
         .then((value) {
       value.documents.forEach((element) {

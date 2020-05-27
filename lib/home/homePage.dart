@@ -124,6 +124,8 @@ class _HomePageState extends State<HomePage> {
             ClusterLocationPage(),
             Positioned(
                 top: 25,
+                left: 0,
+                right: 0,
                 child: SearchBar(
                   scaffoldKey: _scaffoldKey,
                 )),
@@ -255,34 +257,49 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
-        child: Flex(
-          direction: Axis.horizontal,
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width * 0.1,
+      child: FittedBox(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Material(
+              color: Colors.indigo, // button color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    bottomLeft: Radius.circular(50)),
+              ),
               elevation: 5,
-              borderRadius: BorderRadius.circular(15),
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.amberAccent,
+                    ),
+                    onPressed: () {
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                  )),
+            ),
+            Material(
+              elevation: 5,
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.7,
                 clipBehavior: Clip.hardEdge,
+                width: MediaQuery.of(context).size.width * 0.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border(),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      bottomLeft: Radius.circular(50)),
                 ),
                 child: TextField(
                   showCursor: true,
                   style: TextStyle(fontSize: 15),
                   keyboardType: TextInputType.text,
                   autofocus: false,
-                  autofillHints: ["Indore", "IIT Simrol"],
                   maxLines: 1,
                   readOnly: isReadOnly,
                   onTap: () {
@@ -295,15 +312,6 @@ class _SearchBarState extends State<SearchBar> {
                     hintText: 'Enter Address',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(left: 10, top: 15),
-                    prefixIcon: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        _scaffoldKey.currentState.openDrawer();
-                      },
-                    ),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       onPressed: () {},

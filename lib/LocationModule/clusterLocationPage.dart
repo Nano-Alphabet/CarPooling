@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_maps/flutter_google_maps.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uow/models/Cluster.dart';
@@ -30,17 +30,18 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
   @override
   void initState() {
     super.initState();
-    _getLocation();
+    //_getLocation();
     _setMarkers();
   }
 
-  GoogleMapController mapController;
-  LatLng center = LatLng(22.528380, 75.920596);
+  GeoCoord center = GeoCoord(22.528380, 75.920596);
   String searchAddress;
   bool isNormalMap = true;
   TextEditingController conte = TextEditingController();
 
   List<Marker> markers = [];
+
+  GlobalKey<GoogleMapStateBase> _key = GlobalKey<GoogleMapStateBase>();
 
   _setMarkers() async {
     //widget.shopList.forEach((element) {
@@ -64,33 +65,25 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
     pos = Position(latitude: lat, longitude: lng);
     if (pos.latitude != null)
       setState(() {
-        center = LatLng(pos.latitude, pos.longitude);
+        center = GeoCoord(pos.latitude, pos.longitude);
       });
     return pos;
   }
 
   void _add(Cluster cluster) async {
-    final MarkerId markerId = MarkerId(cluster.clusterID);
     //print(address);
-    LatLng center =
-        LatLng(cluster.geoPoint.latitude, cluster.geoPoint.longitude);
+    var center =
+        GeoCoord(cluster.geoPoint.latitude, cluster.geoPoint.longitude);
 
     if (center == null) return;
     // creating a new MARKER
     final Marker marker = Marker(
-      onTap: () {
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(target: center, zoom: 16)));
-      },
-      markerId: markerId,
-      icon: BitmapDescriptor.defaultMarker,
-      position: center,
-      infoWindow: InfoWindow(
-          title: cluster.finalLocation,
-          snippet: cluster.adminFirstName.toString(),
-          onTap: () {
-            //TODO Navigate to DEtails page
-          }),
+      center,
+      infoSnippet: "saas bahu",
+      onTap: (str) {},
+      onInfoWindowTap: () {},
+      label: cluster.finalLocation,
+      info: cluster.finalLocation,
     );
 
     setState(() {
@@ -111,60 +104,38 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
         child: Stack(
           children: <Widget>[
             GoogleMap(
-              onMapCreated: (controller) async {
-                setState(() {
-                  mapController = controller;
-                });
-                CurrentUser _user =
-                    Provider.of<CarPoolingProvider>(context).user;
-                setState(() {
-                  markers.add(Marker(
-                    onTap: () {
-                      mapController.animateCamera(
-                          CameraUpdate.newCameraPosition(CameraPosition(
-                              target: LatLng(_user.lat, _user.lng), zoom: 16)));
-                    },
-                    markerId: MarkerId(_user.userName),
-                    icon: BitmapDescriptor.defaultMarkerWithHue(
-                        BitmapDescriptor.hueBlue),
-                    position: LatLng(_user.lat, _user.lng),
-                    infoWindow: InfoWindow(
-                      title: _user.userName,
-                    ),
-                  ));
-                  mapController.animateCamera(CameraUpdate.newCameraPosition(
-                      CameraPosition(
-                          target: LatLng(_user.lat, _user.lng), zoom: 16)));
-                });
-              },
-              compassEnabled: true,
-              mapToolbarEnabled: true,
-              myLocationButtonEnabled: true,
-              myLocationEnabled: true,
-
-              buildingsEnabled: true,
-              padding: EdgeInsets.only(top: 100),
+              key: _key,
+              interactive: true,
+              initialZoom: 13,
+              initialPosition: center,
+              mobilePreferences: MobileMapPreferences(
+                rotateGesturesEnabled: true,
+                scrollGesturesEnabled: true,
+                zoomGesturesEnabled: true,
+                tiltGesturesEnabled: true,
+                compassEnabled: true,
+                mapToolbarEnabled: true,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+                indoorViewEnabled: true,
+                trafficEnabled: true,
+                buildingsEnabled: true,
+              ),
+              webPreferences: WebMapPreferences(
+                  panControl: true,
+                  overviewMapControl: true,
+                  rotateControl: true,
+                  scaleControl: true,
+                  zoomControl: true,
+                  dragGestures: true,
+                  scrollwheel: true),
               markers: Set<Marker>.of(markers),
-              mapType: isNormalMap ? MapType.normal : MapType.hybrid,
-              onCameraMove: (camPos) {
+              mapType: isNormalMap ? MapType.roadmap : MapType.hybrid,
+              onTap: (camPos) {
                 setState(() {
-                  center = camPos.target;
+                  center = camPos;
                 });
               },
-
-              // onTap: (latLng0) {
-              //   Geocoder.local
-              //       .findAddressesFromCoordinates(
-              //           Coordinates(center.latitude, center.longitude))
-              //       .then((val) {
-              //     setState(() {
-              //       searchAddress = val.first.addressLine;
-              //       conte.text = val.first.addressLine;
-              //     });
-              //   }
-              //   );
-              // },
-              initialCameraPosition: CameraPosition(target: center, zoom: 13),
             ),
             /*Positioned(
               child: Container(
@@ -211,11 +182,6 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
   }
 
   void navigateToAddress() {
-    Geolocator().placemarkFromAddress(conte.text).then((val) {
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target:
-              LatLng(val.first.position.latitude, val.first.position.longitude),
-          zoom: 14)));
-    });
+    Geolocator().placemarkFromAddress(conte.text).then((val) {});
   }
 }
