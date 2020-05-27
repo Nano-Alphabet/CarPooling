@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uow/models/request.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -11,7 +12,7 @@ var clusters = <Cluster>[
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
     cost: "2000 Rs",
-    noOfPassengers: "2",
+    noOfPassengers: 2,
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
@@ -25,7 +26,7 @@ var clusters = <Cluster>[
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
     cost: "2000 Rs",
-    noOfPassengers: "2",
+    noOfPassengers: 2,
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
@@ -39,7 +40,7 @@ var clusters = <Cluster>[
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
     cost: "2000 Rs",
-    noOfPassengers: "2",
+    noOfPassengers: 2,
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
@@ -57,7 +58,7 @@ class Cluster {
   String finalLocation;
   String phoneNo;
   String cost;
-  String noOfPassengers;
+  int noOfPassengers;
   String carNo;
   String carType;
   int leavingTime;
@@ -65,6 +66,24 @@ class Cluster {
   String adminUserID;
 
   GeoPoint geoPoint;
+  Map<String, Request> requests = {};
+  int get pWatingRequest {
+    int count = 0;
+    requests.forEach((key, value) {
+      if (!value.isAccepted) count++;
+    });
+    return count;
+  }
+
+  int get pApprovedRequest {
+    int count = 0;
+    requests.forEach((key, value) {
+      if (value.isAccepted) count++;
+    });
+    return count;
+  }
+
+  DateTime get pLeavingTime => DateTime.fromMillisecondsSinceEpoch(leavingTime);
 
   Cluster(
       {this.adminFirstName,
@@ -87,12 +106,15 @@ class Cluster {
     this.finalLocation = data["finalLocation"] ?? "";
     this.phoneNo = data["phoneNo"] ?? "";
     this.cost = data["cost"] ?? "";
-    this.noOfPassengers = data["noOfPassengers"] ?? "";
+    this.noOfPassengers = data["noOfPassengers"] ?? 1;
     this.carNo = data["carNo"] ?? "";
     this.carType = data["carType"] ?? "";
     this.leavingTime = data["leavingTime"] ?? "";
     this.date = data["date"] ?? "";
     this.adminUserID = data["adminUserID"] ?? "";
+    (data["requests"] ?? {}).forEach((key, value) {
+      this.requests.addAll({key: Request.fromMap(value)});
+    });
   }
 
   Map<String, dynamic> toMap() {

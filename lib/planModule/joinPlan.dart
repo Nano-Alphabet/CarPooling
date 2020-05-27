@@ -19,7 +19,7 @@ class JoinPlan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map clusters = Provider.of<CarPoolingProvider>(context).clustersMap;
+    Map clusters = Provider.of<CarPoolingProvider>(context).globalClustersMap;
     clusters.forEach((key, value) {
       plans.add(ClusterCard(cluster: value));
     });

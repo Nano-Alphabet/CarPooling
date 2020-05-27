@@ -7,7 +7,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CurrentUser user =
-        Provider.of<CarPoolingProvider>(context, listen: false).user;
+        Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.teal[900],
                     ),
                     title: Text(
-                      user.userName,
+                      user.userFirstName,
                       style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                     ),
                   )),

@@ -6,21 +6,21 @@ import 'package:velocity_x/velocity_x.dart';
 
 var requests = <Request>[
   Request(
-    adminUserID: "12345",
+    requestUserID: "12345",
     clusterID: "",
-    isAccepted: "false",
+    isAccepted: false,
     phoneNo: "1234567890",
   ),
   Request(
-    adminUserID: "12345",
+    requestUserID: "12345",
     clusterID: "",
-    isAccepted: "false",
+    isAccepted: false,
     phoneNo: "1234567890",
   ),
   Request(
-    adminUserID: "12345",
+    requestUserID: "12345",
     clusterID: "",
-    isAccepted: "false",
+    isAccepted: false,
     phoneNo: "1234567890",
   ),
 ];
@@ -28,34 +28,25 @@ var requests = <Request>[
 class Request {
   //  For the time being, I am keeping all of these as strings
   String clusterID;
-  // String adminFirstName;
-  // String adminLastName;
-  // String initialLocation;
-  // String finalLocation;
   String phoneNo;
-  // String cost;
-  // String noOfPassengers;
-  // String carNo;
-  // String carType;
-  // String time;
-  // String date;
-  String adminUserID;
-  String isAccepted;
+  String requestUserID;
+  String requestUserName;
+  bool isAccepted;
 
-  GeoPoint geoPoint;
-
-  Request({this.adminUserID, this.clusterID, this.isAccepted, this.phoneNo});
+  Request({this.requestUserID, this.clusterID, this.isAccepted, this.phoneNo});
 
   Request.fromMap(Map data) {
-    this.adminUserID = data["adminUserID"] ?? "";
+    this.requestUserID = data["requestUserID"] ?? "";
     this.clusterID = data["clusterID"] ?? "";
-    this.isAccepted = data["isAccepted"] ?? "false";
+    this.isAccepted = data["isAccepted"] ?? false;
     this.phoneNo = data["phoneNo"] ?? "";
+    this.requestUserName = data["requestUserName"] ?? "";
   }
 
   Map<String, dynamic> toMap() {
     return {
-      "adminUserID": adminUserID,
+      "adminUserID": requestUserID,
+      "requestUserName": requestUserName,
       "clusterID": clusterID,
       "isAccepted": isAccepted,
       "phoneNo": phoneNo,

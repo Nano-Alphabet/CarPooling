@@ -57,11 +57,11 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   Cluster cluster = Cluster();
   @override
   Widget build(BuildContext context) {
-    cluster = Provider.of<CarPoolingProvider>(context).clustersMap["ID"];
     return Form(
       key: _formKey,
       child: ListView(
         children: <Widget>[
+          //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
           FormField(
             labelText: "First Name",
             initVal: cluster.adminFirstName,
@@ -115,7 +115,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             labelText: "Number of Passengers",
             validator: (String value) {},
             onSaved: (String value) {
-              cluster.noOfPassengers = value;
+              cluster.noOfPassengers = int.parse(value);
             },
           ),
           FormField(
@@ -159,7 +159,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 Provider.of<CarPoolingProvider>(context, listen: false)
-                    .setData(cluster);
+                    .createClusterData(cluster);
                 // clusters.add(cluster);
                 _showDialog();
                 // Navigator.push(

@@ -7,22 +7,20 @@ class ViewPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: FlatButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: SizedBox(
-            width: 350.0,
-            height: 550.0,
-            // isCornerRounded: true,
+      backgroundColor: Colors.black12,
+      body: SafeArea(
+        child: Center(
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(20.0),
+              margin: const EdgeInsets.all(20.0).copyWith(top: 50, bottom: 50),
               // color: Colors.white,
               child: ListView(
                 // crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,8 +115,34 @@ class ViewPlan extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 80.0, left: 30.0, right: 30.0),
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: cluster.noOfPassengers,
+                      children: [
+                        for (var i = 0;
+                            i <
+                                (cluster.noOfPassengers -
+                                    cluster.pApprovedRequest);
+                            i++)
+                          Icon(
+                            Icons.event_seat,
+                            color: Colors.green[200],
+                            size: 35,
+                          ),
+                        for (var i = 0; i < cluster.pApprovedRequest; i++)
+                          Icon(
+                            Icons.event_seat,
+                            size: 35,
+                            color: Colors.orange,
+                          ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 0, left: 30.0, right: 30.0),
                     child: Container(
                         width: 250.0,
                         height: 60.0,

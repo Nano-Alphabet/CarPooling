@@ -94,8 +94,8 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
   @override
   Widget build(BuildContext context) {
     markers = [];
-    Map clusters =
-        Provider.of<CarPoolingProvider>(context, listen: false).clustersMap;
+    Map clusters = Provider.of<CarPoolingProvider>(context, listen: false)
+        .globalClustersMap;
     clusters.values.forEach((element) {
       //_add(element);
     });
@@ -109,18 +109,18 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
               initialZoom: 13,
               initialPosition: center,
               mobilePreferences: MobileMapPreferences(
-                rotateGesturesEnabled: true,
-                scrollGesturesEnabled: true,
-                zoomGesturesEnabled: true,
-                tiltGesturesEnabled: true,
-                compassEnabled: true,
-                mapToolbarEnabled: true,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                indoorViewEnabled: true,
-                trafficEnabled: true,
-                buildingsEnabled: true,
-              ),
+                  rotateGesturesEnabled: true,
+                  scrollGesturesEnabled: true,
+                  zoomGesturesEnabled: true,
+                  tiltGesturesEnabled: true,
+                  compassEnabled: true,
+                  mapToolbarEnabled: true,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  indoorViewEnabled: true,
+                  trafficEnabled: true,
+                  buildingsEnabled: true,
+                  padding: EdgeInsets.only(top: 100)),
               webPreferences: WebMapPreferences(
                   panControl: true,
                   overviewMapControl: true,
