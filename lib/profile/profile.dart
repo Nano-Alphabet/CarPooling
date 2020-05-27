@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uow/models/currentUser.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CurrentUser user =
+        Provider.of<CarPoolingProvider>(context, listen: false).user;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -32,8 +37,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
 
-
-            // Welcome text, currently not needed
+              // Welcome text, currently not needed
 
               // Text(
               //   'Welcome',
@@ -62,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.teal[900],
                     ),
                     title: Text(
-                      'First Name',
+                      user.userName,
                       style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                     ),
                   )),

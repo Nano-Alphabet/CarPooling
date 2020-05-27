@@ -57,12 +57,14 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   Cluster cluster = Cluster();
   @override
   Widget build(BuildContext context) {
+    cluster = Provider.of<CarPoolingProvider>(context).clustersMap["ID"];
     return Form(
       key: _formKey,
       child: ListView(
         children: <Widget>[
           FormField(
             labelText: "First Name",
+            initVal: cluster.adminFirstName,
             validator: (String value) {
               if (value.isEmpty) {
                 return 'Please enter your name';
@@ -84,7 +86,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             labelText: "Pickup Point",
             validator: (String value) {},
             onSaved: (String value) {
-              cluster.initialLocation = value;
+              cluster.initialLocation =
+                  value; //TODO NAvigate to Slect Location Page
             },
           ),
           FormField(
@@ -134,7 +137,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             validator: (String value) {},
             onSaved: (String value) {
               cluster.time = value;
-            },
+            }, //TODO ADD DATE TIME PICKER
           ),
           FormField(
             labelText: "Date",
@@ -157,7 +160,6 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 _formKey.currentState.save();
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .setData(cluster);
-                clusters.add(cluster);
                 _showDialog();
                 // Navigator.push(
                 //     context,
@@ -183,11 +185,13 @@ class FormField extends StatelessWidget {
   final String labelText;
   final Function validator;
   final Function onSaved;
+  final String initVal;
 
   FormField({
     this.labelText,
     this.validator,
     this.onSaved,
+    this.initVal,
   });
   @override
   Widget build(BuildContext context) {
@@ -195,6 +199,7 @@ class FormField extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
         cursorColor: Colors.greenAccent,
+        initialValue: "ahhgs",
         style: TextStyle(fontSize: 20),
         decoration: InputDecoration(
           labelText: labelText,

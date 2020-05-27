@@ -11,6 +11,7 @@ class CarPoolingProvider with ChangeNotifier {
   *CLUSTERS key: unique cluster ID
   *this will help us in accessing clusters more effectively*/
   Map<String, Cluster> clustersMap = {};
+  Map<String, Cluster> clustersHistoryMap = {};
 
   //
   //INIT -----------------------------
