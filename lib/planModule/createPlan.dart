@@ -136,8 +136,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             labelText: "Time",
             validator: (String value) {},
             onSaved: (String value) {
-              cluster.time = value;
-            }, //TODO ADD DATE TIME PICKER
+              cluster.leavingTime = 125; // Needs Milliseconds since epoches
+            }, //TODO! ADD DATE TIME PICKER
           ),
           FormField(
             labelText: "Date",
@@ -160,6 +160,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 _formKey.currentState.save();
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .setData(cluster);
+                // clusters.add(cluster);
                 _showDialog();
                 // Navigator.push(
                 //     context,

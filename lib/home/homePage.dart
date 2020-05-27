@@ -255,94 +255,96 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(10),
-      child: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Material(
-            elevation: 5,
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    bottomLeft: Radius.circular(50)),
-              ),
-              child: TextField(
-                showCursor: true,
-                style: TextStyle(fontSize: 15),
-                keyboardType: TextInputType.text,
-                autofocus: false,
-                autofillHints: ["Indore", "IIT Simrol"],
-                maxLines: 1,
-                readOnly: isReadOnly,
-                onTap: () {
-                  print("object");
-                  setState(() {
-                    isReadOnly = !isReadOnly;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Enter Address',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 10, top: 15),
-                  prefixIcon: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black,
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
+        child: Flex(
+          direction: Axis.horizontal,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Material(
+              elevation: 5,
+              borderRadius: BorderRadius.circular(15),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      bottomLeft: Radius.circular(50)),
+                ),
+                child: TextField(
+                  showCursor: true,
+                  style: TextStyle(fontSize: 15),
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  autofillHints: ["Indore", "IIT Simrol"],
+                  maxLines: 1,
+                  readOnly: isReadOnly,
+                  onTap: () {
+                    print("object");
+                    setState(() {
+                      isReadOnly = !isReadOnly;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Enter Address',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(left: 10, top: 15),
+                    prefixIcon: IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        _scaffoldKey.currentState.openDrawer();
+                      },
                     ),
-                    onPressed: () {
-                      _scaffoldKey.currentState.openDrawer();
-                    },
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {},
+                      iconSize: 25,
+                    ),
                   ),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {},
-                    iconSize: 25,
-                  ),
-                ),
-                onEditingComplete: () {},
-                onSubmitted: (val) {
-                  setState(() {});
-                },
-                onChanged: (val) {
-                  setState(() {});
-                },
-              ),
-            ),
-          ),
-          Material(
-            color: Colors.indigo, // button color
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  bottomRight: Radius.circular(50)),
-            ),
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notification_important,
-                  color: Colors.amberAccent,
-                  size: 35,
-                ),
-                onPressed: () => showDialog(
-                  context: context,
-                  child: _dialogBuilder(),
+                  onEditingComplete: () {},
+                  onSubmitted: (val) {
+                    setState(() {});
+                  },
+                  onChanged: (val) {
+                    setState(() {});
+                  },
                 ),
               ),
             ),
-          ),
-        ],
+            Material(
+              color: Colors.indigo, // button color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(50),
+                    bottomRight: Radius.circular(50)),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.notification_important,
+                    color: Colors.amberAccent,
+                    size: 35,
+                  ),
+                  onPressed: () => showDialog(
+                    context: context,
+                    child: _dialogBuilder(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

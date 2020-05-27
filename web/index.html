@@ -16,6 +16,31 @@
 
   <title>uow</title>
   <link rel="manifest" href="manifest.json">
+   <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-firestore.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyC1mieKRiTaPf0LAaoVx0slRNTQ5JSUbaU",
+    authDomain: "carpooling-24ef2.firebaseapp.com",
+    databaseURL: "https://carpooling-24ef2.firebaseio.com",
+    projectId: "carpooling-24ef2",
+    storageBucket: "carpooling-24ef2.appspot.com",
+    messagingSenderId: "106088369872",
+    appId: "1:106088369872:web:94a16a695a98fddbc298d5",
+    measurementId: "G-BLS61MVEFM"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to

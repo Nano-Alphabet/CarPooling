@@ -1,114 +1,64 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-var clusters = <Cluster>[
-  Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
-    initialLocation: "IIT Indore",
-    finalLocation: "Bhawarkuan/IT Park",
-    phoneNo: "1234567890",
-    cost: "2000 Rs",
-    noOfPassengers: "2",
-    carNo: "AB12 CD3456",
-    carType: "Sedan",
-    leavingTime: 125,
-    date: "24-12-25",
+var requests = <Request>[
+  Request(
     adminUserID: "12345",
+    clusterID: "",
+    isAccepted: "false",
+    phoneNo: "1234567890",
   ),
-  Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
-    initialLocation: "IIT Indore",
-    finalLocation: "Bhawarkuan/IT Park",
-    phoneNo: "1234567890",
-    cost: "2000 Rs",
-    noOfPassengers: "2",
-    carNo: "AB12 CD3456",
-    carType: "Sedan",
-    leavingTime: 125,
-    date: "24-12-25",
+  Request(
     adminUserID: "12345",
+    clusterID: "",
+    isAccepted: "false",
+    phoneNo: "1234567890",
   ),
-  Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
-    initialLocation: "IIT Indore",
-    finalLocation: "Bhawarkuan/IT Park",
-    phoneNo: "1234567890",
-    cost: "2000 Rs",
-    noOfPassengers: "2",
-    carNo: "AB12 CD3456",
-    carType: "Sedan",
-    leavingTime: 125,
-    date: "24-12-25",
+  Request(
     adminUserID: "12345",
-  )
+    clusterID: "",
+    isAccepted: "false",
+    phoneNo: "1234567890",
+  ),
 ];
 
-class Cluster {
+class Request {
   //  For the time being, I am keeping all of these as strings
   String clusterID;
-  String adminFirstName;
-  String adminLastName;
-  String initialLocation;
-  String finalLocation;
+  // String adminFirstName;
+  // String adminLastName;
+  // String initialLocation;
+  // String finalLocation;
   String phoneNo;
-  String cost;
-  String noOfPassengers;
-  String carNo;
-  String carType;
-  int leavingTime;
-  String date;
+  // String cost;
+  // String noOfPassengers;
+  // String carNo;
+  // String carType;
+  // String time;
+  // String date;
   String adminUserID;
+  String isAccepted;
 
   GeoPoint geoPoint;
 
-  Cluster(
-      {this.adminFirstName,
-      this.adminLastName,
-      this.initialLocation,
-      this.finalLocation,
-      this.phoneNo,
-      this.cost,
-      this.noOfPassengers,
-      this.carNo,
-      this.carType,
-      this.leavingTime,
-      this.date,
-      this.adminUserID});
+  Request({this.adminUserID, this.clusterID, this.isAccepted, this.phoneNo});
 
-  Cluster.fromMap(Map data) {
-    this.adminFirstName = data["adminFirstName"] ?? "";
-    this.adminLastName = data["adminLastName"] ?? "...";
-    this.initialLocation = data["initialLocation"] ?? "";
-    this.finalLocation = data["finalLocation"] ?? "";
-    this.phoneNo = data["phoneNo"] ?? "";
-    this.cost = data["cost"] ?? "";
-    this.noOfPassengers = data["noOfPassengers"] ?? "";
-    this.carNo = data["carNo"] ?? "";
-    this.carType = data["carType"] ?? "";
-    this.leavingTime = data["leavingTime"] ?? "";
-    this.date = data["date"] ?? "";
+  Request.fromMap(Map data) {
     this.adminUserID = data["adminUserID"] ?? "";
+    this.clusterID = data["clusterID"] ?? "";
+    this.isAccepted = data["isAccepted"] ?? "false";
+    this.phoneNo = data["phoneNo"] ?? "";
   }
 
   Map<String, dynamic> toMap() {
     return {
-      "adminFirstName": adminFirstName,
-      "adminLastName": adminLastName,
-      "initialLocation": initialLocation,
-      "finalLocation": finalLocation,
-      "phoneNo": phoneNo,
-      "cost": cost,
-      "noOfPassengers": noOfPassengers,
-      "carNo": carNo,
-      "carType": carType,
-      "leavingTime": leavingTime,
-      "date": date,
       "adminUserID": adminUserID,
+      "clusterID": clusterID,
+      "isAccepted": isAccepted,
+      "phoneNo": phoneNo,
     };
   }
 }
@@ -207,19 +157,3 @@ class ClusterCard extends StatelessWidget {
     );
   }
 }
-
-// class ClusterCard extends StatefulWidget {
-//   @override
-//   _ClusterCardState createState() => _ClusterCardState();
-// }
-
-// class _ClusterCardState extends State<ClusterCard> {
-//   Cluster cluster;
-//   _ClusterCard(this.cluster);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-
-//     );
-//   }
-// }

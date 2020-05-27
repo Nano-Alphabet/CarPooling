@@ -94,7 +94,11 @@ class ViewPlan extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
                           child: ticketDetailsWidget(
-                              'Date', cluster.date, 'time', cluster.time),
+                              'Date',
+                              cluster.date,
+                              'time',
+                              cluster.leavingTime
+                                  .toString()), //TODO Add datetime string
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
