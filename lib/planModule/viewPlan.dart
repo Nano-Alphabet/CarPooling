@@ -8,11 +8,10 @@ import 'package:uow/provider/carPoolingProvider.dart';
 class ViewPlan extends StatelessWidget {
   final Cluster cluster;
   final String clusterID;
-  ViewPlan({this.cluster, this.clusterID});
+  final bool showButton;
+  ViewPlan({this.cluster, this.clusterID, @required this.showButton});
   @override
   Widget build(BuildContext context) {
-    CurrentUser user =
-        Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
     return Scaffold(
       backgroundColor: Colors.black12,
       body: SafeArea(
@@ -121,52 +120,52 @@ class ViewPlan extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: cluster.noOfPassengers,
+                  SizedBox(
+                    height: 100,
+                    child: Flex(
+                      direction: Axis.horizontal,
                       children: [
                         for (var i = 0;
                             i <
                                 (cluster.noOfPassengers -
                                     cluster.pApprovedRequest);
                             i++)
-                          Icon(
-                            Icons.event_seat,
-                            color: Colors.green[200],
-                            size: 35,
+                          Expanded(
+                            child: Icon(
+                              Icons.event_seat,
+                              color: Colors.green[200],
+                              size: 35,
+                            ),
                           ),
                         for (var i = 0; i < cluster.pApprovedRequest; i++)
-                          Icon(
-                            Icons.event_seat,
-                            size: 35,
-                            color: Colors.orange,
+                          Expanded(
+                            child: Icon(
+                              Icons.event_seat,
+                              size: 35,
+                              color: Colors.orange,
+                            ),
                           ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 0, left: 30.0, right: 30.0),
-                    child: Container(
-                        width: 250.0,
-                        height: 60.0,
-                        child: RaisedButton(
-                          onPressed: () {
-                            Request request;
-                            request.clusterID=clusterID;
-                            request.phoneNo=user.phoneNo;
-                            request.requestUserID="NoId";
-                            request.requestUserName=user.userFirstName+" "+user.userLastName;
-                            request.isAccepted=false;
-                            print("Send chat message on whatsapp no " +
-                                cluster.phoneNo);
-                          },
-                          child: Text("Send join request"),
-                        )),
-                  ),
+                  showButton
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              top: 0, left: 30.0, right: 30.0),
+                          child: Container(
+                              width: 250.0,
+                              height: 60.0,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  Provider.of<CarPoolingProvider>(context,
+                                          listen: false)
+                                      .createClusterJoinRequest(
+                                          clusterId: cluster.clusterID);
+                                },
+                                child: Text("Send join request"),
+                              )),
+                        )
+                      : Container(),
                   // Padding(
                   //   padding: const EdgeInsets.only(
                   //       top: 10.0, left: 75.0, right: 75.0),

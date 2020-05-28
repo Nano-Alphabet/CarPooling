@@ -109,7 +109,7 @@ class Cluster {
     this.noOfPassengers = data["noOfPassengers"] ?? 1;
     this.carNo = data["carNo"] ?? "";
     this.carType = data["carType"] ?? "";
-    this.leavingTime = data["leavingTime"] ?? "";
+    this.leavingTime = data["leavingTime"] ?? 0;
     this.date = data["date"] ?? "";
     this.adminUserID = data["adminUserID"] ?? "";
     (data["requests"] ?? {}).forEach((key, value) {
@@ -218,6 +218,7 @@ class ClusterCard extends StatelessWidget {
                         builder: (BuildContext context) => ViewPlan(
                               cluster: cluster,
                               clusterID: clusterID,
+                              showButton: true,
                             )));
               },
               child: Icon(

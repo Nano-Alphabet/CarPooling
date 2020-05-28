@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Stack(
           children: <Widget>[
-            ClusterLocationPage(),
+            // ClusterLocationPage(),
             Positioned(
                 top: 25,
                 left: 0,
@@ -150,7 +150,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
 final String server =
     debugDefaultTargetPlatformOverride == TargetPlatform.android
         ? "10.0.2.2"
@@ -165,12 +164,14 @@ Widget setUpAlertDialoadBox() {
     });
     return requestsArray;
   }
+
   return Scrollbar(
     child: Container(
-      height: 200,
-      width: 60,
-    child: ListView(children: addRequests(),)
-    ),
+        height: 200,
+        width: 60,
+        child: ListView(
+          children: addRequests(),
+        )),
   );
 }
 

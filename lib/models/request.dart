@@ -19,7 +19,6 @@ var requests = <Request>[
     isAccepted: false,
     phoneNo: "1234567890",
     requestUserName: "Harry Potter",
-
   ),
   Request(
     requestUserID: "12345",
@@ -58,8 +57,16 @@ class Request {
   String requestUserID;
   String requestUserName;
   bool isAccepted;
+  String clusterAdminId;
+  String requestId;
+  int requestTime;
 
-  Request({this.requestUserID, this.clusterID, this.isAccepted, this.phoneNo, this.requestUserName});
+  Request(
+      {this.requestUserID,
+      this.clusterID,
+      this.isAccepted,
+      this.phoneNo,
+      this.requestUserName});
 
   Request.fromMap(Map data) {
     this.requestUserID = data["requestUserID"] ?? "";
@@ -67,6 +74,9 @@ class Request {
     this.isAccepted = data["isAccepted"] ?? false;
     this.phoneNo = data["phoneNo"] ?? "";
     this.requestUserName = data["requestUserName"] ?? "";
+    this.clusterAdminId = data["clusterAdminId"] ?? "";
+    this.requestId = data["requestId"];
+    this.requestTime = data["requestTime"];
   }
 
   Map<String, dynamic> toMap() {
@@ -76,6 +86,9 @@ class Request {
       "clusterID": clusterID,
       "isAccepted": isAccepted,
       "phoneNo": phoneNo,
+      "clusterAdminId": clusterAdminId,
+      "requestId": requestId,
+      "requestTime": requestTime,
     };
   }
 }
@@ -87,45 +100,48 @@ class RequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    height: 100,
-    margin: EdgeInsets.all(1),
-    color: Colors.blue[50],
-    padding: const EdgeInsets.only(right: 20.0),
-    alignment: Alignment.center,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            request.requestUserName,
-            style:
-                Theme.of(context).textTheme.headline5.apply(color: Colors.black),
+      height: 100,
+      margin: EdgeInsets.all(1),
+      color: Colors.blue[50],
+      padding: const EdgeInsets.only(right: 20.0),
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              request.requestUserName,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .apply(color: Colors.black),
+            ),
           ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Wrap(
-            children: [
-              FlatButton(
-                color: Colors.lightGreenAccent,
-                onPressed: () {
-                  FlutterOpenWhatsapp.sendSingleMessage("+91"+request.phoneNo, "Hello Brother");
-                  // Navigator.of(context).pop();
-                },
-                child: const Text('WhatsChat'),
-              ),
-              5.widthBox,
-              RaisedButton(
-                color: Colors.lightBlue,
-                onPressed: () {},
-                child: const Text('ALLOW'),
-              )
-            ],
+          Align(
+            alignment: Alignment.centerRight,
+            child: Wrap(
+              children: [
+                FlatButton(
+                  color: Colors.lightGreenAccent,
+                  onPressed: () {
+                    FlutterOpenWhatsapp.sendSingleMessage(
+                        "+91" + request.phoneNo, "Hello Brother");
+                    // Navigator.of(context).pop();
+                  },
+                  child: const Text('WhatsChat'),
+                ),
+                5.widthBox,
+                RaisedButton(
+                  color: Colors.lightBlue,
+                  onPressed: () {},
+                  child: const Text('ALLOW'),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }

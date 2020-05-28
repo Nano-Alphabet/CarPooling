@@ -9,8 +9,6 @@ class CarPoolingProvider with ChangeNotifier {
   //
   //VARIABLES -------------------------
   CurrentUser currentUser;
-  
-
 
   /*
   *CLUSTERS key: unique cluster ID
@@ -20,11 +18,14 @@ class CarPoolingProvider with ChangeNotifier {
   Map<String, Request> requestsMap = {};
   Map<String, Request> myRequestHistoryMap = {};
 
-
   //
   //INIT -----------------------------
   CarPoolingProvider() {
-    
+    currentUser = CurrentUser.fromMap({});
+    currentUser.getCurrentUser();
+    currentUser.uid = "A12";
+    currentUser.userFirstName = "myFirstName";
+    currentUser.userLastName = "myLastName";
     loadGlobalClusterData(force: true);
     loadMyClustersHistoryData(force: true);
   }
@@ -36,28 +37,26 @@ class CarPoolingProvider with ChangeNotifier {
     if (force || globalClustersMap.length == 0)
       await Firestore.instance
           .collection("clusters")
-          .where("leavingTime",
+          /*.where("leavingTime",
               isGreaterThan: DateTime.now()
                   .subtract(Duration(hours: 3))
-                  .millisecondsSinceEpoch)
+                  .millisecondsSinceEpoch)*/
           .getDocuments()
           .then((value) {
         value.documents.forEach((element) {
           globalClustersMap.addAll({
             element.documentID: Cluster.fromMap(element.data),
           });
+          globalClustersMap[element.documentID].clusterID = element.documentID;
           // clusters.add(Cluster.fromMap(element.data)); //TODO remove
+          print("Data Loaded from firebase");
           notifyListeners();
         });
       });
-    print("Data Loaded from firebase");
     return "done";
   }
 
   Future<String> loadMyClustersHistoryData({bool force = false}) async {
-    currentUser.uid="A12";
-    currentUser.userFirstName="myFirstName";
-    currentUser.userLastName="myLastName";
     if (force || myClustersHistoryMap.length == 0)
       await Firestore.instance
           .collection("clusters")
@@ -98,6 +97,7 @@ class CarPoolingProvider with ChangeNotifier {
     if (force || myClustersHistoryMap[clusterId] != null)
       await Firestore.instance
           .collection("request")
+          .where("clusterAdminId", isEqualTo: currentUser.uid)
           .getDocuments()
           .then((value) {
         value.documents.forEach((element) {
@@ -146,15 +146,24 @@ class CarPoolingProvider with ChangeNotifier {
   // }
 
   // other version with separate request table
-  Future<String> createClusterJoinRequest(
-      {Request request}) async {
+  Future<String> createClusterJoinRequest({@required String clusterId}) async {
+    Request request = Request.fromMap({});
+    request.isAccepted = false;
+    request.phoneNo = currentUser.phoneNo;
+    request.requestUserID = currentUser.uid;
+    request.requestUserName = currentUser.userFirstName.toString() +
+        " " +
+        currentUser.userLastName.toString();
+    request.requestTime = DateTime.now().millisecondsSinceEpoch;
+    request.clusterID = clusterId;
+    request.clusterAdminId = globalClustersMap[clusterId].adminUserID;
+
     DocumentReference docRef = await Firestore.instance
         .collection("request")
         .add(request.toMap())
         .catchError(onError);
-
+    request.requestId = docRef.documentID;
     myRequestHistoryMap[docRef.documentID] = request;
-    // globalClustersMap[docRef.documentID] = cluster;
     notifyListeners();
     print("Request uploaded to firebase");
     return "done";
