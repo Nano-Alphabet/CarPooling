@@ -208,7 +208,7 @@ class _SearchBarState extends State<SearchBar> {
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
       alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * 0.1,
+      // width: MediaQuery.of(context).size.width * 0.1,
       child: FittedBox(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
