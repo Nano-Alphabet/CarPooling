@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'home/homePage.dart';
-import 'loginModule/loginPage.dart';
 import 'routes/refreshPage.dart';
 
 void main() => runApp(MyApp());
