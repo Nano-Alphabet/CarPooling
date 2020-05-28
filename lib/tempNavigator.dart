@@ -6,6 +6,7 @@ import 'package:uow/temp/bottomButtons.dart';
 import 'home/homePage2.dart';
 import 'loginModule/signInOTPPage.dart';
 import 'loginModule/signInPage.dart';
+import 'loginModule/signuppage.dart';
 import 'planModule/viewPlan.dart';
 
 class TempNavigator extends StatelessWidget {
