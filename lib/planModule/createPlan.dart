@@ -55,10 +55,12 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   }
 
   final _formKey = GlobalKey<FormState>();
+
   Cluster cluster = Cluster();
   DateTime _date;
   String _datestring;
   String _timestring;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -82,6 +84,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Last Name",
             validator: (String value) {},
+            initVal: cluster.adminLastName,
             onSaved: (String value) {
               cluster.adminLastName = value;
             },
@@ -89,6 +92,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Pickup Point",
             validator: (String value) {},
+            initVal: cluster.initialLocation,
             onSaved: (String value) {
               cluster.initialLocation =
                   value; //TODO NAvigate to Slect Location Page
@@ -97,13 +101,16 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Drop Point",
             validator: (String value) {},
+            initVal: cluster.finalLocation,
             onSaved: (String value) {
               cluster.finalLocation = value;
+              //TODO NAvigate to Slect Location Page
             },
           ),
           FormField(
             labelText: "Phone No",
             validator: (String value) {},
+            initVal: cluster.phoneNo,
             onSaved: (String value) {
               cluster.phoneNo = value;
             },
@@ -111,6 +118,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Cost",
             validator: (String value) {},
+            initVal: cluster.cost,
             onSaved: (String value) {
               cluster.cost = value;
             },
@@ -118,13 +126,15 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Number of Passengers",
             validator: (String value) {},
+            initVal: cluster.noOfPassengers.toString(),
             onSaved: (String value) {
               cluster.noOfPassengers = int.parse(value);
             },
           ),
           FormField(
-            labelText: "Car Number",
+            labelText: "Vehicle Number",
             validator: (String value) {},
+            initVal: cluster.carNo,
             onSaved: (String value) {
               cluster.carNo = value;
             },
@@ -132,10 +142,12 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           FormField(
             labelText: "Car Type",
             validator: (String value) {},
+            initVal: cluster.carType,
             onSaved: (String value) {
               cluster.carType = value;
             },
           ),
+
           DateTimePicker(
             onSaved: (DateTime date) {
                   _date=date;
@@ -153,6 +165,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               cluster.adminUserID = value;
             },
           ),
+
           RaisedButton(
             color: Colors.blueAccent,
             onPressed: () {
@@ -200,8 +213,12 @@ class FormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
+
         cursorColor: Colors.teal,
-        initialValue: "",
+        
+
+        initialValue: initVal,
+
         style: TextStyle(fontSize: 20),
         decoration: InputDecoration(
           labelText: labelText,

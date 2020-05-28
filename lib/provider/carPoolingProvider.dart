@@ -9,16 +9,23 @@ class CarPoolingProvider with ChangeNotifier {
   //
   //VARIABLES -------------------------
   CurrentUser currentUser;
+
   /*
   *CLUSTERS key: unique cluster ID
   *this will help us in accessing clusters more effectively*/
   Map<String, Cluster> globalClustersMap = {};
   Map<String, Cluster> myClustersHistoryMap = {};
-  Map<String, Request> requests = {};
+  Map<String, Request> requestsMap = {};
+  Map<String, Request> myRequestHistoryMap = {};
 
   //
   //INIT -----------------------------
   CarPoolingProvider() {
+    currentUser = CurrentUser.fromMap({});
+    currentUser.getCurrentUser();
+    currentUser.uid = "A12";
+    currentUser.userFirstName = "myFirstName";
+    currentUser.userLastName = "myLastName";
     loadGlobalClusterData(force: true);
     loadMyClustersHistoryData(force: true);
   }
@@ -30,21 +37,22 @@ class CarPoolingProvider with ChangeNotifier {
     if (force || globalClustersMap.length == 0)
       await Firestore.instance
           .collection("clusters")
-          .where("leavingTime",
+          /*.where("leavingTime",
               isGreaterThan: DateTime.now()
                   .subtract(Duration(hours: 3))
-                  .millisecondsSinceEpoch)
+                  .millisecondsSinceEpoch)*/
           .getDocuments()
           .then((value) {
         value.documents.forEach((element) {
           globalClustersMap.addAll({
             element.documentID: Cluster.fromMap(element.data),
           });
-          clusters.add(Cluster.fromMap(element.data)); //TODO remove
+          globalClustersMap[element.documentID].clusterID = element.documentID;
+          // clusters.add(Cluster.fromMap(element.data)); //TODO remove
+          print("Data Loaded from firebase");
           notifyListeners();
         });
       });
-    print("Data Loaded from firebase");
     return "done";
   }
 
@@ -67,19 +75,40 @@ class CarPoolingProvider with ChangeNotifier {
     return "done";
   }
 
+  // Future<String> loadRequestData({String clusterId, bool force = false}) async {
+  //   if (force || myClustersHistoryMap[clusterId] != null)
+  //     await Firestore.instance
+  //         .collection("clusters")
+  //         .document(clusterId)
+  //         .get()
+  //         .then((value) {
+  //       myClustersHistoryMap.addAll({
+  //         value.documentID: Cluster.fromMap(value.data),
+  //       });
+  //       notifyListeners();
+  //     });
+  //   print("Data Loaded from firebase");
+  //   return "done";
+  // }
+
+  //Using other version of loadRequestData
+
   Future<String> loadRequestData({String clusterId, bool force = false}) async {
     if (force || myClustersHistoryMap[clusterId] != null)
       await Firestore.instance
-          .collection("clusters")
-          .document(clusterId)
-          .get()
+          .collection("request")
+          .where("clusterAdminId", isEqualTo: currentUser.uid)
+          .getDocuments()
           .then((value) {
-        myClustersHistoryMap.addAll({
-          value.documentID: Cluster.fromMap(value.data),
+        value.documents.forEach((element) {
+          requestsMap.addAll({
+            element.documentID: Request.fromMap(element.data),
+          });
+
+          notifyListeners();
         });
-        notifyListeners();
       });
-    print("Data Loaded from firebase");
+    print("Requests Loaded from firebase");
     return "done";
   }
 
@@ -103,18 +132,43 @@ class CarPoolingProvider with ChangeNotifier {
     return "done";
   }
 
-  Future<String> createClusterJoinRequest(
-      {@required Request request, @required String clusterID}) async {
-    await Firestore.instance
-        .collection("clusters")
-        .document(clusterID)
-        .setData({
-      "requests": {currentUser.uid: request.toMap()}
-    }, merge: true).catchError(onError);
+  // Future<String> createClusterJoinRequest(
+  //     {@required Request request, @required String clusterID}) async {
+  //   await Firestore.instance
+  //       .collection("clusters")
+  //       .document(clusterID)
+  //       .setData({
+  //     "requests": {currentUser.uid: request.toMap()}
+  //   }, merge: true).catchError(onError);
+  //   notifyListeners();
+  //   print("Data uploaded to firebase");
+  //   return "done";
+  // }
+
+  // other version with separate request table
+  Future<String> createClusterJoinRequest({@required String clusterId}) async {
+    Request request = Request.fromMap({});
+    request.isAccepted = false;
+    request.phoneNo = currentUser.phoneNo;
+    request.requestUserID = currentUser.uid;
+    request.requestUserName = currentUser.userFirstName.toString() +
+        " " +
+        currentUser.userLastName.toString();
+    request.requestTime = DateTime.now().millisecondsSinceEpoch;
+    request.clusterID = clusterId;
+    request.clusterAdminId = globalClustersMap[clusterId].adminUserID;
+
+    DocumentReference docRef = await Firestore.instance
+        .collection("request")
+        .add(request.toMap())
+        .catchError(onError);
+    request.requestId = docRef.documentID;
+    myRequestHistoryMap[docRef.documentID] = request;
     notifyListeners();
-    print("Data uploaded to firebase");
+    print("Request uploaded to firebase");
     return "done";
   }
+
   //
   //VALIDATORS -----------------------
 

@@ -109,7 +109,7 @@ class Cluster {
     this.noOfPassengers = data["noOfPassengers"] ?? 1;
     this.carNo = data["carNo"] ?? "";
     this.carType = data["carType"] ?? "";
-    this.leavingTime = data["leavingTime"] ?? "";
+    this.leavingTime = data["leavingTime"] ?? 0;
     this.date = data["date"] ?? "";
     this.adminUserID = data["adminUserID"] ?? "";
     (data["requests"] ?? {}).forEach((key, value) {
@@ -137,7 +137,8 @@ class Cluster {
 
 class ClusterCard extends StatelessWidget {
   final Cluster cluster;
-  ClusterCard({this.cluster});
+  final String clusterID;
+  ClusterCard({this.cluster, this.clusterID});
 
   @override
   Widget build(BuildContext context) {
@@ -214,8 +215,11 @@ class ClusterCard extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ViewPlan(cluster: cluster)));
+                        builder: (BuildContext context) => ViewPlan(
+                              cluster: cluster,
+                              clusterID: clusterID,
+                              showButton: true,
+                            )));
               },
               child: Icon(
                 Icons.info,

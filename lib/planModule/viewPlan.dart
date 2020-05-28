@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
+import 'package:uow/models/currentUser.dart';
+import 'package:uow/models/request.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 
 class ViewPlan extends StatelessWidget {
   final Cluster cluster;
-  ViewPlan({this.cluster});
+  final String clusterID;
+  final bool showButton;
+  ViewPlan({this.cluster, this.clusterID, @required this.showButton});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,46 +120,52 @@ class ViewPlan extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: cluster.noOfPassengers,
+                  SizedBox(
+                    height: 100,
+                    child: Flex(
+                      direction: Axis.horizontal,
                       children: [
                         for (var i = 0;
                             i <
                                 (cluster.noOfPassengers -
                                     cluster.pApprovedRequest);
                             i++)
-                          Icon(
-                            Icons.event_seat,
-                            color: Colors.green[200],
-                            size: 35,
+                          Expanded(
+                            child: Icon(
+                              Icons.event_seat,
+                              color: Colors.green[200],
+                              size: 35,
+                            ),
                           ),
                         for (var i = 0; i < cluster.pApprovedRequest; i++)
-                          Icon(
-                            Icons.event_seat,
-                            size: 35,
-                            color: Colors.orange,
+                          Expanded(
+                            child: Icon(
+                              Icons.event_seat,
+                              size: 35,
+                              color: Colors.orange,
+                            ),
                           ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 0, left: 30.0, right: 30.0),
-                    child: Container(
-                        width: 250.0,
-                        height: 60.0,
-                        child: RaisedButton(
-                          onPressed: () {
-                            print("Send chat message on whatsapp no " +
-                                cluster.phoneNo);
-                          },
-                          child: Text("Send join request"),
-                        )),
-                  ),
+                  showButton
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              top: 0, left: 30.0, right: 30.0),
+                          child: Container(
+                              width: 250.0,
+                              height: 60.0,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  Provider.of<CarPoolingProvider>(context,
+                                          listen: false)
+                                      .createClusterJoinRequest(
+                                          clusterId: cluster.clusterID);
+                                },
+                                child: Text("Send join request"),
+                              )),
+                        )
+                      : Container(),
                   // Padding(
                   //   padding: const EdgeInsets.only(
                   //       top: 10.0, left: 75.0, right: 75.0),

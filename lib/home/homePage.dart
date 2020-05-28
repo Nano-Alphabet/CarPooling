@@ -3,6 +3,7 @@ import 'package:uow/LocationModule/clusterLocationPage.dart';
 import 'package:uow/LocationModule/loadLocationScreen.dart';
 
 import 'package:uow/Notification/notificationpage.dart';
+import 'package:uow/models/request.dart';
 import 'package:uow/profile/profile.dart';
 import 'package:uow/signInModule/signuppageruchir.dart';
 import 'package:uow/temp/bottomButtons.dart';
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Stack(
           children: <Widget>[
-            ClusterLocationPage(),
+            // ClusterLocationPage(),
             Positioned(
                 top: 25,
                 left: 0,
@@ -149,82 +150,28 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class Customer {
-  const Customer({this.name, this.phone});
-  final String name;
-  final int phone;
-}
-
 final String server =
     debugDefaultTargetPlatformOverride == TargetPlatform.android
         ? "10.0.2.2"
         : "0.0.0.0";
 
-final List<Customer> customers = <Customer>[
-  Customer(name: 'Ruchir', phone: 6377414790),
-  Customer(name: 'Sreeharsh', phone: 6303073463),
-  Customer(name: 'Ubaid', phone: 8149943088),
-  Customer(name: 'Adarsh', phone: 6265252766)
-];
-
-Widget _listItemBuilder(BuildContext context, int index) {
-  int t = customers[index].phone;
-  String n = customers[index].name;
-  return Container(
-    height: 100,
-    margin: EdgeInsets.all(1),
-    color: Colors.blue[50],
-    padding: const EdgeInsets.only(right: 20.0),
-    alignment: Alignment.center,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            customers[index].name,
-            style:
-                Theme.of(context).textTheme.headline.apply(color: Colors.black),
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Wrap(
-            children: [
-              FlatButton(
-                color: Colors.lightGreenAccent,
-                onPressed: () {
-                  FlutterOpenWhatsapp.sendSingleMessage("+91$t", "Hello $n");
-                  // Navigator.of(context).pop();
-                },
-                child: const Text('WhatsChat'),
-              ),
-              5.widthBox,
-              RaisedButton(
-                color: Colors.lightBlue,
-                onPressed: () {},
-                child: const Text('ALLOW'),
-              )
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 Widget setUpAlertDialoadBox() {
+  var requestsArray = <RequestCard>[];
+  addRequests() {
+    // clusters.add(cluster);
+    requests.forEach((i) {
+      requestsArray.add(RequestCard(request: i));
+    });
+    return requestsArray;
+  }
+
   return Scrollbar(
     child: Container(
-      height: 200,
-      width: 60,
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: customers.length,
-        itemBuilder: _listItemBuilder,
-      ),
-    ),
+        height: 200,
+        width: 60,
+        child: ListView(
+          children: addRequests(),
+        )),
   );
 }
 

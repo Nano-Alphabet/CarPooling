@@ -8,29 +8,31 @@ class JoinPlan extends StatelessWidget {
   // final Cluster cluster=Cluster(adminFirstName: "Hello",adminLastName: "Yo");
   // JoinPlan({this.cluster});
 
-  var plans = <ClusterCard>[];
-  addPlans() {
-    // clusters.add(cluster);
-    clusters.forEach((i) {
-      plans.add(ClusterCard(cluster: i));
-    });
-    return plans;
-  }
-
   @override
   Widget build(BuildContext context) {
+    var plans = <Widget>[];
+
     Map clusters = Provider.of<CarPoolingProvider>(context).globalClustersMap;
+    print(clusters.length);
     clusters.forEach((key, value) {
-      plans.add(ClusterCard(cluster: value));
+      plans.add(ClusterCard(cluster: value, clusterID: key));
+    });
+    clusters.forEach((key, value) {
+      print(value.adminFirstName);
     });
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("JoinPlan"),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.all(8),
-          children: addPlans(),
-        ));
+      appBar: AppBar(
+        title: Text("JoinPlan"),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: plans,
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Provider.of<CarPoolingProvider>(context, listen: false)
+            .loadGlobalClusterData(force: true);
+      }),
+    );
   }
 }
