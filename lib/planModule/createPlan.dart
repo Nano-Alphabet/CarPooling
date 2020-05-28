@@ -57,7 +57,6 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   final _formKey = GlobalKey<FormState>();
   Cluster cluster = Cluster();
   DateTime _date;
-  DateTime _time;
   String _datestring;
   String _timestring;
   @override
@@ -138,41 +137,13 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             },
           ),
           DateTimePicker(
-            onSaved: () {
-              DatePicker.showDatePicker(
-                context,
-                theme: DatePickerTheme(
-                  containerHeight: 210.0,
-                ),
-                showTitleActions: true,
-                minTime: DateTime(2000, 1, 1),
-                maxTime: DateTime(2022, 12, 31),
-                onConfirm: (date) {
-                  print('confirm $date');
+            onSaved: (DateTime date) {
                   _date=date;
-                  _datestring = '${date.year} - ${date.month} - ${date.day}';
-                  setState(() {});
-                },
-                currentTime: DateTime.now(),
-                locale: LocaleType.en,
-              );
+                  setState((){});
             },
-            onSaved2: () {
-              DatePicker.showTimePicker(
-                context,
-                theme: DatePickerTheme(
-                  containerHeight: 210.0,
-                ),
-                showTitleActions: true,
-                onConfirm: (time) {
-                  print('confirm $time');
-                  _timestring = '${time.hour} : ${time.minute} : ${time.second}';
+            onSaved2: (DateTime time) {
+                  _date=DateTime(_date.year,_date.month,_date.day,time.hour,time.minute,time.second);
                   setState(() {});
-                },
-                currentTime: DateTime.now(),
-                locale: LocaleType.en,
-              );
-              setState(() {});
             },
             ),
           FormField(
@@ -187,6 +158,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                cluster.leavingTime=_date.millisecondsSinceEpoch;
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .createClusterData(cluster);
                 // clusters.add(cluster);

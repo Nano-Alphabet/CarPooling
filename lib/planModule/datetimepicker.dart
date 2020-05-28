@@ -2,8 +2,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 
 class DateTimePicker extends StatefulWidget {
-  final Function onSaved;
-  final Function onSaved2;
+  final onSaved;
+  final onSaved2;
   DateTime _date;
   DateTime _time;
   String _datestring;
@@ -20,12 +20,12 @@ class DateTimePicker extends StatefulWidget {
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  Function onSaved;
+  var onSaved;
   DateTime date;
   DateTime time;
   String datestring;
   String timestring;
-  Function onSaved2;
+  var onSaved2;
   _DateTimePickerState(
       {this.onSaved,
       this.date,
@@ -47,7 +47,26 @@ class _DateTimePickerState extends State<DateTimePicker> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             elevation: 4.0,
-            onPressed: onSaved,
+            onPressed: () {
+              DatePicker.showDatePicker(
+                context,
+                theme: DatePickerTheme(
+                  containerHeight: 210.0,
+                ),
+                showTitleActions: true,
+                minTime: DateTime(2000, 1, 1),
+                maxTime: DateTime(2022, 12, 31),
+                onConfirm: (date) {
+                  print('confirm $date');
+                  // _date=date;
+                  onSaved(date);
+                  datestring = '${date.year} - ${date.month} - ${date.day}';
+                  setState(() {});
+                },
+                currentTime: DateTime.now(),
+                locale: LocaleType.en,
+              );
+            },
             child: Container(
               alignment: Alignment.center,
               height: 50.0,
@@ -97,7 +116,25 @@ class _DateTimePickerState extends State<DateTimePicker> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
             elevation: 4.0,
-            onPressed: onSaved2,
+            onPressed: () {
+              DatePicker.showTimePicker(
+                context,
+                theme: DatePickerTheme(
+                  containerHeight: 210.0,
+                ),
+                showTitleActions: true,
+                onConfirm: (time) {
+                  print('confirm $time');
+                  onSaved2(time);
+                  timestring = '${time.hour} : ${time.minute} : ${time.second}';
+
+                  setState(() {});
+                },
+                currentTime: DateTime.now(),
+                locale: LocaleType.en,
+              );
+              setState(() {});
+            },
             child: Container(
               alignment: Alignment.center,
               height: 50.0,
