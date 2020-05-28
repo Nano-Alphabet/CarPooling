@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
-
+import 'datetimepicker.dart';
 class CreatePlan extends StatefulWidget {
   @override
   _CreatePlanState createState() => _CreatePlanState();
@@ -55,6 +56,10 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
 
   final _formKey = GlobalKey<FormState>();
   Cluster cluster = Cluster();
+  DateTime _date;
+  DateTime _time;
+  String _datestring;
+  String _timestring;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -132,20 +137,44 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               cluster.carType = value;
             },
           ),
-          FormField(
-            labelText: "Time",
-            validator: (String value) {},
-            onSaved: (String value) {
-              cluster.leavingTime = 125; // Needs Milliseconds since epoches
-            }, //TODO! ADD DATE TIME PICKER
-          ),
-          FormField(
-            labelText: "Date",
-            validator: (String value) {},
-            onSaved: (String value) {
-              cluster.date = value;
+          DateTimePicker(
+            onSaved: () {
+              DatePicker.showDatePicker(
+                context,
+                theme: DatePickerTheme(
+                  containerHeight: 210.0,
+                ),
+                showTitleActions: true,
+                minTime: DateTime(2000, 1, 1),
+                maxTime: DateTime(2022, 12, 31),
+                onConfirm: (date) {
+                  print('confirm $date');
+                  _date=date;
+                  _datestring = '${date.year} - ${date.month} - ${date.day}';
+                  setState(() {});
+                },
+                currentTime: DateTime.now(),
+                locale: LocaleType.en,
+              );
             },
-          ),
+            onSaved2: () {
+              DatePicker.showTimePicker(
+                context,
+                theme: DatePickerTheme(
+                  containerHeight: 210.0,
+                ),
+                showTitleActions: true,
+                onConfirm: (time) {
+                  print('confirm $time');
+                  _timestring = '${time.hour} : ${time.minute} : ${time.second}';
+                  setState(() {});
+                },
+                currentTime: DateTime.now(),
+                locale: LocaleType.en,
+              );
+              setState(() {});
+            },
+            ),
           FormField(
             labelText: "Admin User Id",
             validator: (String value) {},
@@ -199,8 +228,8 @@ class FormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
-        cursorColor: Colors.greenAccent,
-        initialValue: "ahhgs",
+        cursorColor: Colors.teal,
+        initialValue: "",
         style: TextStyle(fontSize: 20),
         decoration: InputDecoration(
           labelText: labelText,
@@ -211,7 +240,7 @@ class FormField extends StatelessWidget {
             ),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.green),
+            borderSide: BorderSide(color: Colors.teal),
           ),
         ),
         validator: validator,

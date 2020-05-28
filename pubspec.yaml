@@ -61,6 +61,7 @@ dependencies:
   ## Flutter Web 
   flutter_for_web: ^1.0.0
   flutter_for_web_ui: ^1.0.0
+  flutter_datetime_picker:
   firebase_core_web:
 
 dev_dependencies:
