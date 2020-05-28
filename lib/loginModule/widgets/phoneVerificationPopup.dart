@@ -110,7 +110,7 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
             .catchError((e) {
       error = e.toString();
     }))
-        .user;
+        ?.user;
 
     setState(() {
       isVerifyingOtp = false;
