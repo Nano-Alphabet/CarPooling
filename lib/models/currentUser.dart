@@ -1,70 +1,61 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrentUser {
-  String userFirstName;
-  String userLastName;
-  String password;
-  String uid; //unique ID
-  String phoneNo;
+  String get uid => user.uid;
+  String get phoneNo => user.phoneNumber;
+  String get userName => user.displayName;
+  String get userEmail => user.email;
   double lat;
   double lng;
+  String password;
+  FirebaseUser user;
+  // collection ref. to update user in firestore
+  final CollectionReference userData =
+      Firestore.instance.collection('UserData');
 
-  void getCurrentUser() async {
-    var spfs = await SharedPreferences.getInstance();
-    this.userFirstName = spfs.getString("userFirstName");
-    this.userLastName = spfs.getString("userLastName");
-    this.password = spfs.getString("password");
-    this.uid = spfs.getString("uid");
-    this.phoneNo = spfs.getString("phoneNo");
-    this.lat = spfs.getDouble("lat");
-    this.lng = spfs.getDouble("lng");
+  Future<FirebaseUser> getCurrentUser() async {
+    user = await FirebaseAuth.instance.currentUser();
+    return user;
   }
 
-  Future<void> setCurrentData() async {
-    var spfs = await SharedPreferences.getInstance();
-    spfs.setString("userFirstName", userFirstName).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setString("userLastName", userLastName).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setString("phoneNo", phoneNo).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setString("password", password).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setString("uid", uid).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setDouble("lat", lat).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-    spfs.setDouble("lng", lng).catchError((err) {
-      Fluttertoast.showToast(msg: "Error setting user name");
-    });
-  }
-
-  CurrentUser.fromMap(Map data) {
-    this.userFirstName = data["userFirstName"] ?? "";
-    this.userLastName = data["userLastName"] ?? "";
-    this.password = data["password"] ?? "";
-    this.uid = data["uid"] ?? "";
-    this.phoneNo = data["phoneNo"] ?? "";
-    this.lat = data["lat"] ?? 0;
-    this.lng = data["lng"] ?? 0;
-  }
+  Future<void> setCurrentData() async {}
 
   Map toMap() {
     return {
-      "userFirstName": userFirstName,
-      "userLastName": userLastName,
+      "userName": userName,
       "password": password,
       "uid": uid,
       "phoneNo": phoneNo,
       "lat": lat,
       "lng": lng,
     };
+  }
+
+  Future<void> storeUserInMemory(FirebaseUser user) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("username", user.displayName);
+    sharedPreferences.setString('email', user.email);
+    sharedPreferences.setString('phone', user.phoneNumber);
+    sharedPreferences.setString('uid', user.uid);
+  }
+
+  Future updateUserData(String uid, String username, String email,
+      String password, String phoneNo) async {
+    return await userData.document(uid).setData({
+      'username': username,
+      'email': email,
+      'uid': uid,
+      'password': password,
+      'phoneNo': phoneNo,
+    });
+  }
+
+  Future<void> logOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacementNamed("/init");
   }
 }

@@ -6,8 +6,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 var clusters = <Cluster>[
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -20,8 +19,7 @@ var clusters = <Cluster>[
     adminUserID: "12345",
   ),
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -34,8 +32,7 @@ var clusters = <Cluster>[
     adminUserID: "12345",
   ),
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -52,8 +49,9 @@ var clusters = <Cluster>[
 class Cluster {
   //  For the time being, I am keeping all of these as strings
   String clusterID;
-  String adminFirstName;
-  String adminLastName;
+  String adminName;
+  //String adminFirstName; these two are combined in one
+  //String adminLastName;
   String initialLocation;
   String finalLocation;
   String phoneNo;
@@ -86,8 +84,7 @@ class Cluster {
   DateTime get pLeavingTime => DateTime.fromMillisecondsSinceEpoch(leavingTime);
 
   Cluster(
-      {this.adminFirstName,
-      this.adminLastName,
+      {this.adminName,
       this.initialLocation,
       this.finalLocation,
       this.phoneNo,
@@ -100,8 +97,7 @@ class Cluster {
       this.adminUserID});
 
   Cluster.fromMap(Map data) {
-    this.adminFirstName = data["adminFirstName"] ?? "";
-    this.adminLastName = data["adminLastName"] ?? "...";
+    this.adminName = data["adminName"] ?? "";
     this.initialLocation = data["initialLocation"] ?? "";
     this.finalLocation = data["finalLocation"] ?? "";
     this.phoneNo = data["phoneNo"] ?? "";
@@ -119,8 +115,7 @@ class Cluster {
 
   Map<String, dynamic> toMap() {
     return {
-      "adminFirstName": adminFirstName,
-      "adminLastName": adminLastName,
+      "adminName": adminName,
       "initialLocation": initialLocation,
       "finalLocation": finalLocation,
       "phoneNo": phoneNo,

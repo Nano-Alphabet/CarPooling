@@ -92,9 +92,9 @@ class ViewPlan extends StatelessWidget {
                       children: <Widget>[
                         ticketDetailsWidget(
                             'First Name',
-                            cluster.adminFirstName,
-                            'Last name',
-                            cluster.adminLastName),
+                            cluster.adminName,
+                            'No of Passengers',
+                            cluster.noOfPassengers.toString()),
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
                           child: ticketDetailsWidget(

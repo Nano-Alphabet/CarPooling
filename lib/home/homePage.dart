@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uow/LocationModule/clusterLocationPage.dart';
-import 'package:uow/LocationModule/loadLocationScreen.dart';
-
-import 'package:uow/Notification/notificationpage.dart';
+import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/profile/profile.dart';
-import 'package:uow/signInModule/signuppageruchir.dart';
 import 'package:uow/temp/bottomButtons.dart';
 import 'package:uow/tempNavigator.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 
 class HomePage extends StatefulWidget {
   @override

@@ -68,7 +68,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
           FormField(
             labelText: "First Name",
-            initVal: cluster.adminFirstName,
+            initVal: cluster.adminName,
             validator: (String value) {
               if (value.isEmpty) {
                 return 'Please enter your name';
@@ -76,15 +76,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               return null;
             },
             onSaved: (String value) {
-              cluster.adminFirstName = value;
-            },
-          ),
-          FormField(
-            labelText: "Last Name",
-            validator: (String value) {},
-            initVal: cluster.adminLastName,
-            onSaved: (String value) {
-              cluster.adminLastName = value;
+              cluster.adminName = value;
             },
           ),
           FormField(

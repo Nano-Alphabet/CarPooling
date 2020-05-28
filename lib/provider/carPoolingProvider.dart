@@ -8,7 +8,7 @@ import 'package:uow/models/request.dart';
 class CarPoolingProvider with ChangeNotifier {
   //
   //VARIABLES -------------------------
-  CurrentUser currentUser;
+  CurrentUser currentUser = CurrentUser();
 
   /*
   *CLUSTERS key: unique cluster ID
@@ -21,11 +21,8 @@ class CarPoolingProvider with ChangeNotifier {
   //
   //INIT -----------------------------
   CarPoolingProvider() {
-    currentUser = CurrentUser.fromMap({});
+    currentUser = CurrentUser();
     currentUser.getCurrentUser();
-    currentUser.uid = "A12";
-    currentUser.userFirstName = "myFirstName";
-    currentUser.userLastName = "myLastName";
     loadGlobalClusterData(force: true);
     loadMyClustersHistoryData(force: true);
   }
@@ -117,8 +114,7 @@ class CarPoolingProvider with ChangeNotifier {
 
   //createClusterData you need not to send admin Id, phone no etc
   Future<String> createClusterData(Cluster cluster) async {
-    cluster.adminFirstName = currentUser.userFirstName;
-    cluster.adminLastName = currentUser.userLastName;
+    cluster.adminName = currentUser.userName;
     cluster.adminUserID = currentUser.uid;
     cluster.phoneNo = currentUser.phoneNo;
     DocumentReference docRef = await Firestore.instance
@@ -151,9 +147,7 @@ class CarPoolingProvider with ChangeNotifier {
     request.isAccepted = false;
     request.phoneNo = currentUser.phoneNo;
     request.requestUserID = currentUser.uid;
-    request.requestUserName = currentUser.userFirstName.toString() +
-        " " +
-        currentUser.userLastName.toString();
+    request.requestUserName = currentUser.userName.toString();
     request.requestTime = DateTime.now().millisecondsSinceEpoch;
     request.clusterID = clusterId;
     request.clusterAdminId = globalClustersMap[clusterId].adminUserID;
@@ -173,8 +167,10 @@ class CarPoolingProvider with ChangeNotifier {
   //VALIDATORS -----------------------
 
   //
-  //USER ----------------------------
-  Future<String> signUpUser({@required CurrentUser user}) async {
+  //USER ----------------------------NOTE----------------
+  //USER IS SHIFTED TO A NEW CLASS
+
+  /* Future<String> signUpUser({@required CurrentUser user}) async {
     DocumentReference docRef = await Firestore.instance
         .collection("users")
         .add(user.toMap())
@@ -222,7 +218,7 @@ class CarPoolingProvider with ChangeNotifier {
     print("Data Loaded from firebase");
     return "done";
   }
-
+*/
   //
   //ERROR Handling --------------------------
   void onError(dynamic err) {

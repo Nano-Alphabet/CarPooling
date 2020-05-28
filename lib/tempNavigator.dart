@@ -4,10 +4,9 @@ import 'package:uow/planModule/createPlan.dart';
 import 'package:uow/temp/bottomButtons.dart';
 
 import 'home/homePage2.dart';
+import 'loginModule/signInOTPPage.dart';
+import 'loginModule/signInPage.dart';
 import 'planModule/viewPlan.dart';
-import 'signInModule/signInOTPPage.dart';
-import 'signInModule/signInPage.dart';
-import 'signInModule/signuppageruchir.dart';
 
 class TempNavigator extends StatelessWidget {
   @override

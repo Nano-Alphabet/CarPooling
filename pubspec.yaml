@@ -40,11 +40,14 @@ dependencies:
   pin_entry_text_field: ^0.1.4
   fluttertoast: #error handling
   flutter_datetime_picker:
+  pin_code_text_field:
   shared_preferences: #Local Storage
+
 
   ##-----------------------------------------------
   ## Firebase
   cloud_firestore:
+  firebase_auth:
 
   ##-----------------------------------------------
   ## State Management
