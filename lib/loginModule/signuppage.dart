@@ -60,6 +60,9 @@ class _SignUpState extends State<SignUp> {
         barrierDismissible: false);
 
     if (_response.displayName == null || _response.displayName == "") {
+      setState(() {
+        isSignUp = true;
+      });
       await showDialog(
           context: context,
           builder: (context) {
@@ -90,9 +93,19 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
+              actions: [
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: "OK".text.make())
+              ],
             );
           },
           barrierDismissible: false);
+      if (userName == "") {
+        return;
+      }
     }
 
     // found user in response

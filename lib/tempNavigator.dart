@@ -4,8 +4,6 @@ import 'package:uow/planModule/createPlan.dart';
 import 'package:uow/temp/bottomButtons.dart';
 
 import 'home/homePage2.dart';
-import 'loginModule/signInOTPPage.dart';
-import 'loginModule/signInPage.dart';
 import 'loginModule/signuppage.dart';
 import 'planModule/viewPlan.dart';
 
@@ -45,7 +43,7 @@ class TempNavigator extends StatelessWidget {
                               SignUp())); // TODO add class
                 },
                 child: Text('SignUP Page')),
-            FlatButton(
+            /*FlatButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -53,8 +51,8 @@ class TempNavigator extends StatelessWidget {
                           builder: (BuildContext context) =>
                               LoginPage())); // TODO add class
                 },
-                child: Text('Sign in page')),
-            FlatButton(
+                child: Text('Sign in page')),*/
+            /* FlatButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -62,7 +60,7 @@ class TempNavigator extends StatelessWidget {
                           builder: (BuildContext context) =>
                               MySignInOTPPage())); // TODO add class
                 },
-                child: Text('Sign In OTP')),
+                child: Text('Sign In OTP')),*/
             FlatButton(
                 onPressed: () {
                   Navigator.push(
@@ -86,8 +84,9 @@ class TempNavigator extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              ViewPlan())); // TODO add class
+                          builder: (BuildContext context) => ViewPlan(
+                                showButton: false,
+                              ))); // TODO add class
                 },
                 child: Text('ViewPlan')),
           ],
