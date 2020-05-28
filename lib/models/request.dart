@@ -1,27 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 var requests = <Request>[
   Request(
-    requestUserID: "12345",
-    clusterID: "",
+    requestUserID: "A12345",
+    clusterID: "gh4654",
     isAccepted: false,
     phoneNo: "1234567890",
+    requestUserName: "Stuart Little",
+  ),
+  Request(
+    requestUserID: "B12345",
+    clusterID: "afds454",
+    isAccepted: false,
+    phoneNo: "1234567890",
+    requestUserName: "Harry Potter",
+
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "",
-    isAccepted: false,
+    clusterID: "DF546",
+    isAccepted: true,
     phoneNo: "1234567890",
+    requestUserName: "Thanos",
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "",
-    isAccepted: false,
+    clusterID: "DF546",
+    isAccepted: true,
     phoneNo: "1234567890",
+    requestUserName: "Ghamora",
+  ),
+  Request(
+    requestUserID: "12345",
+    clusterID: "DF546",
+    isAccepted: true,
+    phoneNo: "1234567890",
+    requestUserName: "Spiderman",
+  ),
+  Request(
+    requestUserID: "12345",
+    clusterID: "DF546",
+    isAccepted: true,
+    phoneNo: "1234567890",
+    requestUserName: "Black Widow",
   ),
 ];
 
@@ -33,7 +59,7 @@ class Request {
   String requestUserName;
   bool isAccepted;
 
-  Request({this.requestUserID, this.clusterID, this.isAccepted, this.phoneNo});
+  Request({this.requestUserID, this.clusterID, this.isAccepted, this.phoneNo, this.requestUserName});
 
   Request.fromMap(Map data) {
     this.requestUserID = data["requestUserID"] ?? "";
@@ -54,97 +80,52 @@ class Request {
   }
 }
 
-class ClusterCard extends StatelessWidget {
-  final Cluster cluster;
-  ClusterCard({this.cluster});
+class RequestCard extends StatelessWidget {
+  final Request request;
+  RequestCard({this.request});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 25, 10, 4),
-      decoration: BoxDecoration(
-          border: Border(
-        bottom: BorderSide(width: 1.0, color: Colors.black),
-      )),
-      child: IntrinsicHeight(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: SizedBox(
-                  // height: 75.0,
-                  width: 170.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        cluster.date,
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          cluster.initialLocation,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: SizedBox(
-                  // height: 75.0,
-                  width: 170.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        cluster.leavingTime.toString(),
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          cluster.finalLocation,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ViewPlan(cluster: cluster)));
-              },
-              child: Icon(
-                Icons.info,
-                color: Colors.green,
-                // size: 30.0,
-              ),
-            )
-          ],
+    height: 100,
+    margin: EdgeInsets.all(1),
+    color: Colors.blue[50],
+    padding: const EdgeInsets.only(right: 20.0),
+    alignment: Alignment.center,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            request.requestUserName,
+            style:
+                Theme.of(context).textTheme.headline5.apply(color: Colors.black),
+          ),
         ),
-      ),
-    );
+        Align(
+          alignment: Alignment.centerRight,
+          child: Wrap(
+            children: [
+              FlatButton(
+                color: Colors.lightGreenAccent,
+                onPressed: () {
+                  FlutterOpenWhatsapp.sendSingleMessage("+91"+request.phoneNo, "Hello Brother");
+                  // Navigator.of(context).pop();
+                },
+                child: const Text('WhatsChat'),
+              ),
+              5.widthBox,
+              RaisedButton(
+                color: Colors.lightBlue,
+                onPressed: () {},
+                child: const Text('ALLOW'),
+              )
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
   }
 }

@@ -137,7 +137,8 @@ class Cluster {
 
 class ClusterCard extends StatelessWidget {
   final Cluster cluster;
-  ClusterCard({this.cluster});
+  final String clusterID;
+  ClusterCard({this.cluster, this.clusterID});
 
   @override
   Widget build(BuildContext context) {
@@ -214,8 +215,10 @@ class ClusterCard extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ViewPlan(cluster: cluster)));
+                        builder: (BuildContext context) => ViewPlan(
+                              cluster: cluster,
+                              clusterID: clusterID,
+                            )));
               },
               child: Icon(
                 Icons.info,

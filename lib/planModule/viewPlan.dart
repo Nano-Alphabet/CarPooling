@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
+import 'package:uow/models/currentUser.dart';
+import 'package:uow/models/request.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 
 class ViewPlan extends StatelessWidget {
   final Cluster cluster;
-  ViewPlan({this.cluster});
+  final String clusterID;
+  ViewPlan({this.cluster, this.clusterID});
   @override
   Widget build(BuildContext context) {
+    CurrentUser user =
+        Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
     return Scaffold(
       backgroundColor: Colors.black12,
       body: SafeArea(
@@ -148,6 +155,12 @@ class ViewPlan extends StatelessWidget {
                         height: 60.0,
                         child: RaisedButton(
                           onPressed: () {
+                            Request request;
+                            request.clusterID=clusterID;
+                            request.phoneNo=user.phoneNo;
+                            request.requestUserID="NoId";
+                            request.requestUserName=user.userFirstName+" "+user.userLastName;
+                            request.isAccepted=false;
                             print("Send chat message on whatsapp no " +
                                 cluster.phoneNo);
                           },
