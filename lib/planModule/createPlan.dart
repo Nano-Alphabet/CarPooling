@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'datetimepicker.dart';
+
 class CreatePlan extends StatefulWidget {
   @override
   _CreatePlanState createState() => _CreatePlanState();
@@ -56,10 +56,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  Cluster cluster = Cluster();
+  Cluster cluster = clusters[0];
   DateTime _date;
-  String _datestring;
-  String _timestring;
 
   @override
   Widget build(BuildContext context) {
@@ -150,19 +148,13 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
 
           DateTimePicker(
             onSaved: (DateTime date) {
-                  _date=date;
-                  setState((){});
+              _date = date;
+              setState(() {});
             },
             onSaved2: (DateTime time) {
-                  _date=DateTime(_date.year,_date.month,_date.day,time.hour,time.minute,time.second);
-                  setState(() {});
-            },
-            ),
-          FormField(
-            labelText: "Admin User Id",
-            validator: (String value) {},
-            onSaved: (String value) {
-              cluster.adminUserID = value;
+              _date = DateTime(_date.year, _date.month, _date.day, time.hour,
+                  time.minute, time.second);
+              setState(() {});
             },
           ),
 
@@ -171,7 +163,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                cluster.leavingTime=_date.millisecondsSinceEpoch;
+                cluster.leavingTime = _date.millisecondsSinceEpoch;
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .createClusterData(cluster);
                 // clusters.add(cluster);
@@ -213,12 +205,8 @@ class FormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
-
         cursorColor: Colors.teal,
-        
-
         initialValue: initVal,
-
         style: TextStyle(fontSize: 20),
         decoration: InputDecoration(
           labelText: labelText,
