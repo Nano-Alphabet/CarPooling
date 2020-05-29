@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/init',
         routes: {
           // '/init': (context) => RefreshPage(),
-          '/init': (context) => RefreshPage(),
+          '/init': (context) => HomePage(),
           '/sign': (context) => SignUp(),
           '/home': (context) => HomePage(),
         },
