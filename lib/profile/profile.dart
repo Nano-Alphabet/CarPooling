@@ -5,14 +5,24 @@ import 'package:uow/models/currentUser.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     CurrentUser user =
         Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
-    if(user==null){
-      return Center(
-        child: "User Not Found".text.make(),
+    if(user.user==null){
+      user.getCurrentUser();
+      return Scaffold(
+              body: Center(
+          child: "User Not Found,\n click to refresh".text.make().click((){setState(() {
+            
+          });}).make(),
+        ),
       );
     }
     return Scaffold(
