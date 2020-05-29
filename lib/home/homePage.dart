@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _scaffoldKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
-    var prov=Provider.of<CarPoolingProvider>(context, listen: false);
+    var prov=Provider.of<CarPoolingProvider>(context, listen: false).globalClustersMap;
     return Scaffold(
       /*appBar: AppBar(
           backgroundColor: Colors.transparent,
