@@ -24,7 +24,7 @@ class CarPoolingProvider with ChangeNotifier {
     currentUser = CurrentUser();
     currentUser.getCurrentUser();
     loadGlobalClusterData(force: true);
-    loadMyClustersHistoryData(force: true);
+    //loadMyClustersHistoryData(force: true);
   }
 
   //

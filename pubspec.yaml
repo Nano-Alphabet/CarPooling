@@ -65,7 +65,9 @@ dependencies:
   ## Flutter Web
   flutter_for_web: ^1.0.0
   flutter_for_web_ui: ^1.0.0
+  firebase_auth_web:
   firebase_core_web:
+  rflutter_alert: ^1.0.3
 
 dev_dependencies:
   flutter_test:

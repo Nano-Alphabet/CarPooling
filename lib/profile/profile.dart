@@ -3,12 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/models/currentUser.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CurrentUser user =
         Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
+    if(user==null){
+      return Center(
+        child: "User Not Found".text.make(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                     color: Colors.teal[900],
                   ),
                   title: Text(
-                    user.userName,
+                    user.userName??"--",
                     style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                   ),
                 )),
@@ -61,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                     color: Colors.teal[900],
                   ),
                   title: Text(
-                    user.phoneNo,
+                    user.phoneNo??"--",
                     style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                   ),
                 )),

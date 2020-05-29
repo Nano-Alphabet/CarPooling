@@ -119,7 +119,6 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
     });
 
     final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
     setState(() {
       isPhoneVerified = true;
       if (user != null) {
@@ -210,53 +209,44 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
           Text(
             '    Enter OTP :',
           ).text.bold.sm.make(),
-          Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: PinCodeTextField(
-                    autofocus: false,
-                    controller: _pinEditingController,
-                    hideCharacter: false,
-                    highlight: true,
-                    highlightColor: Colors.blue,
-                    defaultBorderColor: Colors.black,
-                    hasTextBorderColor: Colors.green,
-                    maxLength: 6,
-                    pinBoxWidth: MediaQuery.of(context).size.width * 0.09,
-                    pinBoxHeight: MediaQuery.of(context).size.width * 0.1,
-                    hasError: false,
-                    pinBoxOuterPadding: EdgeInsets.all(0),
-                    maskCharacter: "😎",
+          PinCodeTextField(
+            autofocus: false,
+            controller: _pinEditingController,
+            hideCharacter: false,
+            highlight: true,
+            highlightColor: Colors.blue,
+            defaultBorderColor: Colors.black,
+            hasTextBorderColor: Colors.green,
+            maxLength: 6,
+            pinBoxWidth: MediaQuery.of(context).size.width * 0.09,
+            pinBoxHeight: MediaQuery.of(context).size.width * 0.1,
+            hasError: false,
+            pinBoxOuterPadding: EdgeInsets.all(0),
+            maskCharacter: "😎",
 
-                    onTextChanged: (text) {
-                      setState(() {
-                        smsCode = text;
-                      });
-                    },
-                    onDone: (text) {
-                      setState(() {
-                        smsCode = text;
-                        isVerifyingOtp = true;
-                      });
-                      print("DONE $text");
-                      // TODO entered otp
-                      _signInWithPhoneNumber();
-                    },
-                    // pinCodeTextFieldLayoutType: PinCodeTextFieldLayoutType.AUTO_ADJUST_WIDTH,
+            onTextChanged: (text) {
+              setState(() {
+                smsCode = text;
+              });
+            },
+            onDone: (text) {
+              setState(() {
+                smsCode = text;
+                isVerifyingOtp = true;
+              });
+              print("DONE $text");
+              // TODO entered otp
+              _signInWithPhoneNumber();
+            },
+            // pinCodeTextFieldLayoutType: PinCodeTextFieldLayoutType.AUTO_ADJUST_WIDTH,
 
-                    wrapAlignment: WrapAlignment.spaceEvenly,
-                    pinBoxDecoration:
-                        ProvidedPinBoxDecoration.roundedPinBoxDecoration,
-                    pinTextStyle: TextStyle(fontSize: 15.0),
-                    pinTextAnimatedSwitcherTransition:
-                        ProvidedPinBoxTextAnimation.scalingTransition,
-                    pinTextAnimatedSwitcherDuration:
-                        Duration(milliseconds: 300),
-                  ),
-                ),
-              ]),
+            wrapAlignment: WrapAlignment.spaceEvenly,
+            pinBoxDecoration: ProvidedPinBoxDecoration.roundedPinBoxDecoration,
+            pinTextStyle: TextStyle(fontSize: 15.0),
+            pinTextAnimatedSwitcherTransition:
+                ProvidedPinBoxTextAnimation.scalingTransition,
+            pinTextAnimatedSwitcherDuration: Duration(milliseconds: 300),
+          ),
           isVerifyingOtp
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -318,12 +308,13 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Phone Login'),
-      content: isPhoneVerified
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Phone Login'),
+      ),
+      body: isPhoneVerified
           ? phoneVerifiedDisplay()
           : isOtpSent ? otpNumberDisplay() : phoneNumberDisplay(),
-      contentPadding: EdgeInsets.only(top: 15),
     );
   }
 }

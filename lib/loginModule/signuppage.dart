@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'widgets/phoneVerificationPopup.dart';
 
@@ -15,6 +17,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool isSignUp = false;
+  FirebaseUser user;
   // to hold values of phone no. input
   TextEditingController userPhoneConte = TextEditingController();
 
@@ -31,7 +34,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   // This Function performs sigin operation.
-  void _performSignIn() async {
+  Future<void> _performSignIn() async {
     // condition check : if correct phone no. is entered.
     if (userPhoneConte.text == "" ||
         userPhoneConte.text.length < 10 ||
@@ -44,65 +47,69 @@ class _SignUpState extends State<SignUp> {
               (isSignUp ? "and UserName" : ""));
       return;
     }
-
     FirebaseUser _response; // var to store sign-Ined user
-    await showDialog(
-        context: context,
-        builder: (context) {
-          // in response we get the firebase user object, which is set equal to _response
-          return PhoneVerificationPopup(
-            phoneNo: userPhoneConte.text,
-            callBack: (FirebaseUser status) {
-              _response = status;
-            },
-          );
-        },
-        barrierDismissible: false);
+    Fluttertoast.showToast(msg: 'at response');
+    if (kIsWeb) {
+      Fluttertoast.showToast(msg: 'checked is web', timeInSecForIosWeb: 5);
+      _response = (await FirebaseAuth.instance.signInAnonymously()).user;
+    } else {
+      await showDialog(
+          context: context,
+          builder: (context) {
+            // in response we get the firebase user object, which is set equal to _response
+            return PhoneVerificationPopup(
+              phoneNo: userPhoneConte.text,
+              callBack: (FirebaseUser status) {
+                _response = status;
+              },
+            );
+          },
+          barrierDismissible: true);
+    }
 
     if (_response.displayName == null || _response.displayName == "") {
       setState(() {
         isSignUp = true;
       });
-      await showDialog(
-          context: context,
-          builder: (context) {
-            // in response we get the firebase user object, which is set equal to _response
-            return AlertDialog(
-              title: "Please Enter User Name".text.make(),
-              content: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  cursorColor: Colors.greenAccent,
-                  style: TextStyle(fontSize: 25),
-                  onChanged: (val) {
-                    setState(() {
-                      userName = val;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'NAME',
-                    labelStyle: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
+      Fluttertoast.showToast(
+          msg: 'Display Name not found', timeInSecForIosWeb: 5);
+      Alert(
+        title: "Please Enter User Name",
+        context: context,
+        type: AlertType.info,
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            cursorColor: Colors.greenAccent,
+            style: TextStyle(fontSize: 25),
+            onChanged: (val) {
+              setState(() {
+                userName = val;
+              });
+            },
+            decoration: InputDecoration(
+              labelText: 'NAME',
+              labelStyle: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
                 ),
               ),
-              actions: [
-                FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: "OK".text.make())
-              ],
-            );
-          },
-          barrierDismissible: false);
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.green),
+              ),
+            ),
+          ),
+        ),
+        buttons: [
+          DialogButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: "OK".text.make())
+        ],
+      );
+
       if (userName == "") {
         return;
       }
@@ -111,6 +118,7 @@ class _SignUpState extends State<SignUp> {
     // found user in response
     if (_response != null) {
       // save the current user in memory and current state
+      Fluttertoast.showToast(msg: 'Updating user', timeInSecForIosWeb: 5);
       UserUpdateInfo info = new UserUpdateInfo();
       info.displayName = userName;
       if (isSignUp) await _response.updateProfile(info);
@@ -122,6 +130,7 @@ class _SignUpState extends State<SignUp> {
 
       // navigate to home screen
       Navigator.pushReplacementNamed(context, '/home');
+      return;
     }
 
     // User not found flash a message
@@ -227,9 +236,9 @@ class _SignUpState extends State<SignUp> {
             // width: 100,
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 print('hello2');
-                _performSignIn();
+                await _performSignIn();
               },
               child: Material(
                 borderRadius: BorderRadius.circular(20.0),
