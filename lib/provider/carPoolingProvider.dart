@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uow/errorHandlerModule/errorDialouges.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/models/currentUser.dart';
 import 'package:uow/models/request.dart';
@@ -72,24 +73,24 @@ class CarPoolingProvider with ChangeNotifier {
     return "done";
   }
 
-  // Future<String> loadRequestData({String clusterId, bool force = false}) async {
-  //   if (force || myClustersHistoryMap[clusterId] != null)
-  //     await Firestore.instance
-  //         .collection("clusters")
-  //         .document(clusterId)
-  //         .get()
-  //         .then((value) {
-  //       myClustersHistoryMap.addAll({
-  //         value.documentID: Cluster.fromMap(value.data),
-  //       });
-  //       notifyListeners();
-  //     });
-  //   print("Data Loaded from firebase");
-  //   return "done";
-  // }
+  Future<String> loadRequestData({String clusterId, bool force = false}) async {
+    if (force || myClustersHistoryMap[clusterId] != null)
+      await Firestore.instance
+          .collection("clusters")
+          .document(clusterId)
+          .get()
+          .then((value) {
+        myClustersHistoryMap.addAll({
+          value.documentID: Cluster.fromMap(value.data),
+        });
+        notifyListeners();
+      });
+    print("Data Loaded from firebase");
+    return "done";
+  }
 
-  //Using other version of loadRequestData
-
+  //VERSION Using other version of loadRequestData
+/*
   Future<String> loadRequestData({String clusterId, bool force = false}) async {
     if (force || myClustersHistoryMap[clusterId] != null)
       await Firestore.instance
@@ -108,7 +109,7 @@ class CarPoolingProvider with ChangeNotifier {
     print("Requests Loaded from firebase");
     return "done";
   }
-
+*/
   //
   //SETERS ---------------------------
 
@@ -128,20 +129,48 @@ class CarPoolingProvider with ChangeNotifier {
     return "done";
   }
 
-  // Future<String> createClusterJoinRequest(
-  //     {@required Request request, @required String clusterID}) async {
-  //   await Firestore.instance
-  //       .collection("clusters")
-  //       .document(clusterID)
-  //       .setData({
-  //     "requests": {currentUser.uid: request.toMap()}
-  //   }, merge: true).catchError(onError);
-  //   notifyListeners();
-  //   print("Data uploaded to firebase");
-  //   return "done";
-  // }
+  Future<String> createClusterJoinRequest({@required String clusterID}) async {
+    if(clusterID == null ||clusterID == ""){
+      Fluttertoast.showToast(msg: "Cluster Id is not correct");
+      return "not Done";
+    }
+    Request request = Request.fromMap({});
+    request.isAccepted = false;
+    request.phoneNo = currentUser.phoneNo;
+    request.requestUserID = currentUser.uid;
+    request.requestUserName = currentUser.userName.toString();
+    request.requestTime = DateTime.now().millisecondsSinceEpoch;
+    await Firestore.instance
+        .collection("clusters")
+        .document(clusterID)
+        .setData({
+      "requests": {currentUser.uid: request.toMap()}
+    }, merge: true).catchError(onError);
+    notifyListeners();
+    print("Data uploaded to firebase");
+    return "done";
+  }
 
-  // other version with separate request table
+  Future<String> acceptUserRequest(
+      {@required String clusterID, @required String requestUserId}) async {
+    await Firestore.instance
+        .collection("clusters")
+        .document(clusterID)
+        .setData({
+      "requests": {
+        requestUserId: {
+          "isAccepted": true,
+        }
+      }
+    }, merge: true).catchError(onError);
+    notifyListeners();
+    Fluttertoast.showToast(msg: "Request Made",webShowClose: true);
+    print("Data uploaded to firebase");
+    return "done";
+  }
+
+  //VERSION other version with separate request table
+  /*
   Future<String> createClusterJoinRequest({@required String clusterId}) async {
     Request request = Request.fromMap({});
     request.isAccepted = false;
@@ -158,67 +187,18 @@ class CarPoolingProvider with ChangeNotifier {
     notifyListeners();
     print("Request uploaded to firebase");
     return "done";
-  }
+  }*/
 
   //
   //VALIDATORS -----------------------
 
   //
-  //USER ----------------------------NOTE----------------
-  //USER IS SHIFTED TO A NEW CLASS
-
-  /* Future<String> signUpUser({@required CurrentUser user}) async {
-    DocumentReference docRef = await Firestore.instance
-        .collection("users")
-        .add(user.toMap())
-        .catchError(onError);
-    currentUser = user;
-    currentUser.uid = docRef.documentID;
-    await currentUser.setCurrentData();
-    notifyListeners();
-
-    print("Sign up to firebase");
-    return "done";
-  }
-
-  Future<bool> signInUser({@required CurrentUser user}) async {
-    QuerySnapshot docRef = await Firestore.instance
-        .collection("users")
-        .where("phoneNo", isEqualTo: user.phoneNo)
-        .where("password", isEqualTo: user.password)
-        .getDocuments()
-        .catchError((err) {
-      onError(err);
-      return false;
-    });
-    if (docRef.documents.length == 0) {
-      onError("No user Found!");
-      return false;
-    }
-    currentUser = CurrentUser.fromMap(docRef.documents[0].data);
-    currentUser.uid = docRef.documents[0].documentID;
-    await currentUser.setCurrentData();
-    notifyListeners();
-    return true;
-  }
-
-  Future<String> updateUser({@required CurrentUser user}) async {
-    await Firestore.instance
-        .collection("users")
-        .document(user.uid)
-        .setData(user.toMap(), merge: true)
-        .catchError(onError);
-    currentUser = user;
-    await currentUser.setCurrentData();
-    notifyListeners();
-
-    print("Data Loaded from firebase");
-    return "done";
-  }
-*/
-  //
   //ERROR Handling --------------------------
   void onError(dynamic err) {
-    Fluttertoast.showToast(msg: err.toString());
+    Fluttertoast.showToast(
+        msg: err.toString(),
+        timeInSecForIosWeb: 2,
+        toastLength: Toast.LENGTH_LONG,
+        webShowClose: true);
   }
 }

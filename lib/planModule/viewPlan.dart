@@ -160,9 +160,9 @@ class ViewPlan extends StatelessWidget {
                                   Provider.of<CarPoolingProvider>(context,
                                           listen: false)
                                       .createClusterJoinRequest(
-                                          clusterId: cluster.clusterID);
+                                          clusterID: cluster.clusterID);
                                 },
-                                child: Text("Send join request"),
+                                child: Text("SSend join request"),
                               )),
                         )
                       : Container(),
