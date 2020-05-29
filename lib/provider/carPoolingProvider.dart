@@ -149,14 +149,11 @@ class CarPoolingProvider with ChangeNotifier {
     request.requestUserID = currentUser.uid;
     request.requestUserName = currentUser.userName.toString();
     request.requestTime = DateTime.now().millisecondsSinceEpoch;
-    request.clusterID = clusterId;
-    request.clusterAdminId = globalClustersMap[clusterId].adminUserID;
 
     DocumentReference docRef = await Firestore.instance
         .collection("request")
         .add(request.toMap())
         .catchError(onError);
-    request.requestId = docRef.documentID;
     myRequestHistoryMap[docRef.documentID] = request;
     notifyListeners();
     print("Request uploaded to firebase");
