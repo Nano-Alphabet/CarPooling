@@ -6,7 +6,7 @@ import 'package:uow/temp/bottomButtons.dart';
 import 'package:uow/tempNavigator.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:uow/Notification/notificationpage.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -285,10 +285,16 @@ class _SearchBarState extends State<SearchBar> {
                     color: Colors.amberAccent,
                     size: 35,
                   ),
-                  onPressed: () => showDialog(
-                    context: context,
-                    child: _dialogBuilder(),
-                  ),
+                  // onPressed: () => showDialog(
+                  //   context: context,
+                  //   child: _dialogBuilder(),
+                  // ),
+                  onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => NotificationPage(),));
+              },
                 ),
               ),
             ),
