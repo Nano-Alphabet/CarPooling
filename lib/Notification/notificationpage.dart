@@ -11,8 +11,7 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return DefaultTabController(
         length: choices.length,
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -39,7 +38,7 @@ class _NotificationPageState extends State<NotificationPage> {
             }).toList(),
           ),
         ),
-      ),
+      
     );
   }
 }

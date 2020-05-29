@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/profile/profile.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 import 'package:uow/temp/bottomButtons.dart';
 import 'package:uow/tempNavigator.dart';
 import 'package:flutter/rendering.dart';
@@ -16,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _scaffoldKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
+    var prov=Provider.of<CarPoolingProvider>(context, listen: false);
     return Scaffold(
       /*appBar: AppBar(
           backgroundColor: Colors.transparent,
