@@ -44,8 +44,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
 
   void _addMarkerFromCoord(GeoPoint point) {
     final MarkerId markerId = MarkerId(point.latitude.toString());
-    LatLng _center;
-    _center = LatLng(point.latitude, point.longitude);
+    LatLng _center = LatLng(point.latitude, point.longitude);
 
     if (_center == null) return;
     // creating a new MARKER
@@ -83,11 +82,12 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             padding: EdgeInsets.only(top: 100),
             markers: Set<Marker>.of([
               Marker(
-                  markerId: MarkerId('my location'),
-                  position: center,
-                  //LatLng(widget.point.latitude, widget.point.longitude),
-                  infoWindow: InfoWindow(title: 'Location'),
-                  icon: BitmapDescriptor.defaultMarker)
+                markerId: MarkerId('my location'),
+                position: center,
+                //LatLng(widget.point.latitude, widget.point.longitude),
+                infoWindow: InfoWindow(title: 'Location'),
+                icon: BitmapDescriptor.defaultMarker,
+              )
             ]),
             indoorViewEnabled: true,
             mapType: isNormalMap ? MapType.normal : MapType.hybrid,
@@ -102,7 +102,9 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
               });
             },
             initialCameraPosition: CameraPosition(
-                target: LatLng(22.528380, 75.920596), zoom: zoom),
+              target: center,
+              zoom: zoom,
+            ),
           ),
           Positioned(
             child: SafeArea(
@@ -110,9 +112,10 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                 clipBehavior: Clip.hardEdge,
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(),
-                    borderRadius: BorderRadius.circular(15)),
+                  color: Colors.white,
+                  border: Border(),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: TextField(
                   showCursor: true,
                   controller: conte,
@@ -147,18 +150,20 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             ),
           ),
           Positioned(
-              top: 100,
-              left: 10,
-              child: IconButton(
-                  icon: Icon(
-                    Icons.map,
-                    color: isNormalMap ? Colors.green : Colors.white,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isNormalMap = !isNormalMap;
-                    });
-                  })),
+            top: 100,
+            left: 10,
+            child: IconButton(
+              icon: Icon(
+                Icons.map,
+                color: isNormalMap ? Colors.green : Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  isNormalMap = !isNormalMap;
+                });
+              },
+            ),
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -181,7 +186,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                 child: "SAVE".text.bold.white.make(),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
