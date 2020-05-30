@@ -57,7 +57,6 @@ dependencies:
   ## Location/Maps
   geolocator: #Device Location
   google_maps_flutter:
-  location: ^1.4.1
   flutter_google_maps:
   geoflutterfire:
   geocoder:
