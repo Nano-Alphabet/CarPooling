@@ -46,7 +46,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            elevation: 4.0,
+            elevation: 0,
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
@@ -84,7 +84,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                               color: Colors.teal,
                             ),
                             Text(
-                              "$datestring",
+                              datestring??"Date",
                               style: TextStyle(
                                 color: Colors.teal,
                                 fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
           RaisedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
-            elevation: 4.0,
+            elevation: 0,
             onPressed: () {
               DatePicker.showTimePicker(
                 context,
@@ -151,7 +151,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                               size: 18.0,
                               color: Colors.teal,
                             ),
-                            Text("$timestring",
+                            Text(timestring??"Time",
                                 style: TextStyle(
                                   color: Colors.teal,
                                   fontWeight: FontWeight.bold,

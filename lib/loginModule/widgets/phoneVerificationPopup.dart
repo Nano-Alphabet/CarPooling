@@ -186,7 +186,7 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
                   child: Text('Cancel')),
               FlatButton(
                   textColor: Colors.black,
-                  color: Colors.lime,
+                  color: Colors.cyan,
                   onPressed: () {
                     //make sms call
                     _verifyPhone();
@@ -216,7 +216,7 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
             highlight: true,
             highlightColor: Colors.blue,
             defaultBorderColor: Colors.black,
-            hasTextBorderColor: Colors.green,
+            hasTextBorderColor: Colors.cyan,
             maxLength: 6,
             pinBoxWidth: MediaQuery.of(context).size.width * 0.09,
             pinBoxHeight: MediaQuery.of(context).size.width * 0.1,
@@ -269,7 +269,7 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
                   child: Text('Cancel')),
               FlatButton(
                   textColor: Colors.black,
-                  color: Colors.lime,
+                  color: Colors.cyan,
                   onPressed: () {
                     // TODO enter otp
                     setState(() {
@@ -294,7 +294,7 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
           Text('Phone Number Verified :)'),
           FlatButton(
               textColor: Colors.black,
-              color: Colors.lime,
+              color: Colors.cyan,
               onPressed: () {
                 widget.callBack(_user);
 
@@ -308,11 +308,9 @@ class _PhoneVerificationPopupState extends State<PhoneVerificationPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Phone Login'),
-      ),
-      body: isPhoneVerified
+    return AlertDialog(
+      title: Text('Phone Login'),
+      content: isPhoneVerified
           ? phoneVerifiedDisplay()
           : isOtpSent ? otpNumberDisplay() : phoneNumberDisplay(),
     );

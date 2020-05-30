@@ -7,6 +7,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:velocity_x/velocity_x.dart';
 
 import 'widgets/phoneVerificationPopup.dart';
 
@@ -143,137 +144,164 @@ class _SignUpState extends State<SignUp> {
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
       extendBody: true,
-      body: Flex(
-        direction: Axis.vertical,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Stack(
+      body: Container(
+        decoration: BoxDecoration(
+            color: Colors.indigo,
+            gradient: LinearGradient(
+                end: Alignment.bottomCenter,
+                begin: Alignment.topCenter,
+                stops: [
+                  0,
+                  1
+                ],
+                colors: [
+                  Color.fromRGBO(63, 0, 129, 1),
+                  Color.fromRGBO(110, 97, 171, 1)
+                ])),
+        child: Flex(
+          direction: Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Stack(
+                  fit: StackFit.loose,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(25, 50, 0, 0),
+                      child: Text(
+                        isSignUp ? 'Signup' : "Log-in",
+                        style: GoogleFonts.balooDa(
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 80.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(262, 70, 0, 0),
+                      child: Text(
+                        '.',
+                        style: GoogleFonts.balooDa(
+                          textStyle: TextStyle(
+                            fontSize: 80.0,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              padding:
+                  EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+              margin: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 30, 0, 0),
-                    child: Text(
-                      isSignUp ? 'Signup' : "Log-in",
-                      style: GoogleFonts.balooDa(
+                  isSignUp
+                      ? TextField(
+                          cursorColor: Colors.greenAccent,
+                          style: TextStyle(fontSize: 25),
+                          onChanged: (val) {
+                            setState(() {
+                              userName = val;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'NAME',
+                            labelStyle: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                                color: Colors.indigo,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  SizedBox(height: 20),
+                  TextField(
+                    style: TextStyle(fontSize: 25),
+                    controller: userPhoneConte,
+                    maxLength: 10,
+                    decoration: InputDecoration(
+                      labelText: 'PHONE',
+                      prefixText: "+91",
+                      labelStyle: GoogleFonts.montserrat(
                         textStyle: TextStyle(
-                          fontSize: 80.0,
+                          fontSize: 18,
+                          color: Colors.indigo,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green),
+                      ),
+                    ),
+                    cursorColor: Colors.greenAccent,
+                  ),
+                  Container(
+                    height: 45,
+                    // width: 100,
+                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    child: GestureDetector(
+                      onTap: () async {
+                        print('hello2');
+                        await _performSignIn();
+                      },
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Color.fromRGBO(110, 50, 171, 1),
+                        elevation: 7.0,
+                        child: Center(
+                          child: Text(
+                            isSignUp ? 'SIGNUP' : "LOGIN",
+                            style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(262, 70, 0, 0),
-                    child: Text(
-                      '.',
-                      style: GoogleFonts.balooDa(
-                        textStyle: TextStyle(
-                          fontSize: 80.0,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Temporary Back Button for Back Navigation
                 ],
               ),
             ),
-          ),
-
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-              children: <Widget>[
-                isSignUp
-                    ? TextField(
-                        cursorColor: Colors.greenAccent,
-                        style: TextStyle(fontSize: 25),
-                        onChanged: (val) {
-                          setState(() {
-                            userName = val;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'NAME',
-                          labelStyle: GoogleFonts.montserrat(
+            Padding(
+              padding: const EdgeInsets.all(8.0).copyWith(top: 0, bottom: 20),
+              child: Center(
+                child: FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        isSignUp = !isSignUp;
+                      });
+                    },
+                    child: Text(!isSignUp ? "Sign-Up" : "Log-In",
+                        style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                        ),
-                      )
-                    : Container(),
-                SizedBox(height: 20),
-                TextField(
-                  style: TextStyle(fontSize: 25),
-                  controller: userPhoneConte,
-                  maxLength: 10,
-                  decoration: InputDecoration(
-                    labelText: 'PHONE',
-                    prefixText: "+91",
-                    labelStyle: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
-                  cursorColor: Colors.greenAccent,
-                ),
-              ],
-            ),
-          ),
-          Expanded(child: Container()), //adds space
-          Container(
-            height: 45,
-            // width: 100,
-            margin: EdgeInsets.symmetric(horizontal: 30),
-            child: GestureDetector(
-              onTap: () async {
-                print('hello2');
-                await _performSignIn();
-              },
-              child: Material(
-                borderRadius: BorderRadius.circular(20.0),
-                shadowColor: Colors.greenAccent,
-                color: Colors.green,
-                elevation: 7.0,
-                child: Center(
-                  child: Text(
-                    isSignUp ? 'SIGNUP' : "LOGIN",
-                    style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ))).text.white.make()),
               ),
             ),
-          ),
-          // Temporary Back Button for Back Navigation
-          Padding(
-            padding: const EdgeInsets.all(8.0).copyWith(bottom: 20),
-            child: Center(
-              child: FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      isSignUp = !isSignUp;
-                    });
-                  },
-                  child: Text(!isSignUp ? "Sign-Up" : "Log-In")),
-            ),
-          ),
-        ],
+            //adds space
+          ],
+        ),
       ),
     );
   }

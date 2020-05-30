@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 // import 'package:flutter_for_web/cupertino.dart';
@@ -27,6 +28,11 @@ class _NotificationPageState extends State<NotificationPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Requests'),
+          flexibleSpace: Container(
+            decoration : BoxDecoration(
+              gradient: grat,
+            )
+          ),
           centerTitle: true,
           bottom: TabBar(
             isScrollable: true,
@@ -66,74 +72,6 @@ class Choice {
   final String title;
 }
 
-class Entry {
-  Entry(
-      {this.carNumber,
-      this.cost,
-      this.finLoc,
-      this.firstName,
-      this.initLoc,
-      this.secondName,
-      this.isApproved,
-      this.phone});
-  String firstName;
-  String secondName;
-  String initLoc;
-  String finLoc;
-  int cost;
-  String carNumber;
-  int phone;
-  bool isApproved;
-}
-
-List<Entry> entries = <Entry>[
-  Entry(
-    firstName: 'Ruchir',
-    secondName: 'Mehta',
-    carNumber: 'XY123',
-    cost: 211,
-    finLoc: 'Dagla',
-    initLoc: 'Kheda',
-    isApproved: true,
-  ),
-  Entry(
-    firstName: 'Ruchir',
-    secondName: 'Mehta',
-    carNumber: 'XY123',
-    cost: 211,
-    finLoc: 'Dagla',
-    initLoc: 'Kheda',
-    isApproved: true,
-  ),
-  Entry(
-    firstName: 'Ruchir',
-    secondName: 'Mehta',
-    carNumber: 'XY123',
-    cost: 211,
-    finLoc: 'Dagla',
-    initLoc: 'Kheda',
-    isApproved: false,
-  ),
-  Entry(
-    firstName: 'Ruchir',
-    secondName: 'Mehta',
-    carNumber: 'XY123',
-    cost: 211,
-    finLoc: 'Dagla',
-    initLoc: 'Kheda',
-    isApproved: false,
-  ),
-  Entry(
-    firstName: 'Ruchir',
-    secondName: 'Mehta',
-    carNumber: 'XY123',
-    cost: 211,
-    finLoc: 'Dagla',
-    initLoc: 'Kheda',
-    isApproved: true,
-  ),
-];
-
 class EntryCard extends StatefulWidget {
   final Cluster entry;
   final String uid;
@@ -148,8 +86,7 @@ class _EntryCardState extends State<EntryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 50,
-      shadowColor: Colors.black,
+      elevation: 2,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25))),
       child: Column(
@@ -363,7 +300,6 @@ class _MyReqState extends State<MyReq> {
 
     return Scrollbar(
       child: Container(
-        color: Colors.blueAccent,
         child: ListView(
           children: addEntries(context),
         ),
@@ -398,7 +334,6 @@ class _JoinReqState extends State<JoinReq> {
 
     return Scrollbar(
       child: Container(
-        color: Colors.blueAccent,
         child: ListView(
           children: addEntries(context),
         ),

@@ -68,195 +68,180 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   TextEditingController contefin;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
-          FormField(
-            labelText: "First Name",
-            initVal: cluster.adminName,
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter your name';
-              }
-              return null;
-            },
-            onSaved: (String value) {
-              cluster.adminName = value;
-            },
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // FormField(
-                //   labelText: "Pickup Point",
-                //   validator: (String value) {},
-                //   initVal: cluster.initialLocation,
-                //   onSaved: (String value) {
-                //     cluster.initialLocation =
-                //         value; //TODO NAvigate to Slect Location Page
-                //   },
-                // ),
-                // TextField(
-                //   controller: conte,
-                // ),
-                Text(
-                  "From: ",
-                  style: TextStyle(fontSize: 20),
-                ),
-                RaisedButton(
-                  child: Text(initlocString ?? "SET"),
-                  color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: initlocString != null
-                      ? null
-                      : () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  LoadLocationMap(
-                                onSaved: (LatLng loc, String str) {
-                                  cluster.startPoint = loc;
-                                  initlocString = "Done";
-                                  Navigator.pop(context);
-                                  setState(() {});
-                                },
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
+            FormField(
+              labelText: "First Name",
+              initVal: cluster.adminName,
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
+              onSaved: (String value) {
+                cluster.adminName = value;
+              },
+            ),
+
+            FormField(
+              labelText: "Phone No",
+              validator: (String value) {},
+              initVal: cluster.phoneNo,
+              onSaved: (String value) {
+                cluster.phoneNo = value;
+              },
+            ),
+            FormField(
+              labelText: "Cost",
+              validator: (String value) {},
+              initVal: cluster.cost,
+              onSaved: (String value) {
+                cluster.cost = value;
+              },
+            ),
+            FormField(
+              labelText: "Number of Passengers",
+              validator: (String value) {},
+              initVal: cluster.noOfPassengers.toString(),
+              onSaved: (String value) {
+                cluster.noOfPassengers = int.parse(value);
+              },
+            ),
+            FormField(
+              labelText: "Vehicle Number",
+              validator: (String value) {},
+              initVal: cluster.carNo,
+              onSaved: (String value) {
+                cluster.carNo = value;
+              },
+            ),
+            FormField(
+              labelText: "Car Type",
+              validator: (String value) {},
+              initVal: cluster.carType,
+              onSaved: (String value) {
+                cluster.carType = value;
+              },
+            ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "From: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  RaisedButton(
+                    child: Text(initlocString ?? "SET"),
+                    color: Colors.lightGreen,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    onPressed: initlocString != null
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    LoadLocationMap(
+                                  onSaved: (LatLng loc, String str) {
+                                    cluster.startPoint = loc;
+                                    initlocString = "Done";
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                )
-              ],
-            ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // FormField(
-                //   labelText: "Drop Point",
-                //   validator: (String value) {},
-                //   initVal: cluster.finalLocation,
-                //   onSaved: (String value) {
-                //     cluster.finalLocation = value;
-                //     //TODO NAvigate to Slect Location Page
-                //   },
-                // ),
-                Text(
-                  "To: ",
-                  style: TextStyle(fontSize: 20),
-                ),
-                RaisedButton(
-                  child: Text(finlocString??"SET"),
-                  color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: finlocString != null
-                      ? null
-                      :() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => LoadLocationMap(
-                          onSaved: (LatLng loc, String str) {
-                            cluster.endPoint = loc;
-                            finlocString = "Done";
-
-                            Navigator.pop(context);
-                            setState(() {});
+                            );
                           },
-                        ),
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
-          FormField(
-            labelText: "Phone No",
-            validator: (String value) {},
-            initVal: cluster.phoneNo,
-            onSaved: (String value) {
-              cluster.phoneNo = value;
-            },
-          ),
-          FormField(
-            labelText: "Cost",
-            validator: (String value) {},
-            initVal: cluster.cost,
-            onSaved: (String value) {
-              cluster.cost = value;
-            },
-          ),
-          FormField(
-            labelText: "Number of Passengers",
-            validator: (String value) {},
-            initVal: cluster.noOfPassengers.toString(),
-            onSaved: (String value) {
-              cluster.noOfPassengers = int.parse(value);
-            },
-          ),
-          FormField(
-            labelText: "Vehicle Number",
-            validator: (String value) {},
-            initVal: cluster.carNo,
-            onSaved: (String value) {
-              cluster.carNo = value;
-            },
-          ),
-          FormField(
-            labelText: "Car Type",
-            validator: (String value) {},
-            initVal: cluster.carType,
-            onSaved: (String value) {
-              cluster.carType = value;
-            },
-          ),
-
-          DateTimePicker(
-            onSaved: (DateTime date) {
-              _date = date;
-              setState(() {});
-            },
-            onSaved2: (DateTime time) {
-              _date = DateTime(_date.year, _date.month, _date.day, time.hour,
-                  time.minute, time.second);
-              setState(() {});
-            },
-          ),
-
-          RaisedButton(
-            color: Colors.blueAccent,
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                cluster.leavingTime = _date.millisecondsSinceEpoch;
-                cluster.initialLocation = initlocString;
-                cluster.finalLocation = finlocString;
-                Provider.of<CarPoolingProvider>(context, listen: false)
-                    .createClusterData(cluster);
-                // clusters.add(cluster);
-                _showDialog();
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => JoinPlan(cluster: this.cluster)));
-              }
-            },
-            child: Text(
-              'Create Plan',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "To: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  RaisedButton(
+                    child: Text(finlocString ?? "SET"),
+                    color: Colors.lightGreen,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    onPressed: finlocString != null
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    LoadLocationMap(
+                                  onSaved: (LatLng loc, String str) {
+                                    cluster.endPoint = loc;
+                                    finlocString = "Done";
+
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                  )
+                ],
+              ),
+            ),
+            DateTimePicker(
+              onSaved: (DateTime date) {
+                _date = date;
+                setState(() {});
+              },
+              onSaved2: (DateTime time) {
+                _date = DateTime(_date.year, _date.month, _date.day, time.hour,
+                    time.minute, time.second);
+                setState(() {});
+              },
+            ),
+
+            RaisedButton(
+              color: Colors.blueAccent,
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  cluster.leavingTime = _date.millisecondsSinceEpoch;
+                  cluster.initialLocation = initlocString;
+                  cluster.finalLocation = finlocString;
+                  Provider.of<CarPoolingProvider>(context, listen: false)
+                      .createClusterData(cluster);
+                  // clusters.add(cluster);
+                  _showDialog();
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => JoinPlan(cluster: this.cluster)));
+                }
+              },
+              child: Text(
+                'Create Plan',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

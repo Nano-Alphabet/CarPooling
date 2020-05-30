@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uow/LocationModule/clusterLocationPage.dart';
+import 'package:uow/home/drawer.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/loginModule/signuppage.dart';
@@ -50,70 +52,7 @@ class _HomePageState extends State<HomePage> {
               }),
         ),*/
       key: _scaffoldKey,
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              height: 75.0,
-              child: DrawerHeader(
-                child: Center(
-                  child: Text(
-                    'MySelf',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(color: Colors.blueGrey),
-                margin: EdgeInsets.all(0.0),
-                padding: EdgeInsets.all(0.0),
-              ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => ProfilePage()));
-              },
-            ),
-            ListTile(
-              title: Text('Sign Up'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => SignUp()));
-              },
-            ),
-            ListTile(
-              title: Text('Temp Page'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => TempNavigator()));
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -218,9 +157,12 @@ class _SearchBarState extends State<SearchBar> {
           children: <Widget>[
             Material(
               color: Colors.indigo, // button color
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(10),
+                    topRight: Radius.circular(10),
                     bottomLeft: Radius.circular(50)),
               ),
               elevation: 5,
@@ -239,21 +181,23 @@ class _SearchBarState extends State<SearchBar> {
             Material(
               elevation: 5,
               child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
+                clipBehavior: Clip.hardEdge,
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.5,
+
+                decoration: BoxDecoration(
                     color: Colors.white,
-                  ),
-                  child: "Unite On Wheels"
+                   ),
+                child:
+                    /*"Unite On Wheels"
                       .text
                       .textStyle(GoogleFonts.balooDa(textStyle: TextStyle()))
                       .size(20)
-                      .make()
-                  /* TextField(
+                      .make()*/
+
+                    TextField(
                   showCursor: true,
                   controller: TextEditingController(text: "Unite On Wheels"),
-                  style: GoogleFonts.balooDa(textStyle: TextStyle()),
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   maxLines: 1,
@@ -281,14 +225,16 @@ class _SearchBarState extends State<SearchBar> {
                   onChanged: (val) {
                     setState(() {});
                   },
-                ),*/
-                  ),
+                ),
+              ),
             ),
             Material(
               color: Colors.indigo, // button color
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(50),
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(50)),
               ),
               elevation: 5,
