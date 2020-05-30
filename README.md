@@ -18,6 +18,7 @@
         <li>Namani Sreeharsh</li>
         <li>Shaikh Ubaid</li>
     </ul>
+    <p>Link to <a href="https://docs.google.com/document/d/1yn4LxVR5EqAwksHoRDGN7KTVUdxjvYIg1bmaGJej-Ws/">Software Requirements Specification (SRS)</a></p>
     <br>
     <h2>Under the guidance of</h2>
     <h3>Dr Puneet Gupta</h3>
