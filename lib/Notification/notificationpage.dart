@@ -181,20 +181,85 @@ class _EntryCardState extends State<EntryCard> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("From: ${entry.initialLocation}",
-                          style: TextStyle(fontSize: 15)),
-                      Text("To: ${entry.finalLocation}",
-                          style: TextStyle(fontSize: 15)),
+                      Container(
+                        height: 25,
+                        width: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  color: Colors.transparent,
+                                  child: Text(
+                                    "From: ${entry.initialLocation}",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 25,
+                        width: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  color: Colors.transparent,
+                                  child: Text(
+                                    "To: ${entry.finalLocation}",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         height: 3,
                       ),
                       Container(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            "Rs: ${entry.cost}",
-                            style: TextStyle(fontSize: 32),
-                          ),
+                        height: 40,
+                        width: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  color: Colors.transparent,
+                                  child: Text(
+                                    "Rs: ${entry.cost}",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize: 35,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
