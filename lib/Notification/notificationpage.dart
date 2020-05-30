@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
@@ -231,7 +232,9 @@ class _EntryCardState extends State<EntryCard> {
                                   BorderRadius.all(Radius.circular(8))),
                         )
                       : FlatButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             Provider.of<CarPoolingProvider>(context, listen: false).acceptUserRequest(clusterID: entry.clusterID, requestUserId: widget.uid).then((value) => Fluttertoast.showToast(msg: "Request accepted"));
+                          },
                           child: Row(
                             children: <Widget>[
                               Text('Approve',
