@@ -15,13 +15,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     CurrentUser user =
         Provider.of<CarPoolingProvider>(context, listen: false).currentUser;
-    if(user.user==null){
+    if (user.user == null) {
       user.getCurrentUser();
       return Scaffold(
-              body: Center(
-          child: "User Not Found,\n click to refresh".text.make().click((){setState(() {
-            
-          });}).make(),
+        body: Center(
+          child: "User Not Found,\n click to refresh".text.make().click(() {
+            setState(() {});
+          }).make(),
         ),
       );
     }
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.teal[900],
                   ),
                   title: Text(
-                    user.userName??"--",
+                    user.userName ?? "--",
                     style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                   ),
                 )),
@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.teal[900],
                   ),
                   title: Text(
-                    user.phoneNo??"--",
+                    user.phoneNo ?? "--",
                     style: TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
                   ),
                 )),

@@ -16,8 +16,7 @@ class CarPoolingProvider with ChangeNotifier {
   *this will help us in accessing clusters more effectively*/
   Map<String, Cluster> globalClustersMap = {};
   Map<String, Cluster> myClustersHistoryMap = {};
-  Map<String, Request> requestsMap = {};
-  Map<String, Request> myRequestHistoryMap = {};
+  Map<String, Cluster> myRequestHistoryMap = {};
 
   //
   //INIT -----------------------------
@@ -25,20 +24,16 @@ class CarPoolingProvider with ChangeNotifier {
     currentUser = CurrentUser();
     currentUser.getCurrentUser();
     loadGlobalClusterData(force: true);
-    //loadMyClustersHistoryData(force: true);
+    loadMyClustersHistoryData(force: true);
   }
 
   //
   //LOADERS --------------------------
 
   Future<String> loadGlobalClusterData({bool force = false}) async {
-    if (force || globalClustersMap.length == 0)
+    if (force || globalClustersMap.length == 0) {
       await Firestore.instance
           .collection("clusters")
-          /*.where("leavingTime",
-              isGreaterThan: DateTime.now()
-                  .subtract(Duration(hours: 3))
-                  .millisecondsSinceEpoch)*/
           .getDocuments()
           .then((value) {
         value.documents.forEach((element) {
@@ -46,16 +41,18 @@ class CarPoolingProvider with ChangeNotifier {
             element.documentID: Cluster.fromMap(element.data),
           });
           globalClustersMap[element.documentID].clusterID = element.documentID;
-          // clusters.add(Cluster.fromMap(element.data)); //TODO remove
+
           print("Data Loaded from firebase");
           notifyListeners();
         });
       });
+    }
     return "done";
   }
 
   Future<String> loadMyClustersHistoryData({bool force = false}) async {
-    if (force || myClustersHistoryMap.length == 0)
+    if (force || myClustersHistoryMap.length == 0) {
+      currentUser.user = await currentUser.getCurrentUser();
       await Firestore.instance
           .collection("clusters")
           .where("adminUserID", isEqualTo: currentUser.uid)
@@ -65,11 +62,14 @@ class CarPoolingProvider with ChangeNotifier {
           myClustersHistoryMap.addAll({
             element.documentID: Cluster.fromMap(element.data),
           });
-          clusters.add(Cluster.fromMap(element.data)); //TODO remove
+          myClustersHistoryMap[element.documentID].clusterID =
+              element.documentID;
           notifyListeners();
         });
       });
-    print("Data Loaded from firebase");
+      fillRequestData();
+      print("loaded my clusters from firebase");
+    }
     return "done";
   }
 
@@ -85,6 +85,21 @@ class CarPoolingProvider with ChangeNotifier {
         });
         notifyListeners();
       });
+    fillRequestData();
+    print("Data Loaded from firebase");
+    return "done";
+  }
+
+  Future<String> fillRequestData() async {
+    if (myClustersHistoryMap.length != 0) {
+      globalClustersMap.forEach((key, element) {
+        if (globalClustersMap[element.clusterID].requests[currentUser.uid] !=
+            null) {
+          myRequestHistoryMap.addAll(
+              {element.clusterID: globalClustersMap[element.clusterID]});
+        }
+      });
+    }
     print("Data Loaded from firebase");
     return "done";
   }
@@ -130,7 +145,7 @@ class CarPoolingProvider with ChangeNotifier {
   }
 
   Future<String> createClusterJoinRequest({@required String clusterID}) async {
-    if(clusterID == null ||clusterID == ""){
+    if (clusterID == null || clusterID == "") {
       Fluttertoast.showToast(msg: "Cluster Id is not correct");
       return "not Done";
     }
@@ -164,7 +179,7 @@ class CarPoolingProvider with ChangeNotifier {
       }
     }, merge: true).catchError(onError);
     notifyListeners();
-    Fluttertoast.showToast(msg: "Request Made",webShowClose: true);
+    Fluttertoast.showToast(msg: "Request Made", webShowClose: true);
     print("Data uploaded to firebase");
     return "done";
   }
