@@ -15,13 +15,15 @@ import 'dart:ui';
 
 class LoadLocationMap extends StatefulWidget {
   final GeoPoint point;
-
+  final onSaved;
   const LoadLocationMap({
     Key key,
     this.point,
+    this.onSaved,
   }) : super(key: key);
   @override
-  _LoadLocationMapState createState() => _LoadLocationMapState();
+  _LoadLocationMapState createState() =>
+      _LoadLocationMapState(onSaved: onSaved);
 }
 
 class _LoadLocationMapState extends State<LoadLocationMap> {
@@ -33,7 +35,9 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
     //TODO GET CURRENT LOCATION
   }
 
+  _LoadLocationMapState({this.onSaved});
   GoogleMapController mapController;
+  var onSaved;
   LatLng center = LatLng(22.528380, 75.920596);
   double zoom = 5;
 
@@ -100,6 +104,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
               setState(() {
                 center = camPos.target;
               });
+              print(center);
             },
             initialCameraPosition: CameraPosition(
               target: center,
@@ -168,22 +173,28 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: InkWell(
-              onTap: () async {
-                //TODO SET location
-              },
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                  bottom: 20,
+            child: Container(
+              child: InkWell(
+                onTap: () async {
+                  print("Map Ruchir");
+                  onSaved(center, searchAddress);
+                  setState(() {});
+                  Navigator.pop(context);
+                  //TODO SET location
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    left: 50,
+                    right: 50,
+                    bottom: 20,
+                  ),
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.lightGreen),
+                  child: "SAVE".text.bold.white.make(),
                 ),
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.lightGreen),
-                child: "SAVE".text.bold.white.make(),
               ),
             ),
           ),
@@ -192,6 +203,22 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
     );
   }
 
+<<<<<<< HEAD
+  void navigateToAddress() {
+    Geocoder.local.findAddressesFromQuery(conte.text).then(
+      (val) {
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(val.first.coordinates.latitude,
+                  val.first.coordinates.longitude),
+              zoom: 16,
+            ),
+          ),
+        );
+      },
+    );
+=======
   void navigateToAddress() async{
     var add= "1600 Amphiteatre Parkway, Mountain View";
     await Geocoder.google("AIzaSyCI-cR5myD0t1dOKh81RXlhGP1zct4ICMU", language: "en").findAddressesFromQuery(add).then((val) {
@@ -210,5 +237,6 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
           zoom: 16)));
       print(val);
     });
+>>>>>>> c2e3c2329299ceea2792de58bce078167d53e748
   }
 }
