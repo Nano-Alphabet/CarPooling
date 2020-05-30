@@ -1,89 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:uow/Notification/myRequest.dart';
 import 'package:uow/home/gradients.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
-// import 'package:flutter_for_web/cupertino.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-// import 'dart:html' as html;
-class NotificationPage extends StatefulWidget {
-  @override
-  _NotificationPageState createState() => _NotificationPageState();
-}
-
-class _NotificationPageState extends State<NotificationPage> {
-  @override
-  Widget build(BuildContext context) {
-    List<Choice> choices = const <Choice>[
-      Choice(title: 'MY REQUESTS'),
-      Choice(title: 'JOIN REQUESTS'),
-    ];
-    List<Widget> tabwidgets = [MyReq(), JoinReq()];
-
-    return DefaultTabController(
-      length: choices.length,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Requests'),
-          flexibleSpace: Container(
-              decoration: BoxDecoration(
-            gradient: grat,
-          )),
-          centerTitle: true,
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: choices.map((Choice choice) {
-              return Tab(
-                text: choice.title,
-                // icon: Icon(choice.icon),
-              );
-            }).toList(),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Provider.of<CarPoolingProvider>(context, listen: false)
-                .loadGlobalClusterData(force: true);
-            await Provider.of<CarPoolingProvider>(context, listen: false)
-                .loadMyClustersHistoryData(force: true);
-            setState(() {});
-          },
-          child: Icon(Icons.refresh),
-        ),
-        body: TabBarView(
-          children: tabwidgets.map((Widget tabwidget) {
-            return Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: tabwidget,
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
-class Choice {
-  const Choice({this.title});
-  final String title;
-}
-
-class EntryCard extends StatefulWidget {
+class MyrequestCard extends StatefulWidget {
   final Cluster entry;
   final String uid;
-  const EntryCard({this.entry, this.uid});
+
+  const MyrequestCard({Key key, this.entry, this.uid}) : super(key: key);
   @override
-  _EntryCardState createState() => _EntryCardState(entry: entry);
+  _MyrequestCardState createState() => _MyrequestCardState();
 }
 
-class _EntryCardState extends State<EntryCard> {
+class _MyrequestCardState extends State<MyrequestCard> {
   Cluster entry;
-  _EntryCardState({this.entry});
+  @override
+  void initState() {
+    super.initState();
+    entry = widget.entry;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -108,14 +48,14 @@ class _EntryCardState extends State<EntryCard> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            entry.requests[widget.uid].requestUserName
+                            "To : "+entry.adminName
                                 .toUpperCase(),
                             style: TextStyle(fontSize: 18),
                           ).text.extraBold.make(),
                         ),
                         Expanded(
                           child: Text(
-                            "Wants to Join you\nfor the trip",
+                            "Vehicle no. "+entry.carNo.toString(),
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 12,
@@ -154,7 +94,7 @@ class _EntryCardState extends State<EntryCard> {
                       ],
                     ),
                     Divider(),
-                   Flex(
+                    Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
                         Expanded(
@@ -232,18 +172,10 @@ class _EntryCardState extends State<EntryCard> {
                                   BorderRadius.all(Radius.circular(8))),
                         )
                       : FlatButton(
-                          onPressed: () {
-                            Provider.of<CarPoolingProvider>(context,
-                                    listen: false)
-                                .acceptUserRequest(
-                                    clusterID: entry.clusterID,
-                                    requestUserId: widget.uid)
-                                .then((value) => Fluttertoast.showToast(
-                                    msg: "Request accepted"));
-                          },
+                          onPressed: null,
                           child: Row(
                             children: <Widget>[
-                              Text('Approve',
+                              Text('Wating ',
                                   style: TextStyle(color: Colors.white)),
                               Icon(Icons.time_to_leave, color: Colors.white),
                             ],
@@ -256,76 +188,6 @@ class _EntryCardState extends State<EntryCard> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MyReq extends StatefulWidget {
-  @override
-  _MyReqState createState() => _MyReqState();
-}
-
-class _MyReqState extends State<MyReq> {
-  @override
-  Widget build(BuildContext context) {
-    var entriesArray = <MyrequestCard>[];
-
-    addEntries(BuildContext context) {
-      String uid = Provider.of<CarPoolingProvider>(context, listen: false)
-          .currentUser
-          .uid;
-      Provider.of<CarPoolingProvider>(context, listen: false)
-          .myRequestHistoryMap
-          .values
-          .forEach((i) {
-        entriesArray.add(MyrequestCard(
-          entry: i,
-          uid: uid,
-        ));
-      });
-      return entriesArray;
-    }
-
-    return Scrollbar(
-      child: Container(
-        child: ListView(
-          children: addEntries(context),
-        ),
-      ),
-    );
-  }
-}
-
-class JoinReq extends StatefulWidget {
-  @override
-  _JoinReqState createState() => _JoinReqState();
-}
-
-class _JoinReqState extends State<JoinReq> {
-  @override
-  Widget build(BuildContext context) {
-    var entriesArray = <EntryCard>[];
-    addEntries(BuildContext context) {
-      Provider.of<CarPoolingProvider>(context, listen: false)
-          .myClustersHistoryMap
-          .values
-          .forEach((i) {
-        i.requests.forEach((key, value) {
-          entriesArray.add(EntryCard(
-            entry: i,
-            uid: key,
-          ));
-        });
-      });
-      return entriesArray;
-    }
-
-    return Scrollbar(
-      child: Container(
-        child: ListView(
-          children: addEntries(context),
         ),
       ),
     );
