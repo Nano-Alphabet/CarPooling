@@ -88,7 +88,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           ),
           Container(
             child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 // FormField(
                 //   labelText: "Pickup Point",
@@ -102,26 +102,33 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 // TextField(
                 //   controller: conte,
                 // ),
-                Text("From: ",style: TextStyle(fontSize: 20),),
+                Text(
+                  "From: ",
+                  style: TextStyle(fontSize: 20),
+                ),
                 RaisedButton(
-                  child: Text("SET"),
+                  child: Text(initlocString ?? "SET"),
                   color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => LoadLocationMap(
-                          onSaved: (LatLng loc, String str) {
-                            initloc = loc;
-                            initlocString = str;
-                            conteinit.text = str;
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    );
-                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: initlocString != null
+                      ? null
+                      : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  LoadLocationMap(
+                                onSaved: (LatLng loc, String str) {
+                                  cluster.startPoint = loc;
+                                  initlocString = "Done";
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          );
+                        },
                 )
               ],
             ),
@@ -139,20 +146,27 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 //     //TODO NAvigate to Slect Location Page
                 //   },
                 // ),
-                Text("To: ",style: TextStyle(fontSize: 20),),
+                Text(
+                  "To: ",
+                  style: TextStyle(fontSize: 20),
+                ),
                 RaisedButton(
-                  child: Text("SET"),
+                  child: Text(finlocString??"SET"),
                   color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: () {
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: finlocString != null
+                      ? null
+                      :() {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => LoadLocationMap(
                           onSaved: (LatLng loc, String str) {
-                            finloc = loc;
-                            finlocString = str;
-                            contefin.text = str;
+                            cluster.endPoint = loc;
+                            finlocString = "Done";
+
+                            Navigator.pop(context);
                             setState(() {});
                           },
                         ),
@@ -222,8 +236,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 cluster.leavingTime = _date.millisecondsSinceEpoch;
-                cluster.initialLocation=initlocString;
-                cluster.finalLocation=finlocString;
+                cluster.initialLocation = initlocString;
+                cluster.finalLocation = finlocString;
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .createClusterData(cluster);
                 // clusters.add(cluster);

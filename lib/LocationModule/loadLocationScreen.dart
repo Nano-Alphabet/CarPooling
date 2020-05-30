@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:http/http.dart' as http;
 import 'dart:ui';
 
 /*
@@ -19,7 +19,7 @@ class LoadLocationMap extends StatefulWidget {
   const LoadLocationMap({
     Key key,
     this.point,
-    this.onSaved,
+    @required this.onSaved,
   }) : super(key: key);
   @override
   _LoadLocationMapState createState() =>
@@ -37,7 +37,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
 
   _LoadLocationMapState({this.onSaved});
   GoogleMapController mapController;
-  var onSaved;
+  final onSaved;
   LatLng center = LatLng(22.528380, 75.920596);
   double zoom = 5;
 
@@ -103,6 +103,15 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             onCameraMove: (camPos) {
               setState(() {
                 center = camPos.target;
+              });
+
+              Geolocator()
+                  .placemarkFromCoordinates(
+                      camPos.target.latitude, camPos.target.longitude)
+                  .then((value) {
+                setState(() {
+                  searchAddress = value.first.name;
+                });
               });
               print(center);
             },
@@ -179,7 +188,6 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                   print("Map Ruchir");
                   onSaved(center, searchAddress);
                   setState(() {});
-                  Navigator.pop(context);
                   //TODO SET location
                 },
                 child: Container(
@@ -203,22 +211,21 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
     );
   }
 
-  void navigateToAddress() async{
-    var add= "1600 Amphiteatre Parkway, Mountain View";
-    await Geocoder.google("AIzaSyCI-cR5myD0t1dOKh81RXlhGP1zct4ICMU", language: "en").findAddressesFromQuery(add).then((val) {
-      if(val.length>0)
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(
-              val.first.coordinates.latitude, val.first.coordinates.longitude),
-          zoom: 16)));
-      print(val);
-    });
-    await Geocoder.local.findAddressesFromQuery(add).then((val) {
-      if(val.length>0)
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(
-              val.first.coordinates.latitude, val.first.coordinates.longitude),
-          zoom: 16)));
+  void navigateToAddress() async {
+    var add = "1600 Amphiteatre Parkway, Mountain View";
+
+    var url =
+        'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBIO0hraouG6ogl1YUAN5SCmNC2B2407Io';
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    await Geolocator().placemarkFromAddress(conte.text).then((val) {
+      if (val.length > 0)
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+                target: LatLng(
+                    val.first.position.latitude, val.first.position.longitude),
+                zoom: 16)));
       print(val);
     });
   }

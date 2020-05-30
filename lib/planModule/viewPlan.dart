@@ -16,8 +16,8 @@ class ViewPlan extends StatelessWidget {
       backgroundColor: Colors.black12,
       body: SafeArea(
         child: Center(
-          child: FlatButton(
-            onPressed: () {
+          child: GestureDetector(
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(
@@ -43,7 +43,7 @@ class ViewPlan extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            cluster.adminUserID,
+                            cluster.cost,
                             style: TextStyle(color: Colors.green),
                           ),
                         ),
@@ -101,8 +101,8 @@ class ViewPlan extends StatelessWidget {
                               'Date',
                               cluster.date,
                               'time',
-                              cluster.leavingTime
-                                  .toString()), //TODO Add datetime string
+                              cluster.pLeavingTime
+                                  .toString().substring(10,16)), //TODO Add datetime string
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
