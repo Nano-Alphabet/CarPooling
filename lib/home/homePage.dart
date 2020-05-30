@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:uow/LocationModule/clusterLocationPage.dart';
-import 'package:uow/LocationModule/loadLocationScreen.dart';
-
-import 'package:uow/Notification/notificationpage.dart';
+import 'package:uow/home/drawer.dart';
+import 'package:uow/home/gradients.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'package:provider/provider.dart';
+import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/profile/profile.dart';
-import 'package:uow/signInModule/signuppageruchir.dart';
+import 'package:uow/provider/carPoolingProvider.dart';
 import 'package:uow/temp/bottomButtons.dart';
 import 'package:uow/tempNavigator.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+import 'package:uow/Notification/notificationpage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,6 +24,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _scaffoldKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<CarPoolingProvider>(context, listen: false)
+        .globalClustersMap;
     return Scaffold(
       /*appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -48,70 +52,7 @@ class _HomePageState extends State<HomePage> {
               }),
         ),*/
       key: _scaffoldKey,
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              height: 75.0,
-              child: DrawerHeader(
-                child: Center(
-                  child: Text(
-                    'MySelf',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(color: Colors.blueGrey),
-                margin: EdgeInsets.all(0.0),
-                padding: EdgeInsets.all(0.0),
-              ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => ProfilePage()));
-              },
-            ),
-            ListTile(
-              title: Text('Sign Up'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => SignUp()));
-              },
-            ),
-            ListTile(
-              title: Text('Temp Page'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => TempNavigator()));
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -122,13 +63,47 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Stack(
           children: <Widget>[
-            // ClusterLocationPage(),
+            ClusterLocationPage(),
+            Align(
+                // left: 0,
+                // right: 0,
+                // bottom: 0,
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        color: light,
+                        height: 50,
+                        width: 20,
+                      ),
+                      Container(
+                        color: light,
+                        height: 50,
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                )),
             Positioned(
                 top: 25,
                 left: 0,
                 right: 0,
                 child: SearchBar(
                   scaffoldKey: _scaffoldKey,
+                )),
+            Align(
+                // left: 0,
+                // right: 0,
+                // bottom: 0,
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 100),
+                  color: light,
+                  height: 30,
+                  width: 50,
                 )),
             Align(
               alignment: Alignment.bottomCenter,
@@ -204,6 +179,10 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<CarPoolingProvider>(context, listen: false);
+    prov.loadGlobalClusterData(force: true);
+    prov.loadMyClustersHistoryData(force: true);
+
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
@@ -215,10 +194,13 @@ class _SearchBarState extends State<SearchBar> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Material(
-              color: Colors.indigo, // button color
+              color: light, // button color
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(10),
+                    topRight: Radius.circular(10),
                     bottomLeft: Radius.circular(50)),
               ),
               elevation: 5,
@@ -238,17 +220,25 @@ class _SearchBarState extends State<SearchBar> {
               elevation: 5,
               child: Container(
                 clipBehavior: Clip.hardEdge,
+                alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 0.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
                 ),
-                child: TextField(
+                child:
+                    /*"Unite On Wheels"
+                      .text
+                      .textStyle(GoogleFonts.balooDa(textStyle: TextStyle()))
+                      .size(20)
+                      .make()*/
+
+                    TextField(
                   showCursor: true,
-                  style: TextStyle(fontSize: 15),
+                  controller: TextEditingController(text: "Unite On Wheels"),
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   maxLines: 1,
-                  readOnly: isReadOnly,
+                  readOnly: true,
                   onTap: () {
                     print("object");
                     setState(() {
@@ -276,10 +266,12 @@ class _SearchBarState extends State<SearchBar> {
               ),
             ),
             Material(
-              color: Colors.indigo, // button color
+              color: light, // button color
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(50),
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(50)),
               ),
               elevation: 5,
@@ -291,10 +283,17 @@ class _SearchBarState extends State<SearchBar> {
                     color: Colors.amberAccent,
                     size: 35,
                   ),
-                  onPressed: () => showDialog(
-                    context: context,
-                    child: _dialogBuilder(),
-                  ),
+                  // onPressed: () => showDialog(
+                  //   context: context,
+                  //   child: _dialogBuilder(),
+                  // ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => NotificationPage(),
+                        ));
+                  },
                 ),
               ),
             ),

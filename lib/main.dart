@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'home/homePage.dart';
+import 'routes/refreshPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,11 +20,17 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'U.O.W',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        home: HomePage(),
+        initialRoute: '/init',
+        routes: {
+          // '/init': (context) => RefreshPage(),
+          '/init': (context) => RefreshPage(),
+          '/sign': (context) => SignUp(),
+          '/home': (context) => HomePage(),
+        },
       ),
     );
   }

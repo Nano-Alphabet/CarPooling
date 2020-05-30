@@ -8,42 +8,36 @@ import 'package:velocity_x/velocity_x.dart';
 var requests = <Request>[
   Request(
     requestUserID: "A12345",
-    clusterID: "gh4654",
     isAccepted: false,
     phoneNo: "1234567890",
     requestUserName: "Stuart Little",
   ),
   Request(
     requestUserID: "B12345",
-    clusterID: "afds454",
     isAccepted: false,
     phoneNo: "1234567890",
     requestUserName: "Harry Potter",
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "DF546",
     isAccepted: true,
     phoneNo: "1234567890",
     requestUserName: "Thanos",
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "DF546",
     isAccepted: true,
     phoneNo: "1234567890",
     requestUserName: "Ghamora",
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "DF546",
     isAccepted: true,
     phoneNo: "1234567890",
     requestUserName: "Spiderman",
   ),
   Request(
     requestUserID: "12345",
-    clusterID: "DF546",
     isAccepted: true,
     phoneNo: "1234567890",
     requestUserName: "Black Widow",
@@ -52,42 +46,32 @@ var requests = <Request>[
 
 class Request {
   //  For the time being, I am keeping all of these as strings
-  String clusterID;
   String phoneNo;
   String requestUserID;
   String requestUserName;
   bool isAccepted;
-  String clusterAdminId;
-  String requestId;
   int requestTime;
 
   Request(
       {this.requestUserID,
-      this.clusterID,
       this.isAccepted,
       this.phoneNo,
       this.requestUserName});
 
   Request.fromMap(Map data) {
     this.requestUserID = data["requestUserID"] ?? "";
-    this.clusterID = data["clusterID"] ?? "";
     this.isAccepted = data["isAccepted"] ?? false;
     this.phoneNo = data["phoneNo"] ?? "";
     this.requestUserName = data["requestUserName"] ?? "";
-    this.clusterAdminId = data["clusterAdminId"] ?? "";
-    this.requestId = data["requestId"];
-    this.requestTime = data["requestTime"];
+    this.requestTime = data["requestTime"]??DateTime.now().millisecondsSinceEpoch;
   }
 
   Map<String, dynamic> toMap() {
     return {
       "adminUserID": requestUserID,
       "requestUserName": requestUserName,
-      "clusterID": clusterID,
       "isAccepted": isAccepted,
       "phoneNo": phoneNo,
-      "clusterAdminId": clusterAdminId,
-      "requestId": requestId,
       "requestTime": requestTime,
     };
   }

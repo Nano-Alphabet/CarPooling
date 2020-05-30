@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/models/currentUser.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ViewPlan extends StatelessWidget {
   final Cluster cluster;
@@ -16,14 +19,15 @@ class ViewPlan extends StatelessWidget {
       backgroundColor: Colors.black12,
       body: SafeArea(
         child: Center(
-          child: FlatButton(
-            onPressed: () {
+          child: GestureDetector(
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
+                border: Border.all(width: 2, color: dark),
               ),
               padding: const EdgeInsets.all(20.0),
               margin: const EdgeInsets.all(20.0).copyWith(top: 50, bottom: 50),
@@ -39,12 +43,12 @@ class ViewPlan extends StatelessWidget {
                         height: 25.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          border: Border.all(width: 1.0, color: Colors.green),
+                          border: Border.all(width: 1.0, color: dark),
                         ),
                         child: Center(
                           child: Text(
-                            cluster.adminUserID,
-                            style: TextStyle(color: Colors.green),
+                            cluster.cost,
+                            style: TextStyle(color: dark),
                           ),
                         ),
                       ),
@@ -73,7 +77,8 @@ class ViewPlan extends StatelessWidget {
                             ),
                           )
                         ],
-                      )
+                      ),
+                      Icon(Icons.cancel, color: light,)
                     ],
                   ),
                   Padding(
@@ -92,17 +97,17 @@ class ViewPlan extends StatelessWidget {
                       children: <Widget>[
                         ticketDetailsWidget(
                             'First Name',
-                            cluster.adminFirstName,
-                            'Last name',
-                            cluster.adminLastName),
+                            cluster.adminName,
+                            'No of Passengers',
+                            cluster.noOfPassengers.toString()),
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
                           child: ticketDetailsWidget(
                               'Date',
                               cluster.date,
                               'time',
-                              cluster.leavingTime
-                                  .toString()), //TODO Add datetime string
+                              cluster.pLeavingTime.toString().substring(
+                                  10, 16)), //TODO Add datetime string
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
@@ -142,7 +147,7 @@ class ViewPlan extends StatelessWidget {
                             child: Icon(
                               Icons.event_seat,
                               size: 35,
-                              color: Colors.orange,
+                              color: light,
                             ),
                           ),
                       ],
@@ -156,13 +161,19 @@ class ViewPlan extends StatelessWidget {
                               width: 250.0,
                               height: 60.0,
                               child: RaisedButton(
-                                onPressed: () {
+                                color: light,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                onPressed: () async {
                                   Provider.of<CarPoolingProvider>(context,
                                           listen: false)
                                       .createClusterJoinRequest(
-                                          clusterId: cluster.clusterID);
+                                          clusterID: cluster.clusterID);
+                                  Fluttertoast.showToast(msg: "Request Sent");
+                                  Navigator.pop(context);
                                 },
-                                child: Text("Send join request"),
+                                child:
+                                    Text("Send join request").text.white.make(),
                               )),
                         )
                       : Container(),

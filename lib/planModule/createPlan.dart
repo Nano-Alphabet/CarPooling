@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'datetimepicker.dart';
+import 'package:uow/LocationModule/loadLocationScreen.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CreatePlan extends StatefulWidget {
   @override
@@ -58,131 +62,206 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
 
   Cluster cluster = clusters[0];
   DateTime _date;
-
+  LatLng initloc;
+  LatLng finloc;
+  String initlocString;
+  String finlocString;
+  TextEditingController conteinit;
+  TextEditingController contefin;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
-          FormField(
-            labelText: "First Name",
-            initVal: cluster.adminFirstName,
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter your name';
-              }
-              return null;
-            },
-            onSaved: (String value) {
-              cluster.adminFirstName = value;
-            },
-          ),
-          FormField(
-            labelText: "Last Name",
-            validator: (String value) {},
-            initVal: cluster.adminLastName,
-            onSaved: (String value) {
-              cluster.adminLastName = value;
-            },
-          ),
-          FormField(
-            labelText: "Pickup Point",
-            validator: (String value) {},
-            initVal: cluster.initialLocation,
-            onSaved: (String value) {
-              cluster.initialLocation =
-                  value; //TODO NAvigate to Slect Location Page
-            },
-          ),
-          FormField(
-            labelText: "Drop Point",
-            validator: (String value) {},
-            initVal: cluster.finalLocation,
-            onSaved: (String value) {
-              cluster.finalLocation = value;
-              //TODO NAvigate to Slect Location Page
-            },
-          ),
-          FormField(
-            labelText: "Phone No",
-            validator: (String value) {},
-            initVal: cluster.phoneNo,
-            onSaved: (String value) {
-              cluster.phoneNo = value;
-            },
-          ),
-          FormField(
-            labelText: "Cost",
-            validator: (String value) {},
-            initVal: cluster.cost,
-            onSaved: (String value) {
-              cluster.cost = value;
-            },
-          ),
-          FormField(
-            labelText: "Number of Passengers",
-            validator: (String value) {},
-            initVal: cluster.noOfPassengers.toString(),
-            onSaved: (String value) {
-              cluster.noOfPassengers = int.parse(value);
-            },
-          ),
-          FormField(
-            labelText: "Vehicle Number",
-            validator: (String value) {},
-            initVal: cluster.carNo,
-            onSaved: (String value) {
-              cluster.carNo = value;
-            },
-          ),
-          FormField(
-            labelText: "Car Type",
-            validator: (String value) {},
-            initVal: cluster.carType,
-            onSaved: (String value) {
-              cluster.carType = value;
-            },
-          ),
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: grat,
+      ),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            //TODO! remove firstName, LastName, phoneNo, adminID they are handeled in provider
+            FormField(
+              labelText: "First Name",
+              initVal: cluster.adminName,
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
+              onSaved: (String value) {
+                cluster.adminName = value;
+              },
+            ),
 
-          DateTimePicker(
-            onSaved: (DateTime date) {
-              _date = date;
-              setState(() {});
-            },
-            onSaved2: (DateTime time) {
-              _date = DateTime(_date.year, _date.month, _date.day, time.hour,
-                  time.minute, time.second);
-              setState(() {});
-            },
-          ),
-
-          RaisedButton(
-            color: Colors.blueAccent,
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                cluster.leavingTime = _date.millisecondsSinceEpoch;
-                Provider.of<CarPoolingProvider>(context, listen: false)
-                    .createClusterData(cluster);
-                // clusters.add(cluster);
-                _showDialog();
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => JoinPlan(cluster: this.cluster)));
-              }
-            },
-            child: Text(
-              'Create Plan',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
+            FormField(
+              labelText: "Phone No",
+              validator: (String value) {},
+              initVal: cluster.phoneNo,
+              onSaved: (String value) {
+                cluster.phoneNo = value;
+              },
+            ),
+            FormField(
+              labelText: "Cost",
+              validator: (String value) {},
+              initVal: cluster.cost,
+              onSaved: (String value) {
+                cluster.cost = value;
+              },
+            ),
+            FormField(
+              labelText: "Number of Passengers",
+              validator: (String value) {},
+              initVal: cluster.noOfPassengers.toString(),
+              onSaved: (String value) {
+                cluster.noOfPassengers = int.parse(value);
+              },
+            ),
+            FormField(
+              labelText: "Vehicle Number",
+              validator: (String value) {},
+              initVal: cluster.carNo,
+              onSaved: (String value) {
+                cluster.carNo = value;
+              },
+            ),
+            FormField(
+              labelText: "Car Type",
+              validator: (String value) {},
+              initVal: cluster.carType,
+              onSaved: (String value) {
+                cluster.carType = value;
+              },
+            ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "From: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  RaisedButton(
+                    child: Text(initlocString ?? "SET").text.white.make(),
+                    color: light,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    onPressed: initlocString != null
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    LoadLocationMap(
+                                  onSaved: (LatLng loc, String str) {
+                                    cluster.startPoint = loc;
+                                    initlocString = "Done";
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "To: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  RaisedButton(
+                    child: Text(finlocString ?? "SET").text.white.make(),
+                    color: light,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    onPressed: finlocString != null
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    LoadLocationMap(
+                                  onSaved: (LatLng loc, String str) {
+                                    cluster.endPoint = loc;
+                                    finlocString = "Done";
+
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                  )
+                ],
+              ),
+            ),
+            DateTimePicker(
+              onSaved: (DateTime date) {
+                _date = date;
+                setState(() {});
+              },
+              onSaved2: (DateTime time) {
+                _date = DateTime(_date.year, _date.month, _date.day, time.hour,
+                    time.minute, time.second);
+                setState(() {});
+              },
+            ),
+            Divider(),
+            GestureDetector(
+              onTap: () async {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  cluster.leavingTime = _date.millisecondsSinceEpoch;
+                  cluster.initialLocation = initlocString;
+                  cluster.finalLocation = finlocString;
+                  Provider.of<CarPoolingProvider>(context, listen: false)
+                      .createClusterData(cluster);
+                  // clusters.add(cluster);
+                  _showDialog();
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => JoinPlan(cluster: this.cluster)));
+                }
+              },
+              child: Material(
+                borderRadius: BorderRadius.circular(20.0),
+                color: light,
+                elevation: 3.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: Text(
+                      'Create Cluster'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 100,
+            )
+          ],
+        ),
       ),
     );
   }

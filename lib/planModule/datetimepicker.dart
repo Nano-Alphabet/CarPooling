@@ -46,7 +46,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            elevation: 4.0,
+            elevation: 0,
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
@@ -81,12 +81,12 @@ class _DateTimePickerState extends State<DateTimePicker> {
                             Icon(
                               Icons.date_range,
                               size: 18.0,
-                              color: Colors.teal,
+                              color: Colors.black,
                             ),
                             Text(
-                              "$datestring",
+                              datestring ?? " Date",
                               style: TextStyle(
-                                color: Colors.teal,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.0,
                               ),
@@ -99,7 +99,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                   Text(
                     " Change",
                     style: TextStyle(
-                      color: Colors.teal,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,
                     ),
@@ -107,7 +107,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 ],
               ),
             ),
-            color: Colors.white,
+            color: Colors.transparent,
           ),
           SizedBox(
             height: 20.0,
@@ -115,7 +115,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
           RaisedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
-            elevation: 4.0,
+            elevation: 0,
             onPressed: () {
               DatePicker.showTimePicker(
                 context,
@@ -149,11 +149,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
                             Icon(
                               Icons.access_time,
                               size: 18.0,
-                              color: Colors.teal,
+                              color: Colors.black,
                             ),
-                            Text("$timestring",
+                            Text(timestring ?? " Time",
                                 style: TextStyle(
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0,
                                 )),
@@ -165,14 +165,14 @@ class _DateTimePickerState extends State<DateTimePicker> {
                   Text(
                     " Change",
                     style: TextStyle(
-                        color: Colors.teal,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0),
                   ),
                 ],
               ),
             ),
-            color: Colors.white,
+            color: Colors.transparent,
           )
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:uow/planModule/createPlan.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -25,7 +26,7 @@ class BottomButtons extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25.0),
                       bottomLeft: Radius.circular(25.0))),
-              color: Colors.indigo,
+              color: light,
               child: Text(
                 "Join",
                 style: TextStyle(color: Colors.white),
@@ -36,7 +37,7 @@ class BottomButtons extends StatelessWidget {
           Opacity(
             opacity: 1,
             child: RaisedButton(
-              color: Colors.white,
+              color: light,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -45,13 +46,13 @@ class BottomButtons extends StatelessWidget {
               },
               padding: EdgeInsets.all(15),
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.indigo),
+                  side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25.0),
                       bottomRight: Radius.circular(25.0))),
               child: Text(
                 "Create",
-                style: TextStyle(color: Colors.indigo),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),

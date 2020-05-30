@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 var clusters = <Cluster>[
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -16,12 +16,10 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   ),
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -30,12 +28,10 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   ),
   Cluster(
-    adminFirstName: "Hello",
-    adminLastName: "Yo",
+    adminName: "Hello",
     initialLocation: "IIT Indore",
     finalLocation: "Bhawarkuan/IT Park",
     phoneNo: "1234567890",
@@ -44,7 +40,6 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   )
 ];
@@ -52,8 +47,9 @@ var clusters = <Cluster>[
 class Cluster {
   //  For the time being, I am keeping all of these as strings
   String clusterID;
-  String adminFirstName;
-  String adminLastName;
+  String adminName;
+  //String adminFirstName; these two are combined in one
+  //String adminLastName;
   String initialLocation;
   String finalLocation;
   String phoneNo;
@@ -62,10 +58,13 @@ class Cluster {
   String carNo;
   String carType;
   int leavingTime;
-  String date;
+  String get date => DateTime.fromMillisecondsSinceEpoch(leavingTime)
+      .toIso8601String()
+      .substring(0, 10);
   String adminUserID;
 
-  GeoPoint geoPoint;
+  LatLng startPoint;
+  LatLng endPoint;
   Map<String, Request> requests = {};
   int get pWatingRequest {
     int count = 0;
@@ -86,8 +85,7 @@ class Cluster {
   DateTime get pLeavingTime => DateTime.fromMillisecondsSinceEpoch(leavingTime);
 
   Cluster(
-      {this.adminFirstName,
-      this.adminLastName,
+      {this.adminName,
       this.initialLocation,
       this.finalLocation,
       this.phoneNo,
@@ -96,12 +94,10 @@ class Cluster {
       this.carNo,
       this.carType,
       this.leavingTime,
-      this.date,
       this.adminUserID});
 
   Cluster.fromMap(Map data) {
-    this.adminFirstName = data["adminFirstName"] ?? "";
-    this.adminLastName = data["adminLastName"] ?? "...";
+    this.adminName = data["adminName"] ?? "";
     this.initialLocation = data["initialLocation"] ?? "";
     this.finalLocation = data["finalLocation"] ?? "";
     this.phoneNo = data["phoneNo"] ?? "";
@@ -110,7 +106,6 @@ class Cluster {
     this.carNo = data["carNo"] ?? "";
     this.carType = data["carType"] ?? "";
     this.leavingTime = data["leavingTime"] ?? 0;
-    this.date = data["date"] ?? "";
     this.adminUserID = data["adminUserID"] ?? "";
     (data["requests"] ?? {}).forEach((key, value) {
       this.requests.addAll({key: Request.fromMap(value)});
@@ -119,8 +114,7 @@ class Cluster {
 
   Map<String, dynamic> toMap() {
     return {
-      "adminFirstName": adminFirstName,
-      "adminLastName": adminLastName,
+      "adminName": adminName,
       "initialLocation": initialLocation,
       "finalLocation": finalLocation,
       "phoneNo": phoneNo,
@@ -131,6 +125,8 @@ class Cluster {
       "leavingTime": leavingTime,
       "date": date,
       "adminUserID": adminUserID,
+      "startPoint": startPoint.toJson(),
+      "endPoint": endPoint.toJson(),
     };
   }
 }
@@ -191,7 +187,7 @@ class ClusterCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        cluster.leavingTime.toString(),
+                        cluster.pLeavingTime.toString().substring(11,16),
                         style: TextStyle(
                           color: Colors.grey,
                         ),
