@@ -188,7 +188,15 @@ class _EntryCardState extends State<EntryCard> {
                       SizedBox(
                         height: 3,
                       ),
-                      Text("Rs: ${entry.cost}", style: TextStyle(fontSize: 32)),
+                      Container(
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            "Rs: ${entry.cost}",
+                            style: TextStyle(fontSize: 32),
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 ],

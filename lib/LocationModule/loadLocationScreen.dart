@@ -203,22 +203,6 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
     );
   }
 
-<<<<<<< HEAD
-  void navigateToAddress() {
-    Geocoder.local.findAddressesFromQuery(conte.text).then(
-      (val) {
-        mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(val.first.coordinates.latitude,
-                  val.first.coordinates.longitude),
-              zoom: 16,
-            ),
-          ),
-        );
-      },
-    );
-=======
   void navigateToAddress() async{
     var add= "1600 Amphiteatre Parkway, Mountain View";
     await Geocoder.google("AIzaSyCI-cR5myD0t1dOKh81RXlhGP1zct4ICMU", language: "en").findAddressesFromQuery(add).then((val) {
@@ -237,6 +221,5 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
           zoom: 16)));
       print(val);
     });
->>>>>>> c2e3c2329299ceea2792de58bce078167d53e748
   }
 }
