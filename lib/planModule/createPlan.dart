@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'datetimepicker.dart';
+import 'package:uow/LocationModule/loadLocationScreen.dart';
 
 class CreatePlan extends StatefulWidget {
   @override
@@ -58,7 +60,12 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
 
   Cluster cluster = clusters[0];
   DateTime _date;
-
+  LatLng initloc;
+  LatLng finloc;
+  String initlocString;
+  String finlocString;
+  TextEditingController conteinit;
+  TextEditingController contefin;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -79,23 +86,82 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               cluster.adminName = value;
             },
           ),
-          FormField(
-            labelText: "Pickup Point",
-            validator: (String value) {},
-            initVal: cluster.initialLocation,
-            onSaved: (String value) {
-              cluster.initialLocation =
-                  value; //TODO NAvigate to Slect Location Page
-            },
+          Container(
+            child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                // FormField(
+                //   labelText: "Pickup Point",
+                //   validator: (String value) {},
+                //   initVal: cluster.initialLocation,
+                //   onSaved: (String value) {
+                //     cluster.initialLocation =
+                //         value; //TODO NAvigate to Slect Location Page
+                //   },
+                // ),
+                // TextField(
+                //   controller: conte,
+                // ),
+                Text("From: ",style: TextStyle(fontSize: 20),),
+                RaisedButton(
+                  child: Text("SET"),
+                  color: Colors.lightGreen,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => LoadLocationMap(
+                          onSaved: (LatLng loc, String str) {
+                            initloc = loc;
+                            initlocString = str;
+                            conteinit.text = str;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
           ),
-          FormField(
-            labelText: "Drop Point",
-            validator: (String value) {},
-            initVal: cluster.finalLocation,
-            onSaved: (String value) {
-              cluster.finalLocation = value;
-              //TODO NAvigate to Slect Location Page
-            },
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                // FormField(
+                //   labelText: "Drop Point",
+                //   validator: (String value) {},
+                //   initVal: cluster.finalLocation,
+                //   onSaved: (String value) {
+                //     cluster.finalLocation = value;
+                //     //TODO NAvigate to Slect Location Page
+                //   },
+                // ),
+                Text("To: ",style: TextStyle(fontSize: 20),),
+                RaisedButton(
+                  child: Text("SET"),
+                  color: Colors.lightGreen,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => LoadLocationMap(
+                          onSaved: (LatLng loc, String str) {
+                            finloc = loc;
+                            finlocString = str;
+                            contefin.text = str;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
           ),
           FormField(
             labelText: "Phone No",
@@ -156,6 +222,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 cluster.leavingTime = _date.millisecondsSinceEpoch;
+                cluster.initialLocation=initlocString;
+                cluster.finalLocation=finlocString;
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .createClusterData(cluster);
                 // clusters.add(cluster);
