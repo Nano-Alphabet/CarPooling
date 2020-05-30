@@ -178,8 +178,8 @@
     </p>
     <h1>App Requirements</h1>
     <ul>
-        <li>Flutter: version 1.0</li>
-        <li>Firebase: version 1.0</li>
+        <li>Flutter SDK</li>
+        <li>Firebase</li>
         <li>The device should be a “SmartPhone” , not a Feature Phone.</li>
         <li>Minimum RAM(Random Access Memory): 1 GB</li>
         <li>Minimum Memory: 100 mb</li>
