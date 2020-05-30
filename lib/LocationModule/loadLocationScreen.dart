@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui';
@@ -126,22 +127,25 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                 clipBehavior: Clip.hardEdge,
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: light,
                   border: Border(),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
                   showCursor: true,
                   controller: conte,
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    hintText: 'Enter Address',
+                    hintText: '  Enter Address',
+                    hintStyle: TextStyle(color: Colors.white),
+                    fillColor: Colors.white,
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(left: 10, top: 15),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       onPressed: navigateToAddress,
+                      color: Colors.white,
                       iconSize: 25,
                     ),
                   ),
@@ -200,7 +204,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: Colors.lightGreen),
+                      color: light),
                   child: "SAVE".text.bold.white.make(),
                 ),
               ),

@@ -154,7 +154,7 @@ class _EntryCardState extends State<EntryCard> {
                       ],
                     ),
                     Divider(),
-                   Flex(
+                    Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
                         Expanded(
@@ -170,7 +170,7 @@ class _EntryCardState extends State<EntryCard> {
                         ),
                         Expanded(
                           child: Text(
-                            entry.pLeavingTime.toString().substring(0,16),
+                            entry.pLeavingTime.toString().substring(0, 16),
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             textAlign: TextAlign.justify,

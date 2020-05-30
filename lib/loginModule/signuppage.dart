@@ -147,6 +147,7 @@ class _SignUpState extends State<SignUp> {
       body: Container(
         decoration: BoxDecoration(
             color: Colors.indigo,
+            
             gradient: LinearGradient(
                 end: Alignment.bottomCenter,
                 begin: Alignment.topCenter,
@@ -196,6 +197,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
+
 
             Container(
               padding:

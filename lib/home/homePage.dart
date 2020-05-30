@@ -64,12 +64,46 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: <Widget>[
             ClusterLocationPage(),
+            Align(
+                // left: 0,
+                // right: 0,
+                // bottom: 0,
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        color: light,
+                        height: 50,
+                        width: 20,
+                      ),
+                      Container(
+                        color: light,
+                        height: 50,
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                )),
             Positioned(
                 top: 25,
                 left: 0,
                 right: 0,
                 child: SearchBar(
                   scaffoldKey: _scaffoldKey,
+                )),
+            Align(
+                // left: 0,
+                // right: 0,
+                // bottom: 0,
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 100),
+                  color: light,
+                  height: 30,
+                  width: 50,
                 )),
             Align(
               alignment: Alignment.bottomCenter,
@@ -145,6 +179,10 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<CarPoolingProvider>(context, listen: false);
+    prov.loadGlobalClusterData(force: true);
+    prov.loadMyClustersHistoryData(force: true);
+
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
@@ -156,7 +194,7 @@ class _SearchBarState extends State<SearchBar> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Material(
-              color: Colors.indigo, // button color
+              color: light, // button color
 
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -184,10 +222,9 @@ class _SearchBarState extends State<SearchBar> {
                 clipBehavior: Clip.hardEdge,
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 0.5,
-
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                   ),
+                  color: Colors.white,
+                ),
                 child:
                     /*"Unite On Wheels"
                       .text
@@ -229,7 +266,7 @@ class _SearchBarState extends State<SearchBar> {
               ),
             ),
             Material(
-              color: Colors.indigo, // button color
+              color: light, // button color
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(50),

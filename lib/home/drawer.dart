@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uow/Notification/notificationpage.dart';
 import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/profile/profile.dart';
 import 'package:uow/tempNavigator.dart';
@@ -23,7 +24,6 @@ class _MyDrawerState extends State<MyDrawer> {
                 children: [],
               ),
             ),
-
             decoration: new BoxDecoration(
                 color: Colors.indigo,
                 gradient: LinearGradient(stops: [
@@ -36,6 +36,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             title: Text('Home'),
+            leading: Icon(Icons.home),
             onTap: () {
               // Update the state of the app
               // ...
@@ -45,6 +46,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             title: Text('Profile'),
+            leading: Icon(Icons.verified_user),
             onTap: () {
               Navigator.push(
                   context,
@@ -53,21 +55,43 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            title: Text('Sign Up'),
+            title: Text('My requests'),
+            leading: Icon(Icons.record_voice_over),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Scaffold(
+                            appBar: AppBar(
+                              title: Text('My requests'),
+                            ),
+                            body: MyReq(),
+                          )));
+            },
+          ),
+          ListTile(
+            title: Text('Join Requests'),
+            leading: Icon(Icons.group),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Scaffold(
+                            appBar: AppBar(
+                              title: Text('Join requests'),
+                            ),
+                            body: JoinReq(),
+                          )));
+            },
+          ),
+          ListTile(
+            title: Text('Sign Out'),
+            leading: Icon(Icons.power_settings_new),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => SignUp()));
-            },
-          ),
-          ListTile(
-            title: Text('Temp Page'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => TempNavigator()));
             },
           ),
         ],

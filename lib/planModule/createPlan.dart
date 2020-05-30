@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:uow/home/gradients.dart';
 import 'package:uow/models/Cluster.dart';
 import 'package:uow/planModule/joinPlan.dart';
 import 'package:uow/provider/carPoolingProvider.dart';
 import 'datetimepicker.dart';
 import 'package:uow/LocationModule/loadLocationScreen.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CreatePlan extends StatefulWidget {
   @override
@@ -70,6 +72,9 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: grat,
+      ),
       child: Form(
         key: _formKey,
         child: ListView(
@@ -139,8 +144,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                     style: TextStyle(fontSize: 20),
                   ),
                   RaisedButton(
-                    child: Text(initlocString ?? "SET"),
-                    color: Colors.lightGreen,
+                    child: Text(initlocString ?? "SET").text.white.make(),
+                    color: light,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     onPressed: initlocString != null
@@ -175,8 +180,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                     style: TextStyle(fontSize: 20),
                   ),
                   RaisedButton(
-                    child: Text(finlocString ?? "SET"),
-                    color: Colors.lightGreen,
+                    child: Text(finlocString ?? "SET").text.white.make(),
+                    color: light,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     onPressed: finlocString != null
@@ -213,10 +218,9 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 setState(() {});
               },
             ),
-
-            RaisedButton(
-              color: Colors.blueAccent,
-              onPressed: () {
+            Divider(),
+            GestureDetector(
+              onTap: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
                   cluster.leavingTime = _date.millisecondsSinceEpoch;
@@ -232,13 +236,29 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                   //         builder: (context) => JoinPlan(cluster: this.cluster)));
                 }
               },
-              child: Text(
-                'Create Plan',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
+              child: Material(
+                borderRadius: BorderRadius.circular(20.0),
+                color: light,
+                elevation: 3.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: Text(
+                      'Create Cluster'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
+            ),
+            Container(
+              height: 100,
             )
           ],
         ),
