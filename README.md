@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,9 @@
 
 <body>
     <h1>Car Pooling for IITI</h1>
+    <p align="center">
+        <img src="img/logo.jpg" alt="">
+    </p>
     <h2>Made with love by</h2>
     <ul>
         <li>Adarsh Baghel</li>
@@ -14,6 +18,15 @@
         <li>Namani Sreeharsh</li>
         <li>Shaikh Ubaid</li>
     </ul>
+    <br>
+    <h2>Under the guidance of</h2>
+    <h3>Dr Puneet Gupta</h3>
+    <p align="center">
+        <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" alt="IITI">
+    </p>
+    <h3>Department of Computer Science and Engineering</h3>
+    <h3>Indian Institute of Technology Indore</h3>
+    <h3>Spring 2020</h3>
     <h1>Introduction</h1>
     <p>Since inappropriate planning of the cities, there has been a big problem of traffic in most cities
         of India. People spend much of their time in traffic every day. In Addition to this many vehicles
@@ -21,7 +34,8 @@
         supplies are very limited all over the world and oil prices are extremely expensive in our
         country. Therefore, most of the people have to take buses and since the number of public
         transportation vehicles are not suf icient, they travel under uncomfortable conditions.
-        <br><br>There are some attempts to solve these problems, however, they focus only on intercity transportation. We
+        <br><br>There are some attempts to solve these problems, however, they focus only on intercity transportation.
+        We
         came up with an ef ective solution as www.uniteonwheels.com .Our project will be used for both
         intercity and urban transportations all over India. As a result, our system will be designed to
         solve these problems and deficiencies of other systems .
@@ -43,7 +57,9 @@
         passenger already travelling in a vehicle and willing to share their ride.
     </p>
     <h1>Definitions, Acronyms, and Abbreviations</h1>
-    <img src="img/definitionstable.png" alt="table"/>
+    <p align="center">
+        <img src="img/definitionstable.png" alt="table" />
+    </p>
     <h1>Functions</h1>
     <ul>
         <li>#Sign Up: Users need to sign up to use the app. The users should have a username and
@@ -129,4 +145,5 @@
         <li>Internet Connection: An active internet connection is a must to use this application.</li>
     </ul>
 </body>
+
 </html>
