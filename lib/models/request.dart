@@ -63,7 +63,7 @@ class Request {
     this.isAccepted = data["isAccepted"] ?? false;
     this.phoneNo = data["phoneNo"] ?? "";
     this.requestUserName = data["requestUserName"] ?? "";
-    this.requestTime = data["requestTime"];
+    this.requestTime = data["requestTime"]??DateTime.now().millisecondsSinceEpoch;
   }
 
   Map<String, dynamic> toMap() {

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:uow/LocationModule/clusterLocationPage.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:provider/provider.dart';
 import 'package:uow/loginModule/signuppage.dart';
 import 'package:uow/models/request.dart';
@@ -9,6 +12,7 @@ import 'package:uow/tempNavigator.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uow/Notification/notificationpage.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -18,7 +22,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _scaffoldKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
-    var prov=Provider.of<CarPoolingProvider>(context, listen: false).globalClustersMap;
+    var prov = Provider.of<CarPoolingProvider>(context, listen: false)
+        .globalClustersMap;
     return Scaffold(
       /*appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -119,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Stack(
           children: <Widget>[
-            // ClusterLocationPage(),
+            ClusterLocationPage(),
             Positioned(
                 top: 25,
                 left: 0,
@@ -234,18 +239,25 @@ class _SearchBarState extends State<SearchBar> {
             Material(
               elevation: 5,
               child: Container(
-                clipBehavior: Clip.hardEdge,
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: TextField(
+                  clipBehavior: Clip.hardEdge,
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: "Unite On Wheels"
+                      .text
+                      .textStyle(GoogleFonts.balooDa(textStyle: TextStyle()))
+                      .size(20)
+                      .make()
+                  /* TextField(
                   showCursor: true,
-                  style: TextStyle(fontSize: 15),
+                  controller: TextEditingController(text: "Unite On Wheels"),
+                  style: GoogleFonts.balooDa(textStyle: TextStyle()),
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   maxLines: 1,
-                  readOnly: isReadOnly,
+                  readOnly: true,
                   onTap: () {
                     print("object");
                     setState(() {
@@ -269,8 +281,8 @@ class _SearchBarState extends State<SearchBar> {
                   onChanged: (val) {
                     setState(() {});
                   },
-                ),
-              ),
+                ),*/
+                  ),
             ),
             Material(
               color: Colors.indigo, // button color
@@ -292,12 +304,13 @@ class _SearchBarState extends State<SearchBar> {
                   //   context: context,
                   //   child: _dialogBuilder(),
                   // ),
-                  onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => NotificationPage(),));
-              },
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => NotificationPage(),
+                        ));
+                  },
                 ),
               ),
             ),
