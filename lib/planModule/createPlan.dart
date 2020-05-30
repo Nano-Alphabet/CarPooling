@@ -88,7 +88,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
           ),
           Container(
             child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 // FormField(
                 //   labelText: "Pickup Point",
@@ -102,11 +102,15 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 // TextField(
                 //   controller: conte,
                 // ),
-                Text("From: ",style: TextStyle(fontSize: 20),),
+                Text(
+                  "From: ",
+                  style: TextStyle(fontSize: 20),
+                ),
                 RaisedButton(
                   child: Text("SET"),
                   color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -139,11 +143,15 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 //     //TODO NAvigate to Slect Location Page
                 //   },
                 // ),
-                Text("To: ",style: TextStyle(fontSize: 20),),
+                Text(
+                  "To: ",
+                  style: TextStyle(fontSize: 20),
+                ),
                 RaisedButton(
                   child: Text("SET"),
                   color: Colors.lightGreen,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -153,6 +161,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                             finloc = loc;
                             finlocString = str;
                             contefin.text = str;
+
+                            Navigator.pop(context);
                             setState(() {});
                           },
                         ),
@@ -222,8 +232,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 cluster.leavingTime = _date.millisecondsSinceEpoch;
-                cluster.initialLocation=initlocString;
-                cluster.finalLocation=finlocString;
+                cluster.initialLocation = initlocString;
+                cluster.finalLocation = finlocString;
                 Provider.of<CarPoolingProvider>(context, listen: false)
                     .createClusterData(cluster);
                 // clusters.add(cluster);
