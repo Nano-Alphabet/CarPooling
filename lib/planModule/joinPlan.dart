@@ -32,11 +32,6 @@ class JoinPlan extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         children: plans,
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => LoadLocationMap()));
-        Provider.of<CarPoolingProvider>(context, listen: false)
-            .loadGlobalClusterData(force: true);
-      }),
     );
   }
 }

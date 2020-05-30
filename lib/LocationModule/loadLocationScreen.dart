@@ -37,7 +37,7 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
 
   _LoadLocationMapState({this.onSaved});
   GoogleMapController mapController;
-  var onSaved;
+  final onSaved;
   LatLng center = LatLng(22.528380, 75.920596);
   double zoom = 5;
 
@@ -103,6 +103,15 @@ class _LoadLocationMapState extends State<LoadLocationMap> {
             onCameraMove: (camPos) {
               setState(() {
                 center = camPos.target;
+              });
+
+              Geolocator()
+                  .placemarkFromCoordinates(
+                      camPos.target.latitude, camPos.target.longitude)
+                  .then((value) {
+                setState(() {
+                  searchAddress = value.first.name;
+                });
               });
               print(center);
             },

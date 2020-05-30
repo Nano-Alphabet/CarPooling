@@ -107,25 +107,28 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                   style: TextStyle(fontSize: 20),
                 ),
                 RaisedButton(
-                  child: Text("SET"),
+                  child: Text(initlocString ?? "SET"),
                   color: Colors.lightGreen,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => LoadLocationMap(
-                          onSaved: (LatLng loc, String str) {
-                            initloc = loc;
-                            initlocString = str;
-                            conteinit.text = str;
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: initlocString != null
+                      ? null
+                      : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  LoadLocationMap(
+                                onSaved: (LatLng loc, String str) {
+                                  cluster.startPoint = loc;
+                                  initlocString = "Done";
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          );
+                        },
                 )
               ],
             ),
@@ -148,19 +151,20 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                   style: TextStyle(fontSize: 20),
                 ),
                 RaisedButton(
-                  child: Text("SET"),
+                  child: Text(finlocString??"SET"),
                   color: Colors.lightGreen,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  onPressed: () {
+                  onPressed: finlocString != null
+                      ? null
+                      :() {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => LoadLocationMap(
                           onSaved: (LatLng loc, String str) {
-                            finloc = loc;
-                            finlocString = str;
-                            contefin.text = str;
+                            cluster.endPoint = loc;
+                            finlocString = "Done";
 
                             Navigator.pop(context);
                             setState(() {});

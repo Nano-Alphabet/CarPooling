@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uow/models/request.dart';
 import 'package:uow/planModule/viewPlan.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -15,7 +16,6 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   ),
   Cluster(
@@ -28,7 +28,6 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   ),
   Cluster(
@@ -41,7 +40,6 @@ var clusters = <Cluster>[
     carNo: "AB12 CD3456",
     carType: "Sedan",
     leavingTime: 125,
-    date: "24-12-25",
     adminUserID: "12345",
   )
 ];
@@ -60,10 +58,13 @@ class Cluster {
   String carNo;
   String carType;
   int leavingTime;
-  String date;
+  String get date => DateTime.fromMillisecondsSinceEpoch(leavingTime)
+      .toIso8601String()
+      .substring(0, 10);
   String adminUserID;
 
-  GeoPoint geoPoint;
+  LatLng startPoint;
+  LatLng endPoint;
   Map<String, Request> requests = {};
   int get pWatingRequest {
     int count = 0;
@@ -93,7 +94,6 @@ class Cluster {
       this.carNo,
       this.carType,
       this.leavingTime,
-      this.date,
       this.adminUserID});
 
   Cluster.fromMap(Map data) {
@@ -106,7 +106,6 @@ class Cluster {
     this.carNo = data["carNo"] ?? "";
     this.carType = data["carType"] ?? "";
     this.leavingTime = data["leavingTime"] ?? 0;
-    this.date = data["date"] ?? "";
     this.adminUserID = data["adminUserID"] ?? "";
     (data["requests"] ?? {}).forEach((key, value) {
       this.requests.addAll({key: Request.fromMap(value)});
@@ -126,6 +125,8 @@ class Cluster {
       "leavingTime": leavingTime,
       "date": date,
       "adminUserID": adminUserID,
+      "startPoint": startPoint.toJson(),
+      "endPoint": endPoint.toJson(),
     };
   }
 }
@@ -186,7 +187,7 @@ class ClusterCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        cluster.leavingTime.toString(),
+                        cluster.pLeavingTime.toString().substring(11,16),
                         style: TextStyle(
                           color: Colors.grey,
                         ),

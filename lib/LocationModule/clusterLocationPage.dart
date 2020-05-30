@@ -73,7 +73,7 @@ class _ClusterLocationPageState extends State<ClusterLocationPage> {
   void _add(Cluster cluster) async {
     //print(address);
     var center =
-        GeoCoord(cluster.geoPoint.latitude, cluster.geoPoint.longitude);
+        GeoCoord(cluster.startPoint.latitude, cluster.startPoint.longitude);
 
     if (center == null) return;
     // creating a new MARKER
