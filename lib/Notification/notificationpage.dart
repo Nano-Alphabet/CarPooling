@@ -233,7 +233,13 @@ class _EntryCardState extends State<EntryCard> {
                         )
                       : FlatButton(
                           onPressed: () {
-                             Provider.of<CarPoolingProvider>(context, listen: false).acceptUserRequest(clusterID: entry.clusterID, requestUserId: widget.uid).then((value) => Fluttertoast.showToast(msg: "Request accepted"));
+                            Provider.of<CarPoolingProvider>(context,
+                                    listen: false)
+                                .acceptUserRequest(
+                                    clusterID: entry.clusterID,
+                                    requestUserId: widget.uid)
+                                .then((value) => Fluttertoast.showToast(
+                                    msg: "Request accepted"));
                           },
                           child: Row(
                             children: <Widget>[
