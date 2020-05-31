@@ -18,7 +18,8 @@
         <li>Namani Sreeharsh</li>
         <li>Shaikh Ubaid</li>
     </ul>
-    <p>Link to <a href="https://docs.google.com/document/d/1yn4LxVR5EqAwksHoRDGN7KTVUdxjvYIg1bmaGJej-Ws/">Software Requirements Specification (SRS)</a></p>
+    <p>Link to <a href="https://docs.google.com/document/d/1yn4LxVR5EqAwksHoRDGN7KTVUdxjvYIg1bmaGJej-Ws/edit?usp=sharing">Software Requirements Specification (SRS)</a></p>
+    <p>Link to <a href="https://docs.google.com/document/d/1Srw7anp5WIve6cEtEiOBM4i84fXdKBv8VuEe2R6eBB8/edit?usp=sharing">UML Diagrams</a></p>
     <br>
     <h2>Under the guidance of</h2>
     <h3>Dr Puneet Gupta</h3>
