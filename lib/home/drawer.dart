@@ -85,6 +85,21 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
+            title: Text('Join Requests'),
+            leading: Icon(Icons.group),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Scaffold(
+                            appBar: AppBar(
+                              title: Text('Join requests'),
+                            ),
+                            body: JoinReq(),
+                          )));
+            },
+          ),
+          ListTile(
             title: Text('Sign Out'),
             leading: Icon(Icons.power_settings_new),
             onTap: () {
