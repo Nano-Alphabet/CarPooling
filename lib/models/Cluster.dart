@@ -45,11 +45,8 @@ var clusters = <Cluster>[
 ];
 
 class Cluster {
-  //  For the time being, I am keeping all of these as strings
   String clusterID;
   String adminName;
-  //String adminFirstName; these two are combined in one
-  //String adminLastName;
   String initialLocation;
   String finalLocation;
   String phoneNo;
@@ -62,7 +59,6 @@ class Cluster {
       .toIso8601String()
       .substring(0, 10);
   String adminUserID;
-
   LatLng startPoint;
   LatLng endPoint;
   Map<String, Request> requests = {};
