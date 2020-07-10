@@ -224,8 +224,8 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
                   cluster.leavingTime = _date.millisecondsSinceEpoch;
-                  cluster.initialLocation = initlocString;
-                  cluster.finalLocation = finlocString;
+                  cluster.initialLocation = "IIT Indore";
+                  cluster.finalLocation = "Railway Station Indore";
                   Provider.of<CarPoolingProvider>(context, listen: false)
                       .createClusterData(cluster);
                   // clusters.add(cluster);

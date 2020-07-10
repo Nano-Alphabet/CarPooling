@@ -121,8 +121,8 @@ class Cluster {
       "leavingTime": leavingTime,
       "date": date,
       "adminUserID": adminUserID,
-      "startPoint": startPoint.toJson(),
-      "endPoint": endPoint.toJson(),
+      // "startPoint": startPoint.toJson(),
+      // "endPoint": endPoint.toJson(),
     };
   }
 }
